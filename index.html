@@ -54,34 +54,350 @@
     };
 
     const levels = [
-    {
-      "elements": [
-        {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
-        {"type":"start","position":{"x":-1,"y":0,"z":0}},
-        {"type":"floor","position":{"x":-1,"y":0,"z":15}},
-        {"type":"floor","position":{"x":0,"y":0,"z":-1}},
-        {"type":"floor","position":{"x":15,"y":0,"z":-1}},
-        {"type":"goal","position":{"x":15,"y":0,"z":15}},
-        {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
-        {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
-        {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
-        {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
-        {"type":"teleporter","entry1":{"x":2,"y":0,"z":2},"entry2":{"x":13,"y":0,"z":13}},
-        {"type":"stair","position":{"x":14,"y":1,"z":14},"direction":"right","count":"6"},
-        {"type":"floor","position":{"x":0,"y":0,"z":-2}},
-        {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
-        {"type":"bonuscrystall","position":{"x":8,"y":3,"z":9}},
-        {"type":"bonuscrystall","position":{"x":8,"y":3,"z":7}}
-      ]
-    },
-    {
-      "elements": [
-        {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":5,"y":0,"z":5}},
-        {"type":"start","position":{"x":-1,"y":0,"z":0}},
-        {"type":"goal","position":{"x":5,"y":0,"z":5}}
-      ]
-    }
-  ];
+      {
+        "elements": [
+          {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
+          {"type":"start","position":{"x":-1,"y":0,"z":0}},
+          {"type":"floor","position":{"x":-1,"y":0,"z":15}},
+          {"type":"floor","position":{"x":0,"y":0,"z":-1}},
+          {"type":"floor","position":{"x":15,"y":0,"z":-1}},
+          {"type":"goal","position":{"x":15,"y":0,"z":15}},
+          {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
+          {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
+          {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
+          {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
+          {"type":"teleporter","entry1":{"x":2,"y":0,"z":2},"entry2":{"x":13,"y":0,"z":13}},
+          {"type":"stair","position":{"x":16,"y":1,"z":1},"direction":"right","count":"6"},
+          {"type":"floor","position":{"x":0,"y":0,"z":-2}},
+          {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
+          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":9}},
+          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":7}}
+        ]
+      },
+      {
+        "levelNumber": 2,
+        "defaultTime": 80,
+        "instructions": [
+          "Welcome to Magic Forest!",
+          "Your first task is to collect all the ",
+          "crystals and find the exit to the next level.",
+          "Tip: To zoom-in, use key 'A', to zoom-out use key 'Z'.",
+          "Good Luck!"
+        ],
+        "elements": [
+          {
+            "type": "hero",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "facing": "back"
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -3,
+              "y": 0,
+              "z": 2
+            },
+            "to": {
+              "x": 3,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "to": {
+              "x": 5,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 6,
+              "y": 0,
+              "z": 1
+            },
+            "to": {
+              "x": 10,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 8,
+              "y": 0,
+              "z": 2
+            },
+            "to": {
+              "x": 10,
+              "y": 0,
+              "z": 5
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 9,
+              "y": 0,
+              "z": 7
+            },
+            "to": {
+              "x": 6,
+              "y": 0,
+              "z": 7
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 2,
+              "y": 0,
+              "z": 3
+            },
+            "to": {
+              "x": 2,
+              "y": 0,
+              "z": 4
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 1,
+              "y": 0,
+              "z": 5
+            },
+            "to": {
+              "x": 5,
+              "y": 0,
+              "z": 7
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -4,
+              "y": 0,
+              "z": 0
+            },
+            "to": {
+              "x": -5,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -6,
+              "y": 0,
+              "z": 1
+            },
+            "to": {
+              "x": -10,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -10,
+              "y": 0,
+              "z": -2
+            },
+            "to": {
+              "x": -8,
+              "y": 0,
+              "z": -5
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -7,
+              "y": 0,
+              "z": -4
+            },
+            "to": {
+              "x": -2,
+              "y": 0,
+              "z": -4
+            }
+          },
+          {
+            "type": "floor",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 6
+            }
+          },
+          {
+            "type": "floor",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -3
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 2
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 4
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -4
+            }
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": 2
+            },
+            "comment": "tree01.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": -2
+            },
+            "comment": "tree02.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -3,
+              "y": 0,
+              "z": -2
+            },
+            "comment": "tree01.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -3,
+              "y": 0,
+              "z": 2
+            },
+            "comment": "tree03.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -3
+            },
+            "comment": "barrel.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 4,
+              "y": 0,
+              "z": 6
+            },
+            "comment": "barrel.x"
+          },
+          {
+            "type": "goal",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 6
+            }
+          }
+        ]
+      }
+    ];
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
