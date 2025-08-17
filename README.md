@@ -3,9 +3,8 @@
 This is a remake project inspired by *Magic World* by Funny Arts.  
 The goal is to rebuild the original missions (Desert, Forest, Rocks, etc.) using **Three.js** in modern browsers.
 
-
-Background Images are from Magic World, a game by Funny Arts. The images are used to create a nostalgic and immersive experience for players, reminiscent of classic games.
-https://www.funnyarts.com/magicworldindex.php
+Background Images are from Magic World, a game by Funny Arts. The images are used to create a nostalgic and immersive experience for players, reminiscent of classic games.  
+https://www.funnyarts.com/magicworldindex.php  
 https://www.funnyarts.com/magicworld
 
 ---
@@ -15,20 +14,24 @@ https://www.funnyarts.com/magicworld
 - **Game Framework**
   - Three.js rendering
   - HUD with moves, time, best score (saved in localStorage)
-  - Basic menu (Start, Restart, Win screens)
-  - Camera controls (orbiting)
+  - Basic menu (Start, Restart, Win/Lose screens)
+  - Smooth camera following behind the ball (tank-style controls)
   - Ball movement with step-by-step tile navigation
 
 - **Level Elements**
   - `floor`: Static tiles
-  - `start`: Starting position
-  - `goal`: Exit tile
+  - `hero`: Starting position
+  - `goal`: Exit tile (activates after collecting all crystals)
   - `lift`: Moving platforms (with pause at ends)
+  - `teleporter`: Instant travel between two points
+  - `stair`: Multi-height navigation
+  - `bonuscrystall`: Collectible crystals (required to unlock the goal)
 
 - **Game Flow**
-  - Win/lose handling
-  - Level progression (currently only 2 demo levels)
-  - Simple fall detection
+  - Win/lose handling (fall detection, reaching goal)
+  - Level progression (currently 2 demo levels with instructions in Level 2)
+  - Collectibles system (goal unlocks after all crystals are collected)
+  - Local best score tracking (time & moves)
 
 ---
 
@@ -54,7 +57,6 @@ Each level specifies:
 
 ### 1. Core Gameplay Elements
 - **Bonuses**
-  - `BonusCrystall` (collectible)
   - `BonusLife`, `BonusTime`, `BonusFreeze`, `BonusShield`
   - `BonusFire`, `BonusBombs`
 - **Enemies**
@@ -63,9 +65,7 @@ Each level specifies:
   - `ElectroShock` (damage)
   - `FalseFloor` (collapses after stepping)
 - **Environment**
-  - `Stair` (multi-height navigation)
-  - `Teleporter` (instant travel between two points)
-  - `Custom` models (`palm01.x`, `obelisk_desert.x`, etc.)
+  - Custom models (`palm01.x`, `obelisk_desert.x`, etc.)
 
 ### 2. Level/Gameplay Logic
 - Time limit (`DefaultTime`) per level
@@ -74,7 +74,7 @@ Each level specifies:
 - Bonus effects (extra time, extra life, freeze enemies, etc.)
 - Hazard interactions (shock damage, floor collapse)
 - Multi-level terrain with stairs and height changes
-- Teleporter transitions
+- Teleporter transitions with effects
 
 ### 3. Game Structure
 - Parsing mission files (`.txt`) into level definitions
