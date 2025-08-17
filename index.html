@@ -573,6 +573,8 @@
           const t = new Teleporter(obj.entry1, obj.entry2);
           teleporters.push(t);
         } else if (obj.type === "bonuscrystall") {
+          obj.position = obj.position || { x: 0, y: 0, z: 0 };
+          obj.position.y = obj.position.y + 2; // raise crystals above the ground
           const c = new BonusCrystall(obj.position);
           crystals.push(c);
           crystalsRemaining++;
@@ -645,10 +647,22 @@
 
     function updateCameraBehind() {
       // Camera yaw should be opposite to the facing direction, so it looks at the ball from behind.
-      camYawTarget = YAW_FROM_INDEX[dirIndex] + Math.PI;
+      //camYawTarget = YAW_FROM_INDEX[dirIndex] + Math.PI;
       // Keep pitch and distance as-is (or you can uncomment below to keep them steady)
       // camPitchTarget = DEFAULT_CAM.pitch;
       // camDistTarget = DEFAULT_CAM.dist;
+      let desiredYaw = YAW_FROM_INDEX[dirIndex] + Math.PI;
+
+      // Normalize to [-PI, PI]
+      desiredYaw = Math.atan2(Math.sin(desiredYaw), Math.cos(desiredYaw));
+
+      // Adjust target so the rotation is always the shortest way
+      let delta = desiredYaw - camYaw;
+      delta = Math.atan2(Math.sin(delta), Math.cos(delta)); // wrap to [-PI, PI]
+
+      camYawTarget = camYaw + delta;
+      camPitchTarget = DEFAULT_CAM.pitch;
+      camDistTarget = DEFAULT_CAM.dist;
     }
 
     function resetGame() {
@@ -731,56 +745,47 @@
     window.addEventListener('keydown', (e) => {
       if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
       e.preventDefault();
+      if (isMoving || falling) return;
+      ridingLift = null; dropStartY = null; landStartY = null;
 
       // Rotation-only keys change facing & camera; movement happens on ArrowUp
-      if (e.key === 'ArrowLeft' && !isMoving && !falling) {
+      if (e.key === 'ArrowLeft') {
         dirIndex = (dirIndex + 3) % 4;     // +90°
-        updateCameraBehind();
-        return;
       }
-      if (e.key === 'ArrowRight' && !isMoving && !falling) {
+      if (e.key === 'ArrowRight') {
         dirIndex = (dirIndex + 1) % 4;     // -90°
-        updateCameraBehind();
-        return;
       }
       if (e.key === 'ArrowDown' && !isMoving && !falling) {
         dirIndex = (dirIndex + 2) % 4;     // 180°
-        updateCameraBehind();
-        return;
       }
 
       // ArrowUp moves forward in the stored direction
-      if (e.key === 'ArrowUp') {
-        if (isMoving || falling) return;
-        ridingLift = null; dropStartY = null; landStartY = null;
+      const dir = DIRS[dirIndex].clone();
+      moveFrom.copy(ballPos);
+      moveTo.copy(ballPos).add(dir);
 
-        const dir = DIRS[dirIndex].clone();
-        moveFrom.copy(ballPos);
-        moveTo.copy(ballPos).add(dir);
-
-        // If target tile is higher (stairs) lift to its height
-        for (const t of tiles) {
-          if (Math.abs(t.position.x - moveTo.x) < 0.1 &&
-              Math.abs(t.position.z - moveTo.z) < 0.1) {
-            const tileY = t.position.y;
-            if (tileY > moveFrom.y) {
-              moveTo.y = tileY + BALL_RADIUS;
-            }
+      // If target tile is higher (stairs) lift to its height
+      for (const t of tiles) {
+        if (Math.abs(t.position.x - moveTo.x) < 0.1 &&
+            Math.abs(t.position.z - moveTo.z) < 0.1) {
+          const tileY = t.position.y;
+          if (tileY > moveFrom.y) {
+            moveTo.y = tileY + BALL_RADIUS;
           }
         }
-
-        // Teleport if target has a teleporter
-        for (const tele of teleporters) tele.checkTeleport(moveTo);
-
-        // Ball roll axis
-        window.__moveAxis = new THREE.Vector3(dir.z, 0, -dir.x).normalize();
-        moveStartTime = performance.now();
-        isMoving = true;
-        moves++;
-
-        // Keep camera behind the new direction while moving
-        updateCameraBehind();
       }
+
+      // Teleport if target has a teleporter
+      for (const tele of teleporters) tele.checkTeleport(moveTo);
+
+      // Ball roll axis
+      window.__moveAxis = new THREE.Vector3(dir.z, 0, -dir.x).normalize();
+      moveStartTime = performance.now();
+      isMoving = true;
+      moves++;
+
+      // Keep camera behind the new direction while moving
+      updateCameraBehind();
     });
 
     // Mouse look & wheel still allowed, but next key realigns the camera behind
