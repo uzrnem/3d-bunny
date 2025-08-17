@@ -66,7 +66,8 @@
           {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
           {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
           {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
-          {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}}
+          {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
+          {"type":"teleporter","entry1":{"x":2,"y":2,"z":2},"entry2":{"x":13,"y":13,"z":13}}
         ]
       },
       {
@@ -111,6 +112,7 @@
 
     let tiles = [];
     let lifts = [];
+    let teleporters = [];
     let startTile, goalTile;
     let START_POS, GOAL_POS;
 
@@ -142,12 +144,37 @@
       dispose() { scene.remove(this.mesh); }
     }
 
+    class Teleporter {
+      constructor(e1, e2) {
+        this.entry1 = new THREE.Vector3(e1.x, BALL_Y, e1.z);
+        this.entry2 = new THREE.Vector3(e2.x, BALL_Y, e2.z);
+        this.mesh1 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
+        this.mesh2 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
+        this.mesh1.position.set(e1.x, -TILE_HEIGHT/2, e1.z);
+        this.mesh2.position.set(e2.x, -TILE_HEIGHT/2, e2.z);
+        scene.add(this.mesh1);
+        scene.add(this.mesh2);
+      }
+      checkTeleport(pos) {
+        if (Math.abs(pos.x - this.entry1.x) < 0.1 && Math.abs(pos.y - this.entry1.y) < 0.1 && Math.abs(pos.z - this.entry1.z) < 0.1) {
+          pos.copy(this.entry2);
+        } else if (Math.abs(pos.x - this.entry2.x) < 0.1 && Math.abs(pos.y - this.entry1.y) < 0.1 && Math.abs(pos.z - this.entry2.z) < 0.1) {
+          pos.copy(this.entry1);
+        }
+      }
+      dispose() {
+        scene.remove(this.mesh1);
+        scene.remove(this.mesh2);
+      }
+    }
+
     function loadLevel(index) {
       tiles.forEach(t => scene.remove(t));
       lifts.forEach(l => l.dispose && l.dispose());
+      teleporters.forEach(t => t.dispose());
       if (startTile) scene.remove(startTile);
       if (goalTile)  scene.remove(goalTile);
-      tiles = []; lifts = []; startTile = goalTile = undefined;
+      tiles = []; lifts = []; teleporters = []; startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
 
       const def = levels[index].level;
@@ -182,6 +209,10 @@
         if (obj.type === "lift") {
           const l = new Lift(obj.from.x, obj.from.y, obj.from.z, obj.to.x, obj.to.y, obj.to.z);
           lifts.push(l);
+        }
+        if (obj.type === "teleporter") {
+          const t = new Teleporter(obj.entry1, obj.entry2);
+          teleporters.push(t);
         }
       });
 
@@ -295,6 +326,10 @@
       if (e.key === 'ArrowRight') dir.set(0, 0, 1);
       moveFrom.copy(ballPos);
       moveTo.copy(ballPos).add(dir);
+      // if moveTo location has teleporter presert, then teleport another entry
+      for (const tele of teleporters) {
+        tele.checkTeleport(moveTo);
+      }
       window.__moveAxis = new THREE.Vector3(dir.z, 0, -dir.x).normalize();
       moveStartTime = performance.now();
       isMoving = true;
