@@ -323,9 +323,18 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    function isTileAt(x, y, z) {
-      return tiles.some(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.y - y) < 0.1 && Math.abs(t.position.z - z) < 0.1);
+    function hasFloorBelow(x, y, z) {
+      return tiles.some(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1);
     }
+    /*
+    return tiles.some(t => {
+      if (Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.z - z) < 0.1) {
+        console.log(`Ball at (${x},${y},${z}), Tile at (${t.position.x},${t.position.y},${t.position.z}), result is ${t.position.y - y}, tile y ${t.position.y}, ball y ${y}`);
+        console.log(`condition: ${(y+1) > t.position.y}, ball y ${y}, tile y ${t.position.y}`);
+      }
+      return Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1
+    });
+    */
 
     let lastTime = performance.now();
     function animate() {
@@ -366,9 +375,13 @@
             }
           }
           if (!ridingLift) {
-            if (isTileAt(Math.round(ballPos.x), Math.round(ballPos.y), Math.round(ballPos.z))) {
-              ballPos.x = Math.round(ballPos.x);
-              ballPos.z = Math.round(ballPos.z);
+            // Check if we can drop onto a floor tile, from upwards lift
+            const tx = Math.round(ballPos.x), ty = Math.round(ballPos.y), tz = Math.round(ballPos.z);
+            if (hasFloorBelow(tx, ty, tz)) {
+              ballPos.x = tx; ballPos.z = tz;
+              dropStartY = ballPos.y;
+              dropStartTime = performance.now();
+              falling = false;
             } else {
               falling = true; velocityY = 0;
             }
