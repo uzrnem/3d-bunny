@@ -67,7 +67,9 @@
           {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
           {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
           {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
-          {"type":"teleporter","entry1":{"x":2,"y":2,"z":2},"entry2":{"x":13,"y":13,"z":13}}
+          {"type":"teleporter","entry1":{"x":2,"y":2,"z":2},"entry2":{"x":13,"y":13,"z":13}},
+          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":9}},
+          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":7}}
         ]
       },
       {
@@ -113,6 +115,9 @@
     let tiles = [];
     let lifts = [];
     let teleporters = [];
+    let crystals = [];
+    let crystalsRemaining = 0;
+    let goalActive = false;
     let startTile, goalTile;
     let START_POS, GOAL_POS;
 
@@ -168,13 +173,45 @@
       }
     }
 
+    class BonusCrystall {
+      constructor(pos) {
+        this.pos = new THREE.Vector3(pos.x, BALL_Y, pos.z);
+        const geo = new THREE.OctahedronGeometry(0.3);
+        const mat = new THREE.MeshStandardMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.6 });
+        this.mesh = new THREE.Mesh(geo, mat);
+        this.mesh.position.set(pos.x, BALL_Y, pos.z);
+        scene.add(this.mesh);
+        this.collected = false;
+      }
+      checkCollect(ballPos) {
+        if (!this.collected && ballPos.distanceTo(this.pos) < 0.5) {
+          this.collected = true;
+          scene.remove(this.mesh);
+          crystalsRemaining--;
+          if (crystalsRemaining <= 0) {
+            goalTile.material = new THREE.MeshStandardMaterial({ color: 0x22ff55, emissive: 0x22ff55, emissiveIntensity: 0.8 });
+            goalActive = true;
+          }
+        }
+      }
+      dispose() { scene.remove(this.mesh); }
+    }
+
+
     function loadLevel(index) {
       tiles.forEach(t => scene.remove(t));
       lifts.forEach(l => l.dispose && l.dispose());
       teleporters.forEach(t => t.dispose());
+      crystals.forEach(c => c.dispose());
       if (startTile) scene.remove(startTile);
       if (goalTile)  scene.remove(goalTile);
-      tiles = []; lifts = []; teleporters = []; startTile = goalTile = undefined;
+      tiles = [];
+      lifts = [];
+      teleporters = [];
+      crystals = [];
+      crystalsRemaining = 0;
+      goalActive = false;
+      startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
 
       const def = levels[index].level;
@@ -201,10 +238,12 @@
           START_POS = new THREE.Vector3(obj.position.x, BALL_Y, obj.position.z);
         }
         if (obj.type === "goal") {
-          goalTile = new THREE.Mesh(tileGeo, goalMat);
+          //goalTile = new THREE.Mesh(tileGeo, goalMat);
+          goalTile = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x003300 })); // dark until activated
           goalTile.position.set(obj.position.x, -TILE_HEIGHT/2, obj.position.z);
           scene.add(goalTile); tiles.push(goalTile);
           GOAL_POS = new THREE.Vector3(obj.position.x, BALL_Y, obj.position.z);
+          goalActive = false;
         }
         if (obj.type === "lift") {
           const l = new Lift(obj.from.x, obj.from.y, obj.from.z, obj.to.x, obj.to.y, obj.to.z);
@@ -213,6 +252,11 @@
         if (obj.type === "teleporter") {
           const t = new Teleporter(obj.entry1, obj.entry2);
           teleporters.push(t);
+        }
+        if (obj.type === "bonuscrystall") {
+          const c = new BonusCrystall(obj.position);
+          crystals.push(c);
+          crystalsRemaining++;
         }
       });
 
@@ -397,6 +441,10 @@
         if (t >= 1) {
           isMoving = false;
           ballPos.copy(moveTo);
+
+          // collect crystals
+          for (const c of crystals) c.checkCollect(ballPos);
+
           ridingLift = null;
           for (const lift of lifts) {
             if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
@@ -421,7 +469,9 @@
               falling = true; velocityY = 0;
             }
           }
-          if (ballPos.x === GOAL_POS.x && ballPos.z === GOAL_POS.z) { winGame(); }
+          if (goalActive && ballPos.x === GOAL_POS.x && ballPos.z === GOAL_POS.z) {
+            winGame();
+          }
         }
       }
 
