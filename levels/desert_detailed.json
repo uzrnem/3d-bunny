@@ -6,7 +6,7 @@
       "You are in the Magic Desert.",
       "Tip: Use the shields to protect yourself from the bombs!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -430,7 +430,7 @@
       "Magic pyramid! The Crystals are flying in the air.",
       "It must be the Wizard's work. Be careful!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1044,7 +1044,7 @@
     "instructions": [
       "Tip: Look around. Evil Skeletons are hiding!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1348,7 +1348,7 @@
       "Run fast, but be wise.",
       "You are closer and closer on your way home."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1993,7 +1993,7 @@
       "Good job. Now, collect all of the crystals.",
       "Watch the time. It's running out. Go!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -2790,7 +2790,7 @@
       "You are halfway home. Tip: You can hide in the trees, ",
       "but you are not the only one who knows that. "
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -3441,7 +3441,7 @@
     "instructions": [
       "Tip: Use power shields for protection."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -4788,7 +4788,7 @@
       "This is a huge maze. Don't worry,",
       "you have enough skills to pass it!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -5911,7 +5911,7 @@
       "All the way up and down.",
       "Watch out for the skeletons."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -6707,7 +6707,7 @@
       "Avoid the false floor! ",
       "Tip: Use the camera zoom to overview."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -7941,7 +7941,7 @@
     "instructions": [
       "Be very careful. The Wizards are dangerous!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -8678,7 +8678,7 @@
       "You are almost home!.",
       "Are you ready??? Go!!!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {

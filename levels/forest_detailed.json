@@ -9,7 +9,7 @@
       "Tip: To zoom-in, use key 'A', to zoom-out use key 'Z'.",
       "Good Luck!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -330,7 +330,7 @@
       "Be careful and don't let yourself fall down into the abyss!",
       "Tip: Use keys 'X' and 'C' to change your camera view"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -832,7 +832,7 @@
       "See that fellow?  He is not so harmless as he looks.",
       "You better watch out for him!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1385,7 +1385,7 @@
       "Some parts of it might stay for awhile,",
       "but then it'll collapse beneath your feet!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -2026,7 +2026,7 @@
       "These elevators go a long way up, but don't be scared",
       "of heights! Your hard work will reward you."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -2548,7 +2548,7 @@
       "Tip: Use the ice crystals to help freeze ",
       "the green reptile."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -3442,7 +3442,7 @@
     "instructions": [
       "Tip: The teleporters will help you move fast. "
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -3732,7 +3732,7 @@
       "Use bombs to destroy your enemies. ",
       "Tip: Just press the 'B' key to throw the bomb. "
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -4108,7 +4108,7 @@
       "You are deep in the forest! ",
       "Tip: Use your teleports carefully!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -4730,7 +4730,7 @@
     "instructions": [
       "Some floors here will fall, so watch your way."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -5362,7 +5362,7 @@
     "instructions": [
       "Are you ready for a run? Let's get to it!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -5770,7 +5770,7 @@
       "You made it! You are one step closer.",
       "Good Luck!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {

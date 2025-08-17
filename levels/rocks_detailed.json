@@ -6,7 +6,7 @@
       "You are in the world of Rocks now. Tip: ",
       "Use elevators to get to inaccessible areas."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -398,7 +398,7 @@
       "You are not alone here.",
       "Watch out for a ghost that wanders around."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -884,7 +884,7 @@
       "You have a way to go. Up, up, and up.",
       "Be careful and good luck!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1216,7 +1216,7 @@
     "instructions": [
       "Tip: Be careful where you step."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -1637,7 +1637,7 @@
     "instructions": [
       "Sky Rocks."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -2438,7 +2438,7 @@
       "These scorpions are dangerous!",
       "Tip: Use bombs to protect yourself."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -2743,7 +2743,7 @@
       "You have 3 ways to go.",
       "Which one will you choose?"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -3573,7 +3573,7 @@
       "Relax. That's an easy one.",
       "Tip: Be careful with electroshocks."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -3937,7 +3937,7 @@
     "instructions": [
       "Great job. Try this one now!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -5036,7 +5036,7 @@
     "instructions": [
       "Yahoo! What a run. One more to go!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -5634,7 +5634,7 @@
     "instructions": [
       "Scorpions attack!"
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {
@@ -6205,7 +6205,7 @@
       "Excellent! You are getting closer.",
       "Tip: Look around. Some crystals might be hidden."
     ],
-    "objects": [
+    "elements": [
       {
         "type": "hero",
         "position": {

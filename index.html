@@ -39,9 +39,8 @@
     const TILE_SIZE = 1;
     const TILE_HEIGHT = 0.1;
     const BALL_RADIUS = 0.3;
-    const BALL_Y = 0 + BALL_RADIUS;
 
-    const MOVE_SPEED = 1;
+    const MOVE_SPEED = 3; // Ball speed in tiles per second
     const CAM_SMOOTH = 0.12;
     const LIFT_SPEED = 2.0;
     const LIFT_PAUSE_MS = 2000;
@@ -55,32 +54,34 @@
     };
 
     const levels = [
-      {
-        "level": [
-          {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
-          {"type":"start","position":{"x":-1,"y":0,"z":0}},
-          {"type":"floor","position":{"x":-1,"y":0,"z":15}},
-          {"type":"floor","position":{"x":0,"y":0,"z":-1}},
-          {"type":"floor","position":{"x":15,"y":0,"z":-1}},
-          {"type":"goal","position":{"x":15,"y":0,"z":15}},
-          {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
-          {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
-          {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
-          {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
-          {"type":"teleporter","entry1":{"x":2,"y":2,"z":2},"entry2":{"x":13,"y":13,"z":13}},
-          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":9}},
-          {"type":"bonuscrystall","position":{"x":8,"y":3,"z":7}}
-        ]
-      },
-      {
-        "level": [
-          {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":5,"y":0,"z":5}},
-          {"type":"start","position":{"x":-1,"y":0,"z":0}},
-          {"type":"goal","position":{"x":5,"y":0,"z":5}}
-        ]
-      }
-    ];
-
+    {
+      "elements": [
+        {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
+        {"type":"start","position":{"x":-1,"y":0,"z":0}},
+        {"type":"floor","position":{"x":-1,"y":0,"z":15}},
+        {"type":"floor","position":{"x":0,"y":0,"z":-1}},
+        {"type":"floor","position":{"x":15,"y":0,"z":-1}},
+        {"type":"goal","position":{"x":15,"y":0,"z":15}},
+        {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
+        {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
+        {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
+        {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
+        {"type":"teleporter","entry1":{"x":2,"y":0,"z":2},"entry2":{"x":13,"y":0,"z":13}},
+        {"type":"stair","position":{"x":14,"y":1,"z":14},"direction":"right","count":"6"},
+        {"type":"floor","position":{"x":0,"y":0,"z":-2}},
+        {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
+        {"type":"bonuscrystall","position":{"x":8,"y":3,"z":9}},
+        {"type":"bonuscrystall","position":{"x":8,"y":3,"z":7}}
+      ]
+    },
+    {
+      "elements": [
+        {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":5,"y":0,"z":5}},
+        {"type":"start","position":{"x":-1,"y":0,"z":0}},
+        {"type":"goal","position":{"x":5,"y":0,"z":5}}
+      ]
+    }
+  ];
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -151,19 +152,19 @@
 
     class Teleporter {
       constructor(e1, e2) {
-        this.entry1 = new THREE.Vector3(e1.x, BALL_Y, e1.z);
-        this.entry2 = new THREE.Vector3(e2.x, BALL_Y, e2.z);
+        this.entry1 = new THREE.Vector3(e1.x, e1.y/3, e1.z);
+        this.entry2 = new THREE.Vector3(e2.x, e2.y/3, e2.z);
         this.mesh1 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
         this.mesh2 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
-        this.mesh1.position.set(e1.x, -TILE_HEIGHT/2, e1.z);
-        this.mesh2.position.set(e2.x, -TILE_HEIGHT/2, e2.z);
+        this.mesh1.position.set(e1.x, e1.y/3-TILE_HEIGHT/2, e1.z);
+        this.mesh2.position.set(e2.x, e2.y/3-TILE_HEIGHT/2, e2.z);
         scene.add(this.mesh1);
         scene.add(this.mesh2);
       }
       checkTeleport(pos) {
-        if (Math.abs(pos.x - this.entry1.x) < 0.1 && Math.abs(pos.y - this.entry1.y) < 0.1 && Math.abs(pos.z - this.entry1.z) < 0.1) {
+        if (Math.abs(pos.x - this.entry1.x) < 0.1 && this.entry1.distanceTo(pos) < 0.5 && Math.abs(pos.z - this.entry1.z) < 0.1) {
           pos.copy(this.entry2);
-        } else if (Math.abs(pos.x - this.entry2.x) < 0.1 && Math.abs(pos.y - this.entry1.y) < 0.1 && Math.abs(pos.z - this.entry2.z) < 0.1) {
+        } else if (Math.abs(pos.x - this.entry2.x) < 0.1 && this.entry2.distanceTo(pos) < 0.5 && Math.abs(pos.z - this.entry2.z) < 0.1) {
           pos.copy(this.entry1);
         }
       }
@@ -175,11 +176,11 @@
 
     class BonusCrystall {
       constructor(pos) {
-        this.pos = new THREE.Vector3(pos.x, BALL_Y, pos.z);
+        this.pos = new THREE.Vector3(pos.x, pos.y/3*BALL_RADIUS, pos.z);
         const geo = new THREE.OctahedronGeometry(0.3);
         const mat = new THREE.MeshStandardMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.6 });
         this.mesh = new THREE.Mesh(geo, mat);
-        this.mesh.position.set(pos.x, BALL_Y, pos.z);
+        this.mesh.position.set(pos.x, pos.y/3*BALL_RADIUS, pos.z);
         scene.add(this.mesh);
         this.collected = false;
       }
@@ -214,49 +215,76 @@
       startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
 
-      const def = levels[index].level;
+      const def = levels[index].elements;
       def.forEach(obj => {
         if (obj.type === "floor") {
-          if (obj.from) {
-            for (let x = obj.from.x; x <= obj.to.x; x++) {
-              for (let z = obj.from.z; z <= obj.to.z; z++) {
+          if (obj.from && obj.to) {
+            const minX = Math.min(obj.from.x, obj.to.x);
+            const maxX = Math.max(obj.from.x, obj.to.x);
+            const minY = Math.min(obj.from.y, obj.to.y);
+            const minZ = Math.min(obj.from.z, obj.to.z);
+            const maxZ = Math.max(obj.from.z, obj.to.z);
+
+            for (let x = minX; x <= maxX; x++) {
+              for (let z = minZ; z <= maxZ; z++) {
                 const t = new THREE.Mesh(tileGeo, tileMat);
-                t.position.set(x, -TILE_HEIGHT/2, z);
+                t.position.set(x, minY/3-TILE_HEIGHT/2, z);
                 scene.add(t); tiles.push(t);
               }
             }
           } else {
             const t = new THREE.Mesh(tileGeo, tileMat);
-            t.position.set(obj.position.x, -TILE_HEIGHT/2, obj.position.z);
+            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
             scene.add(t); tiles.push(t);
           }
-        }
-        if (obj.type === "start") {
+        } else if (obj.type === "start") {
           startTile = new THREE.Mesh(tileGeo, startMat);
-          startTile.position.set(obj.position.x, -TILE_HEIGHT/2, obj.position.z);
+          startTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(startTile); tiles.push(startTile);
-          START_POS = new THREE.Vector3(obj.position.x, BALL_Y, obj.position.z);
-        }
-        if (obj.type === "goal") {
+          START_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
+        } else if (obj.type === "goal") {
           //goalTile = new THREE.Mesh(tileGeo, goalMat);
           goalTile = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x003300 })); // dark until activated
-          goalTile.position.set(obj.position.x, -TILE_HEIGHT/2, obj.position.z);
+          goalTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(goalTile); tiles.push(goalTile);
-          GOAL_POS = new THREE.Vector3(obj.position.x, BALL_Y, obj.position.z);
+          GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
           goalActive = false;
-        }
-        if (obj.type === "lift") {
+        } else if (obj.type === "lift") {
           const l = new Lift(obj.from.x, obj.from.y, obj.from.z, obj.to.x, obj.to.y, obj.to.z);
           lifts.push(l);
-        }
-        if (obj.type === "teleporter") {
+        } else if (obj.type === "teleporter") {
           const t = new Teleporter(obj.entry1, obj.entry2);
           teleporters.push(t);
-        }
-        if (obj.type === "bonuscrystall") {
+        } else if (obj.type === "bonuscrystall") {
           const c = new BonusCrystall(obj.position);
           crystals.push(c);
           crystalsRemaining++;
+        } else if (obj.type === "stair") {
+          const dirMap = {
+            "right": new THREE.Vector3(1, 0, 0),
+            "left":  new THREE.Vector3(-1, 0, 0),
+            "forward": new THREE.Vector3(0, 0, 1),
+            "back": new THREE.Vector3(0, 0, -1)
+          };
+          const dir = dirMap[obj.direction] || new THREE.Vector3(1,0,0);
+          const steps = parseInt(obj.count) || 1;
+          for (let i = 0; i < steps; i++) {
+            const t = new THREE.Mesh(tileGeo, tileMat);
+            const pos = new THREE.Vector3(
+              obj.position.x + dir.x * i,
+              (obj.position.y + i) * 1/3,   // 👈 Y increases 1/3 per step
+              obj.position.z + dir.z * i
+            );
+            t.position.set(pos.x, pos.y - TILE_HEIGHT/2, pos.z);
+            scene.add(t);
+            tiles.push(t);
+          }
+        } else {
+          if (obj.position) {
+            const t = new THREE.Mesh(tileGeo, tileMat);
+            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
+            scene.add(t); tiles.push(t);
+          }
         }
       });
 
@@ -370,6 +398,19 @@
       if (e.key === 'ArrowRight') dir.set(0, 0, 1);
       moveFrom.copy(ballPos);
       moveTo.copy(ballPos).add(dir);
+
+      // 🔹 NEW: check if target tile is higher (stairs or elevation)
+      for (const t of tiles) {
+        if (Math.abs(t.position.x - moveTo.x) < 0.1 &&
+            Math.abs(t.position.z - moveTo.z) < 0.1) {
+          const tileY = t.position.y;
+          console.log("Current Y: ", moveFrom.y, `, tile pos: ${JSON.stringify(t.position)}`)
+          if (tileY > moveFrom.y) {
+            moveTo.y = tileY + BALL_RADIUS;
+          }
+        }
+      }
+      console.log("New Y: ", moveTo.y)
       // if moveTo location has teleporter presert, then teleport another entry
       for (const tele of teleporters) {
         tele.checkTeleport(moveTo);
@@ -403,7 +444,7 @@
     });
 
     function hasFloorBelow(x, y, z) {
-      return tiles.some(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1);
+      return tiles.find(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1);
     }
     /*
     return tiles.some(t => {
@@ -427,6 +468,7 @@
       if (isMoving && !falling) {
         const t = Math.min(1, (now - moveStartTime) / ( (0.5 / MOVE_SPEED) * 1000 ));
         ballPos.lerpVectors(moveFrom, moveTo, t);
+        console.log(`468 Ball moved to ${ballPos.x}, ${ballPos.y}, ${ballPos.z}`);
         for (const lift of lifts) {
           if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
               Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
@@ -441,6 +483,7 @@
         if (t >= 1) {
           isMoving = false;
           ballPos.copy(moveTo);
+          console.log(`483 Ball moved to ${ballPos.x}, ${ballPos.y}, ${ballPos.z}`);
 
           // collect crystals
           for (const c of crystals) c.checkCollect(ballPos);
@@ -460,16 +503,17 @@
           if (!ridingLift) {
             // Check if we can drop onto a floor tile, from upwards lift
             const tx = Math.round(ballPos.x), ty = Math.round(ballPos.y), tz = Math.round(ballPos.z);
-            if (hasFloorBelow(tx, ty, tz)) {
+            const belowTile = hasFloorBelow(tx, ty, tz);
+            if (belowTile) {
               ballPos.x = tx; ballPos.z = tz;
-              dropStartY = ballPos.y;
+              dropStartY = belowTile.position.y + BALL_RADIUS;
               dropStartTime = performance.now();
               falling = false;
             } else {
               falling = true; velocityY = 0;
             }
           }
-          if (goalActive && ballPos.x === GOAL_POS.x && ballPos.z === GOAL_POS.z) {
+          if (goalActive && ballPos.distanceTo(GOAL_POS) < 0.5) { //ballPos.x === GOAL_POS.x && ballPos.z === GOAL_POS.z) {
             winGame();
           }
         }
@@ -495,10 +539,10 @@
           }
           dropStartY = null;
         } else {
-          if (dropStartY === null) { dropStartY = ballPos.y; dropStartTime = performance.now(); }
+          if (dropStartY === null) { dropStartY = ballPos.y + BALL_RADIUS; dropStartTime = performance.now(); }
           const elapsed = performance.now() - dropStartTime;
           const t = Math.min(1, elapsed / DROP_DURATION);
-          ballPos.y = dropStartY + (BALL_Y - dropStartY) * t;
+          ballPos.y = dropStartY;   // 👈 This pulls Y down to BALL_RADIUS
           ballPos.x = Math.round(ballPos.x);
           ballPos.z = Math.round(ballPos.z);
         }
