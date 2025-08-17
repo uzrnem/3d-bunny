@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ball Rolling Game</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-family: sans-serif;
+      background: rgba(0,0,0,0.5);
+      padding: 8px;
+      border-radius: 8px;
+      user-select:none;
+    }
+    #menu {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      background: rgba(0,0,0,0.8);
+      color: white; font-family: sans-serif; z-index: 10;
+    }
+    button { margin-top: 12px; padding: 10px 20px; font-size: 16px; border-radius: 6px; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="hud">Moves: 0 | Time: 0s<br>Best Moves: - | Best Time: -</div>
+  <div id="menu"><h1>Ball Rolling Game</h1><button id="startBtn">Start Game</button></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script>
+  (() => {
+    const TILE_SIZE = 1;
+    const TILE_HEIGHT = 0.1;
+    const BALL_RADIUS = 0.3;
+    const BALL_Y = 0 + BALL_RADIUS;
+    const MOVE_SPEED = 1;
+    const CAM_SMOOTH = 0.12;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const loader = new THREE.CubeTextureLoader();
+    const skybox = loader.load([
+      './bg_front.bmp',
+      './bg_back.bmp',
+      './bg_top.bmp',
+      './bg_bottom.bmp',
+      './bg_right.bmp',
+      './bg_left.bmp'
+    ]);
+    scene.background = skybox;
+
+    const tileGeo = new THREE.BoxGeometry(TILE_SIZE, TILE_HEIGHT, TILE_SIZE);
+    const tileMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+    const tiles = [];
+    for (let x = 0; x < 16; x++) {
+      for (let z = 0; z < 16; z++) {
+        const tile = new THREE.Mesh(tileGeo, tileMat);
+        tile.position.set(x, -TILE_HEIGHT/2, z);
+        scene.add(tile);
+        tiles.push(tile);
+      }
+    }
+
+    const startTile = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x2255ff }));
+    startTile.position.set(-1, -TILE_HEIGHT/2, 0);
+    scene.add(startTile); tiles.push(startTile);
+
+    const startTile1 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x444444 }));
+    startTile1.position.set(-1, -TILE_HEIGHT/2, 15);
+    scene.add(startTile1); tiles.push(startTile1);
+
+    const startTile2 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x444444 }));
+    startTile2.position.set(0, -TILE_HEIGHT/2, -1);
+    scene.add(startTile2); tiles.push(startTile2);
+
+    const startTile3 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x444444 }));
+    startTile3.position.set(15, -TILE_HEIGHT/2, -1);
+    scene.add(startTile3); tiles.push(startTile3);
+
+    const goalTile = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x22ff55 }));
+    goalTile.position.set(15, -TILE_HEIGHT/2, 15);
+    scene.add(goalTile); tiles.push(goalTile);
+
+    const ballGeo = new THREE.SphereGeometry(BALL_RADIUS, 32, 32);
+    const ballMat = new THREE.MeshStandardMaterial({ color: 0xff2222 });
+    const ball = new THREE.Mesh(ballGeo, ballMat);
+    scene.add(ball);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight.position.set(5, 10, 5);
+    scene.add(dirLight);
+
+    const START_POS = new THREE.Vector3(-1, BALL_Y, 0);
+    const GOAL_POS  = new THREE.Vector3(15, BALL_Y, 15);
+    let ballPos = START_POS.clone();
+    let moves = 0;
+    let startTime = 0;
+    let timerId;
+    let bestMoves = Number(localStorage.getItem('bestMoves')) || null;
+    let bestTime  = Number(localStorage.getItem('bestTime'))  || null;
+
+    let velocityY = 0;
+    let falling = false;
+    let isMoving = false;
+    let moveFrom = new THREE.Vector3();
+    let moveTo   = new THREE.Vector3();
+    let moveDir  = new THREE.Vector3();
+    let moveAxis = new THREE.Vector3();
+    let moveStartTime = 0;
+    let moveDuration  = 0.5 / MOVE_SPEED;
+    let ridingLift = null;
+
+    let dropStartY = null;
+    let dropStartTime = null;
+    const DROP_DURATION = 200;
+
+    let landStartY = null;
+    let landTargetY = null;
+    let landStartTime = null;
+    const LAND_DURATION = 200;
+
+    let gameRunning = false;
+
+    class Lift {
+      constructor(x1, y1, z1, x2, y2, z2) {
+        this.start = new THREE.Vector3(x1, y1, z1);
+        this.end   = new THREE.Vector3(x2, y2, z2);
+        this.progress = 0;
+        this.forward = true;
+        this.waitUntil = 0;
+
+        const geo = new THREE.BoxGeometry(TILE_SIZE, TILE_HEIGHT, TILE_SIZE);
+        const mat = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+        this.mesh = new THREE.Mesh(geo, mat);
+        scene.add(this.mesh);
+        this.mesh.position.copy(this.start);
+      }
+      update(dt) {
+        if (Date.now() < this.waitUntil) return;
+        this.progress += (this.forward ? dt : -dt) * 0.001 * 0.2;
+        if (this.progress >= 1) { this.progress = 1; this.forward = false; this.waitUntil = Date.now()+2000; }
+        if (this.progress <= 0) { this.progress = 0; this.forward = true;  this.waitUntil = Date.now()+2000; }
+        this.mesh.position.lerpVectors(this.start, this.end, this.progress);
+      }
+      reset() {
+        this.progress = 0;
+        this.forward = true;
+        this.waitUntil = 0;
+        this.mesh.position.copy(this.start);
+      }
+    }
+
+    const lifts = [
+      new Lift(-1, 0, 1, -1, 0, 14),
+      new Lift(1, 0, -1, 7, 0, -1),
+      new Lift(-1, 0, -1, 14, 15, 14),
+      new Lift(-2, 0, 0, -2, -15, 0)
+    ];
+
+    const hud  = document.getElementById('hud');
+    const menu = document.getElementById('menu');
+    const startBtn = document.getElementById('startBtn');
+
+    function updateHUD() {
+      const t = Math.floor((Date.now() - startTime) / 1000);
+      hud.innerHTML = `Moves: ${moves} | Time: ${t}s<br>Best Moves: ${bestMoves ?? '-'} | Best Time: ${bestTime ? bestTime + 's' : '-'}`;
+    }
+
+    function resetGame() {
+      ballPos.copy(START_POS);
+      ball.position.copy(ballPos);
+      ball.rotation.set(0,0,0);
+      velocityY = 0;
+      falling = false;
+      isMoving = false;
+      moves = 0;
+      dropStartY = null;
+      landStartY = null;
+      startTime = Date.now();
+      updateHUD();
+      for (const lift of lifts) lift.reset();
+      gameRunning = false;
+    }
+
+    function winGame() {
+      clearInterval(timerId);
+      const duration = Math.floor((Date.now() - startTime) / 1000);
+      menu.style.display = 'flex';
+      menu.innerHTML = `<h1>You Win!</h1><p>Moves: ${moves}, Time: ${duration}s</p><button onclick="location.reload()">Restart</button>`;
+    }
+
+    function loseGame() {
+      clearInterval(timerId);
+      menu.style.display = 'flex';
+      menu.innerHTML = `<h1>You Fell!</h1><button onclick="location.reload()">Restart</button>`;
+    }
+
+    function isTileAt(x, z) {
+      return tiles.some(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.z - z) < 0.1);
+    }
+
+    window.addEventListener('keydown', e => {
+      if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
+      e.preventDefault();
+      if (isMoving || falling) return;
+
+      ridingLift = null;
+      dropStartY = null;
+      landStartY = null;
+
+      const dir = new THREE.Vector3();
+      if (e.key === 'ArrowUp')    dir.set(1, 0, 0);
+      if (e.key === 'ArrowDown')  dir.set(-1, 0, 0);
+      if (e.key === 'ArrowLeft')  dir.set(0, 0, -1);
+      if (e.key === 'ArrowRight') dir.set(0, 0, 1);
+
+      moveFrom.copy(ballPos);
+      moveTo.copy(ballPos).add(dir);
+      moveDir.copy(dir);
+      moveAxis.set(dir.z, 0, -dir.x).normalize();
+
+      moveStartTime = performance.now();
+      isMoving = true;
+      moves++;
+    });
+
+    let dragging = false;
+    let lastX = 0, lastY = 0;
+    window.addEventListener('mousedown', (e) => { dragging = true; lastX = e.clientX; lastY = e.clientY; });
+    window.addEventListener('mouseup',   () => { dragging = false; });
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX; lastY = e.clientY;
+      camYawTarget   += dx * 0.003;
+      camPitchTarget += dy * 0.003;
+      camPitchTarget = Math.max(-0.9, Math.min(0.9, camPitchTarget));
+    });
+    window.addEventListener('wheel', (e) => {
+      camDistTarget += (e.deltaY > 0 ? 1 : -1) * 0.6;
+      camDistTarget = Math.max(3, Math.min(12, camDistTarget));
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    let camYaw   = Math.PI * 0.25 - Math.PI/2 - Math.PI/4;
+    let camPitch = 0.35;
+    let camYawTarget = camYaw;
+    let camPitchTarget = camPitch;
+    let camDist = 6;
+    let camDistTarget = camDist;
+
+    let lastTime = performance.now();
+    function animate() {
+      requestAnimationFrame(animate);
+      const now = performance.now();
+      const dt = now - lastTime;
+      lastTime = now;
+
+      if (gameRunning) {
+        for (const lift of lifts) lift.update(dt);
+      }
+
+      if (isMoving && !falling) {
+        const t = Math.min(1, (now - moveStartTime) / (moveDuration * 1000));
+        ballPos.lerpVectors(moveFrom, moveTo, t);
+        for (const lift of lifts) {
+          if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
+              Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
+            ballPos.set(lift.mesh.position.x, lift.mesh.position.y + BALL_RADIUS, lift.mesh.position.z);
+            ridingLift = lift;
+          }
+        }
+        const dist = TILE_SIZE * t;
+        const angle = dist / BALL_RADIUS;
+        ball.rotation.setFromVector3(new THREE.Vector3(0,0,0));
+        ball.rotateOnWorldAxis(moveAxis, angle);
+
+        if (t >= 1) {
+          isMoving = false;
+          ballPos.copy(moveTo);
+          ridingLift = null;
+          for (const lift of lifts) {
+            if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
+                Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
+              ridingLift = lift;
+              dropStartY = null;
+              landStartY = ballPos.y;
+              landTargetY = lift.mesh.position.y + BALL_RADIUS;
+              landStartTime = performance.now();
+              break;
+            }
+          }
+          if (!ridingLift && !isTileAt(Math.round(ballPos.x), Math.round(ballPos.z))) {
+            falling = true;
+            velocityY = 0;
+          }
+          if (ballPos.x === GOAL_POS.x && ballPos.z === GOAL_POS.z) winGame();
+        }
+      }
+
+      if (falling) {
+        velocityY -= 0.015;
+        ballPos.y += velocityY;
+        if (ballPos.y < -5) loseGame();
+      } else if (!isMoving) {
+        if (ridingLift) {
+          if (landStartY !== null) {
+            const elapsed = performance.now() - landStartTime;
+            const t = Math.min(1, elapsed / LAND_DURATION);
+            ballPos.y = landStartY + (landTargetY - landStartY) * t;
+            ballPos.x = ridingLift.mesh.position.x;
+            ballPos.z = ridingLift.mesh.position.z;
+            if (t >= 1) landStartY = null;
+          } else {
+            ballPos.set(ridingLift.mesh.position.x, ridingLift.mesh.position.y + BALL_RADIUS, ridingLift.mesh.position.z);
+          }
+          dropStartY = null;
+        } else {
+          let foundLift = false;
+          for (const lift of lifts) {
+            if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
+                Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
+              ridingLift = lift;
+              foundLift = true;
+              dropStartY = null;
+              landStartY = ballPos.y;
+              landTargetY = lift.mesh.position.y + BALL_RADIUS;
+              landStartTime = performance.now();
+              break;
+            }
+          }
+          if (!foundLift) {
+            if (dropStartY === null) {
+              dropStartY = ballPos.y;
+              dropStartTime = performance.now();
+            }
+            const elapsed = performance.now() - dropStartTime;
+            const t = Math.min(1, elapsed / DROP_DURATION);
+            ballPos.y = dropStartY + (BALL_Y - dropStartY) * t;
+          }
+        }
+      }
+
+      ball.position.copy(ballPos);
+
+      camYaw   += (camYawTarget   - camYaw)   * CAM_SMOOTH;
+      camPitch += (camPitchTarget - camPitch) * CAM_SMOOTH;
+      camDist  += (camDistTarget  - camDist)  * CAM_SMOOTH;
+
+      const cosP = Math.cos(camPitch), sinP = Math.sin(camPitch);
+      const offset = new THREE.Vector3(
+        Math.sin(camYaw) * cosP,
+        sinP,
+        Math.cos(camYaw) * cosP
+      ).multiplyScalar(camDist);
+
+      const desiredCamPos = ball.position.clone().add(offset);
+      camera.position.lerp(desiredCamPos, CAM_SMOOTH);
+      camera.lookAt(ball.position);
+
+      updateHUD();
+      renderer.render(scene, camera);
+    }
+
+    startBtn.onclick = () => {
+      menu.style.display = 'none';
+      resetGame();
+      clearInterval(timerId);
+      timerId = setInterval(updateHUD, 1000);
+
+      // Delay lift movement by 2 seconds
+      setTimeout(() => {
+        gameRunning = true;
+      }, 2000);
+    };
+
+    ball.position.copy(ballPos);
+    const initOffset = new THREE.Vector3(0, camDist, camDist);
+    camera.position.copy(ball.position.clone().add(initOffset));
+    camera.lookAt(ball.position);
+
+    animate();
+    updateHUD();
+  })();
+  </script>
+</body>
+</html>
