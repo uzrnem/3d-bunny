@@ -38,7 +38,7 @@
   (() => {
     const TILE_SIZE = 1;
     const TILE_HEIGHT = 0.1;
-    const BALL_RADIUS = 0.3;
+    const BALL_RADIUS = 0.4;
 
     const MOVE_SPEED = 3; // Ball speed in tiles per second
     const CAM_SMOOTH = 0.12;
@@ -64,8 +64,9 @@
           {"type":"floor","position":{"x":15,"y":0,"z":-1}},
           {"type":"goal","position":{"x":15,"y":0,"z":15}},
           {"type":"lift","from":{"x":-1,"y":0,"z":1},"to":{"x":-1,"y":0,"z":14}},
-          {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":7,"y":0,"z":-1}},
+          {"type":"lift","from":{"x":1,"y":0,"z":-1},"to":{"x":14,"y":0,"z":-1}},
           {"type":"lift","from":{"x":-1,"y":0,"z":-1},"to":{"x":15,"y":15,"z":15}},
+          {"type":"lift","from":{"x":16,"y":0,"z":-1},"to":{"x":16,"y":0,"z":15}},
           {"type":"lift","from":{"x":-2,"y":0,"z":0},"to":{"x":-2,"y":-15,"z":0}},
           {"type":"teleporter","entry1":{"x":2,"y":0,"z":2},"entry2":{"x":13,"y":0,"z":13}},
           {"type":"stair","position":{"x":16,"y":1,"z":1},"direction":"right","count":"6"},
@@ -421,14 +422,24 @@
     dirLight.position.set(5, 10, 5);
     scene.add(dirLight);
 
+    // Load Texture
+    const tilesTextureLoader = new THREE.TextureLoader();
+    const tileTexture = tilesTextureLoader.load("./bg/tiles.png"); // <-- replace with your file path
+    const destinationTexture = tilesTextureLoader.load("./bg/destination.png"); // <-- replace with your file path
+    const diamondTexture = tilesTextureLoader.load("./bg/diamond.png"); // <-- replace with your file path
+    const liftTexture = tilesTextureLoader.load("./bg/lift.png"); // <-- replace with your file path
+    const teleportTexture = tilesTextureLoader.load("./bg/teleport.png"); // <-- replace with your file path
+    const ballTexture = tilesTextureLoader.load("./bg/ball.png"); // <-- replace with your file path
+
     const tileGeo = new THREE.BoxGeometry(TILE_SIZE, TILE_HEIGHT, TILE_SIZE);
     const ballGeo = new THREE.SphereGeometry(BALL_RADIUS, 32, 32);
 
-    const tileMat  = new THREE.MeshStandardMaterial({ color: 0x444444 });
-    const startMat = new THREE.MeshStandardMaterial({ color: 0x2255ff });
-    const goalMat  = new THREE.MeshStandardMaterial({ color: 0x22ff55 });
-    const liftMat  = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-    const ballMat  = new THREE.MeshStandardMaterial({ color: 0xff2222 });
+    const tileMat  = new THREE.MeshBasicMaterial({ map: tileTexture });
+    const goalMat  = new THREE.MeshBasicMaterial({ map: destinationTexture });
+    const liftMat  = new THREE.MeshBasicMaterial({ map: liftTexture });
+    const teleportMat  = new THREE.MeshBasicMaterial({ map: teleportTexture });
+    const crystallMat  = new THREE.MeshBasicMaterial({ map: diamondTexture });
+    const ballMat  = new THREE.MeshBasicMaterial({ map: ballTexture });
 
     let tiles = [];
     let lifts = [];
@@ -472,8 +483,8 @@
       constructor(e1, e2) {
         this.entry1 = new THREE.Vector3(e1.x, e1.y/3, e1.z);
         this.entry2 = new THREE.Vector3(e2.x, e2.y/3, e2.z);
-        this.mesh1 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
-        this.mesh2 = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0xff00ff }));
+        this.mesh1 = new THREE.Mesh(tileGeo, teleportMat);
+        this.mesh2 = new THREE.Mesh(tileGeo, teleportMat);
         this.mesh1.position.set(e1.x, e1.y/3-TILE_HEIGHT/2, e1.z);
         this.mesh2.position.set(e2.x, e2.y/3-TILE_HEIGHT/2, e2.z);
         scene.add(this.mesh1);
@@ -496,8 +507,7 @@
       constructor(pos) {
         this.pos = new THREE.Vector3(pos.x, pos.y/3*BALL_RADIUS, pos.z);
         const geo = new THREE.OctahedronGeometry(0.3);
-        const mat = new THREE.MeshStandardMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.6 });
-        this.mesh = new THREE.Mesh(geo, mat);
+        this.mesh = new THREE.Mesh(geo, crystallMat);
         this.mesh.position.set(pos.x, pos.y/3*BALL_RADIUS, pos.z);
         scene.add(this.mesh);
         this.collected = false;
@@ -508,7 +518,8 @@
           scene.remove(this.mesh);
           crystalsRemaining--;
           if (crystalsRemaining <= 0) {
-            goalTile.material = new THREE.MeshStandardMaterial({ color: 0x22ff55, emissive: 0x22ff55, emissiveIntensity: 0.8 });
+            goalTile.material = goalMat;
+            goalMat.emissiveIntensity = 2;
             goalActive = true;
           }
         }
@@ -556,12 +567,12 @@
             scene.add(t); tiles.push(t);
           }
         } else if (obj.type === "hero") {
-          startTile = new THREE.Mesh(tileGeo, startMat);
+          startTile = new THREE.Mesh(tileGeo, tileMat);
           startTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(startTile); tiles.push(startTile);
           START_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
         } else if (obj.type === "goal") {
-          goalTile = new THREE.Mesh(tileGeo, new THREE.MeshStandardMaterial({ color: 0x003300 })); // dark until activated
+          goalTile = new THREE.Mesh(tileGeo, goalMat); // dark until activated
           goalTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(goalTile); tiles.push(goalTile);
           GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
