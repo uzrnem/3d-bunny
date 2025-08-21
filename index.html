@@ -86,7 +86,11 @@
           {"type":"floor","position":{"x":0,"y":0,"z":-2}},
           {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
           {"type":"bonuscrystall","position":{"x":8,"y":0,"z":9}},
-          {"type":"bonuscrystall","position":{"x":8,"y":0,"z":7}}
+          {"type":"bonuscrystall","position":{"x":8,"y":0,"z":7}},
+          { "type": "ghost", "from": { "x": 7, "y": 0, "z": 3 }, "to": { "x": 13, "y": 0, "z": 8 } },
+          {"type":"falsefloor","position":{"x":1,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":0,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":-1,"y":0,"z":-3}},
         ]
       },
       {
@@ -100,316 +104,37 @@
           "Good Luck!"
         ],
         "elements": [
-          {
-            "type": "hero",
-            "position": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "facing": "back"
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": -3,
-              "y": 0,
-              "z": 2
-            },
-            "to": {
-              "x": 3,
-              "y": 0,
-              "z": -2
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 4,
-              "y": 0,
-              "z": 0
-            },
-            "to": {
-              "x": 5,
-              "y": 0,
-              "z": 0
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 6,
-              "y": 0,
-              "z": 1
-            },
-            "to": {
-              "x": 10,
-              "y": 0,
-              "z": -1
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 8,
-              "y": 0,
-              "z": 2
-            },
-            "to": {
-              "x": 10,
-              "y": 0,
-              "z": 5
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 9,
-              "y": 0,
-              "z": 7
-            },
-            "to": {
-              "x": 6,
-              "y": 0,
-              "z": 7
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 2,
-              "y": 0,
-              "z": 3
-            },
-            "to": {
-              "x": 2,
-              "y": 0,
-              "z": 4
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": 1,
-              "y": 0,
-              "z": 5
-            },
-            "to": {
-              "x": 5,
-              "y": 0,
-              "z": 7
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": -4,
-              "y": 0,
-              "z": 0
-            },
-            "to": {
-              "x": -5,
-              "y": 0,
-              "z": 0
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": -6,
-              "y": 0,
-              "z": 1
-            },
-            "to": {
-              "x": -10,
-              "y": 0,
-              "z": -1
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": -10,
-              "y": 0,
-              "z": -2
-            },
-            "to": {
-              "x": -8,
-              "y": 0,
-              "z": -5
-            }
-          },
-          {
-            "type": "floor",
-            "from": {
-              "x": -7,
-              "y": 0,
-              "z": -4
-            },
-            "to": {
-              "x": -2,
-              "y": 0,
-              "z": -4
-            }
-          },
-          {
-            "type": "floor",
-            "position": {
-              "x": 9,
-              "y": 0,
-              "z": 6
-            }
-          },
-          {
-            "type": "floor",
-            "position": {
-              "x": -2,
-              "y": 0,
-              "z": -3
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": 2,
-              "y": 0,
-              "z": 1
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": 2,
-              "y": 0,
-              "z": -1
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": -2,
-              "y": 0,
-              "z": -1
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": -2,
-              "y": 0,
-              "z": 1
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": 9,
-              "y": 0,
-              "z": 0
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": 9,
-              "y": 0,
-              "z": 2
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": 9,
-              "y": 0,
-              "z": 4
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": -9,
-              "y": 0,
-              "z": 0
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": -9,
-              "y": 0,
-              "z": -2
-            }
-          },
-          {
-            "type": "bonuscrystall",
-            "position": {
-              "x": -9,
-              "y": 0,
-              "z": -4
-            }
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": 3,
-              "y": 0,
-              "z": 2
-            },
-            "comment": "tree01.x"
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": 3,
-              "y": 0,
-              "z": -2
-            },
-            "comment": "tree02.x"
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": -3,
-              "y": 0,
-              "z": -2
-            },
-            "comment": "tree01.x"
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": -3,
-              "y": 0,
-              "z": 2
-            },
-            "comment": "tree03.x"
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": -9,
-              "y": 0,
-              "z": -3
-            },
-            "comment": "barrel.x"
-          },
-          {
-            "type": "custom",
-            "position": {
-              "x": 4,
-              "y": 0,
-              "z": 6
-            },
-            "comment": "barrel.x"
-          },
-          {
-            "type": "goal",
-            "position": {
-              "x": 2,
-              "y": 0,
-              "z": 6
-            }
-          }
+          { "type": "hero", "position": { "x": 0, "y": 0, "z": 0 }, "facing": "back" },
+          { "type": "floor", "from": { "x": -3, "y": 0, "z": 2 }, "to": { "x": 3, "y": 0, "z": -2 } },
+          { "type": "floor", "from": { "x": 4, "y": 0, "z": 0 }, "to": { "x": 5, "y": 0, "z": 0 } },
+          { "type": "floor", "from": { "x": 6, "y": 0, "z": 1 }, "to": { "x": 10, "y": 0, "z": -1 } },
+          { "type": "floor", "from": { "x": 8, "y": 0, "z": 2 }, "to": { "x": 10, "y": 0, "z": 5 } },
+          { "type": "floor", "from": { "x": 9, "y": 0, "z": 7 }, "to": { "x": 6, "y": 0, "z": 7 } },
+          { "type": "floor", "from": { "x": 2, "y": 0, "z": 3 }, "to": { "x": 2, "y": 0, "z": 4 } },
+          { "type": "floor", "from": { "x": 1, "y": 0, "z": 5 }, "to": { "x": 5, "y": 0, "z": 7 } },
+          { "type": "floor", "from": { "x": -4, "y": 0, "z": 0 }, "to": { "x": -5, "y": 0, "z": 0 } },
+          { "type": "floor", "from": { "x": -6, "y": 0, "z": 1 }, "to": { "x": -10, "y": 0, "z": -1 } },
+          { "type": "floor", "from": { "x": -10, "y": 0, "z": -2 }, "to": { "x": -8, "y": 0, "z": -5 } },
+          { "type": "floor", "from": { "x": -7, "y": 0, "z": -4 }, "to": { "x": -2, "y": 0, "z": -4 } },
+          { "type": "floor", "position": { "x": 9, "y": 0, "z": 6 } },
+          { "type": "floor", "position": { "x": -2, "y": 0, "z": -3 } },
+          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": 1 } },
+          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": -1 } },
+          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": -1 } },
+          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": 1 } },
+          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 0 } },
+          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 2 } },
+          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 4 } },
+          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": 0 } },
+          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -2 } },
+          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -4 } },
+          { "type": "custom", "position": { "x": 3, "y": 0, "z": 2 }, "comment": "tree01.x" },
+          { "type": "custom", "position": { "x": 3, "y": 0, "z": -2 }, "comment": "tree02.x" },
+          { "type": "custom", "position": { "x": -3, "y": 0, "z": -2 }, "comment": "tree01.x" },
+          { "type": "custom", "position": { "x": -3, "y": 0, "z": 2 }, "comment": "tree03.x" },
+          { "type": "custom", "position": { "x": -9, "y": 0, "z": -3 }, "comment": "barrel.x" },
+          { "type": "custom", "position": { "x": 4, "y": 0, "z": 6 }, "comment": "barrel.x" },
+          { "type": "goal", "position": { "x": 2, "y": 0, "z": 6 } }
         ]
       }
     ];
@@ -438,6 +163,8 @@
     // Load Texture
     const tilesTextureLoader = new THREE.TextureLoader();
     const tileTexture = tilesTextureLoader.load("./bg/tiles.png"); // <-- replace with your file path
+    const falseFloorTexture = tilesTextureLoader.load("./bg/falsefloor.png"); // <-- replace with your file path
+    const goalTexture = tilesTextureLoader.load("./bg/goal.png"); // <-- replace with your file path
     const destinationTexture = tilesTextureLoader.load("./bg/destination.png"); // <-- replace with your file path
     const diamondTexture = tilesTextureLoader.load("./bg/diamond.png"); // <-- replace with your file path
     const liftTexture = tilesTextureLoader.load("./bg/lift.png"); // <-- replace with your file path
@@ -448,7 +175,9 @@
     const ballGeo = new THREE.SphereGeometry(BALL_RADIUS, 32, 32);
 
     const tileMat  = new THREE.MeshBasicMaterial({ map: tileTexture });
-    const goalMat  = new THREE.MeshBasicMaterial({ map: destinationTexture });
+    const falseMat  = new THREE.MeshBasicMaterial({ map: falseFloorTexture });
+    const goalMat  = new THREE.MeshStandardMaterial({ map: goalTexture });
+    const destinationMat  = new THREE.MeshStandardMaterial({ map: destinationTexture });
     const liftMat  = new THREE.MeshBasicMaterial({ map: liftTexture });
     const teleportMat  = new THREE.MeshBasicMaterial({ map: teleportTexture });
     const crystallMat  = new THREE.MeshBasicMaterial({ map: diamondTexture });
@@ -456,11 +185,14 @@
 
     let tiles = [];
     let lifts = [];
+    let falseFloors = [];
     let teleporters = [];
     let crystals = [];
+    let ghosts = [];
     let crystalsRemaining = 0;
     let goalActive = false;
     let startTile, goalTile;
+    let goalLight = null;
     let START_POS, GOAL_POS;
 
     const ball = new THREE.Mesh(ballGeo, ballMat);
@@ -542,8 +274,26 @@
             crystalsRemaining--;
 
             if (crystalsRemaining <= 0) {
-              goalTile.material = goalMat;
+              goalTile.material = destinationMat;
               goalActive = true;
+
+              // 🔥 Torch-like green light
+              if (goalLight) {
+                scene.remove(goalLight);
+                goalLight = null;
+              }
+
+              goalLight = new THREE.PointLight(0x00ff00, 5, 12); // (color, intensity, distance)
+              goalLight.position.set(goalTile.position.x, goalTile.position.y + 2, goalTile.position.z);
+
+              // Optional glowing sphere to show the light source
+              const glowGeo = new THREE.SphereGeometry(0.3, 16, 16);
+              const glowMat = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.6 });
+              const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+              glowMesh.name = "goalGlowMesh";
+              goalLight.add(glowMesh);
+
+              scene.add(goalLight);
             }
             return true;
           }
@@ -554,22 +304,283 @@
     }
 
 
+    class FalseFloor {
+  constructor(pos) {
+    this.pos = new THREE.Vector3(pos.x, pos.y/3, pos.z);
+    this.mesh = new THREE.Mesh(tileGeo, falseMat);
+    this.mesh.position.set(this.pos.x, this.pos.y - TILE_HEIGHT/2, this.pos.z);
+    scene.add(this.mesh);
+
+    this.triggered = false;   // countdown started?
+    this.fallAt = null;       // timestamp when fall starts
+    this.falling = false;     // is falling now
+    this.fallSpeed = 0;       // vertical speed
+  }
+
+  update(ballPos) {
+    // 1) Start countdown when ball steps on tile
+    if (!this.triggered &&
+        Math.abs(ballPos.x - this.pos.x) < 0.2 &&
+        Math.abs(ballPos.z - this.pos.z) < 0.2 &&
+        Math.abs(ballPos.y - (this.pos.y + BALL_RADIUS)) < 0.4) {
+      this.triggered = true;
+      this.fallAt = Date.now() + 3000; // 3s wait
+    }
+
+    // 2) Begin falling after countdown
+    if (this.triggered && !this.falling && Date.now() >= this.fallAt) {
+      this.falling = true;
+      this.fallSpeed = -LIFT_SPEED / 8; // start faster than lifts
+
+      // Remove from safe ground list
+      const idx = tiles.indexOf(this.mesh);
+      if (idx !== -1) tiles.splice(idx, 1);
+
+      // If player is on it → make player fall too
+      if (Math.abs(ballPos.x - this.pos.x) < 0.2 &&
+          Math.abs(ballPos.z - this.pos.z) < 0.2) {
+        falling = true;
+        velocityY = this.fallSpeed;
+      }
+    }
+
+    // 3) Animate falling
+    if (this.falling) {
+      this.fallSpeed -= 0.02;               // gravity
+      this.mesh.position.y += this.fallSpeed;
+
+      // Remove from scene when out of view
+      if (this.mesh.position.y < -5) {
+        scene.remove(this.mesh);
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
+        return true; // signal to delete from array
+      }
+    }
+    return false;
+  }
+
+  dispose() { scene.remove(this.mesh); }
+}
+
+
+
+
+
+    class GhostOld {
+      constructor(pos, patrolTo) {
+        this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
+        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
+        this.pos   = this.start.clone();
+
+        this.mesh = new THREE.Mesh(
+          new THREE.SphereGeometry(0.5, 16, 16),
+          new THREE.MeshBasicMaterial({ color: 0xff00ff })
+        );
+        this.mesh.position.copy(this.pos);
+        scene.add(this.mesh);
+
+        this.forward = true;
+        this.progress = 0;
+        this.speed = 1.2; // patrol speed
+        this.tornados = [];
+        this.cooldown = 0;
+      }
+
+      update(dt) {
+        // 🚶 Patrol movement
+        const delta = (dt/1000) * this.speed / this.start.distanceTo(this.end);
+        this.progress += this.forward ? delta : -delta;
+        if (this.progress >= 1) { this.progress = 1; this.forward = false; }
+        if (this.progress <= 0) { this.progress = 0; this.forward = true; }
+        this.pos.lerpVectors(this.start, this.end, this.progress);
+        this.mesh.position.copy(this.pos);
+
+        // 👻 Spin for effect
+        this.mesh.rotation.y += 0.02;
+
+        // 👻 Direct collision with ball
+        if (this.pos.distanceTo(ballPos) < 0.6) {
+          loseGame();
+        }
+
+        // 🔥 Fire tornado if close
+        if (this.pos.distanceTo(ballPos) < 4 && Date.now() > this.cooldown) {
+          const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
+          this.tornados.push(new Tornado(this.pos, dir));
+          this.cooldown = Date.now() + 2000;
+        }
+
+        // update tornado projectiles
+        for (let i = this.tornados.length-1; i >= 0; i--) {
+          if (!this.tornados[i].update(dt)) this.tornados.splice(i,1);
+        }
+      }
+
+      dispose() { 
+        scene.remove(this.mesh); 
+        this.tornados.forEach(t=>scene.remove(t.mesh));
+      }
+    }
+
+    class Tornado {
+      constructor(pos, dir) {
+        this.pos = pos.clone();
+        this.dir = dir.clone().normalize();
+        this.startTime = Date.now();
+        this.lifetime = 20; // seconds
+
+        this.mesh = new THREE.Mesh(
+          new THREE.ConeGeometry(0.3, 0.6, 12, 1, true),
+          new THREE.MeshBasicMaterial({ color: 0x88ccff, wireframe: true, transparent: true })
+        );
+        this.mesh.position.copy(this.pos);
+        scene.add(this.mesh);
+      }
+
+      update(dt) {
+        const elapsed = (Date.now() - this.startTime) / 1000;
+
+        // 🎯 Move forward
+        this.pos.addScaledVector(this.dir, LIFT_SPEED * dt/1000);
+
+        // 🌪️ Spin
+        this.mesh.rotation.y += 0.2;
+
+        // 🌪️ Wobble
+        const wobbleMag = 0.2;
+        const wobbleDir = new THREE.Vector3(-this.dir.z, 0, this.dir.x);
+        const wobbleOffset = wobbleDir.multiplyScalar(Math.sin(elapsed * 10) * wobbleMag);
+
+        this.mesh.position.copy(this.pos.clone().add(wobbleOffset));
+
+        // 💥 Collision with ball
+        if (this.pos.distanceTo(ballPos) < 0.5) {
+          loseGame();
+        }
+
+        // ❌ Fade out in last 2s
+        const timeLeft = this.lifetime - elapsed;
+        if (timeLeft <= 2) {
+          const fade = Math.max(0, timeLeft / 2); // 1 → 0
+          this.mesh.scale.set(fade, fade, fade);
+          this.mesh.material.opacity = fade;
+        }
+
+        // ❌ Remove after lifetime
+        if (elapsed > this.lifetime) {
+          scene.remove(this.mesh);
+          this.mesh.geometry.dispose();
+          this.mesh.material.dispose();
+          return false;
+        }
+
+        return true;
+      }
+    }
+
+    class Ghost {
+  constructor(pos, patrolTo) {
+    this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
+    this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
+    this.pos   = this.start.clone();
+
+    this.mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.5, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0xff00ff })
+    );
+    this.mesh.position.copy(this.pos);
+    scene.add(this.mesh);
+
+    this.forward = true;
+    this.progress = 0;
+    this.speed = LIFT_SPEED; // 👈 ghost patrol speed matches lifts
+    this.distance = this.start.distanceTo(this.end);
+    this.travelTime = Math.max(0.0001, this.distance / this.speed);
+    this.waitUntil = 0;
+
+    this.tornados = [];
+    this.cooldown = 0;
+  }
+
+  update(dt) {
+    // 🚶 Smooth patrol like lifts
+    if (Date.now() >= this.waitUntil) {
+      const delta = dt / (this.travelTime * 1000);
+      this.progress += this.forward ? delta : -delta;
+
+      if (this.progress >= 1) {
+        this.progress = 1; 
+        this.forward = false;
+        this.waitUntil = Date.now() + LIFT_PAUSE_MS;
+      }
+      if (this.progress <= 0) {
+        this.progress = 0; 
+        this.forward = true;
+        this.waitUntil = Date.now() + LIFT_PAUSE_MS;
+      }
+    }
+
+    // 👣 Interpolated position
+    this.pos.lerpVectors(this.start, this.end, this.progress);
+
+    // 👻 Apply bobbing effect
+    const bob = 0; //Math.sin(Date.now() * 0.005) * 0.1;
+    this.mesh.position.set(this.pos.x, this.pos.y + bob, this.pos.z);
+
+    // 👻 Spin for effect
+    this.mesh.rotation.y += 0.02;
+
+    // 👻 Direct collision with ball
+    if (this.pos.distanceTo(ballPos) < 0.6) {
+      loseGame();
+    }
+
+    // 🔥 Fire tornado if close
+    if (this.pos.distanceTo(ballPos) < 6 && Date.now() > this.cooldown) {
+      const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
+      this.tornados.push(new Tornado(this.pos, dir));
+      this.cooldown = Date.now() + 2000;
+    }
+
+    // 🌪️ Update tornado projectiles
+    for (let i = this.tornados.length - 1; i >= 0; i--) {
+      if (!this.tornados[i].update(dt)) this.tornados.splice(i, 1);
+    }
+  }
+
+  dispose() {
+    scene.remove(this.mesh);
+    this.tornados.forEach(t => scene.remove(t.mesh));
+  }
+}
+
+
+
     // ------------ Level loading ------------
     function loadLevel(index) {
       tiles.forEach(t => scene.remove(t));
       lifts.forEach(l => l.dispose && l.dispose());
+      falseFloors.forEach(f => f.dispose());
       teleporters.forEach(t => t.dispose());
       crystals.forEach(c => c.dispose());
       if (startTile) scene.remove(startTile);
       if (goalTile)  scene.remove(goalTile);
       tiles = [];
       lifts = [];
+      falseFloors = [];
       teleporters = [];
       crystals = [];
+      ghosts.forEach(g => g.dispose());
+      ghosts = [];
       crystalsRemaining = 0;
       goalActive = false;
       startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
+      if (goalLight) { 
+        scene.remove(goalLight); 
+        goalLight = null; 
+      }
 
       const def = levels[index].elements;
       def.forEach(obj => {
@@ -635,6 +646,13 @@
             scene.add(t);
             tiles.push(t);
           }
+        } else if (obj.type === "falsefloor") {
+          const f = new FalseFloor(obj.position);
+          falseFloors.push(f);
+          tiles.push(f.mesh); // still counts as a tile initially
+        } else if (obj.type === "ghost") {
+          const g = new Ghost(obj.from, obj.to);
+          ghosts.push(g);
         } else {
           if (obj.position) {
             const t = new THREE.Mesh(tileGeo, tileMat);
@@ -802,12 +820,18 @@
       moveTo.copy(ballPos).add(dir);
 
       // If target tile is higher (stairs) lift to its height
-      for (const t of tiles) {
-        if (Math.abs(t.position.x - moveTo.x) < 0.1 &&
-            Math.abs(t.position.z - moveTo.z) < 0.1) {
-          const tileY = t.position.y;
-          if (tileY > moveFrom.y) {
-            moveTo.y = tileY + BALL_RADIUS;
+      if (moveFrom && moveTo && !falling) {
+        for (const upperTile of tiles) {
+          if (
+            Math.abs(upperTile.position.x - ballPos.x) < 0.1 &&
+            Math.abs(upperTile.position.z - ballPos.z) < 0.1
+          ) {
+            const expectedY = upperTile.position.y + BALL_RADIUS;
+            const diff = expectedY - ballPos.y;
+            // only snap up if close enough and small step (<= 1.5 units)
+            if (diff > 0.05 && diff <= 1.5) {
+              ballPos.y = expectedY;
+            }
           }
         }
       }
@@ -857,11 +881,30 @@
     let lastTime = performance.now();
     function animate() {
       requestAnimationFrame(animate);
+      // Torch flicker effect for goal light
+      if (goalLight) {
+        goalLight.intensity = 4.5 + Math.sin(Date.now() * 0.02) * 0.5 + (Math.random() - 0.5) * 0.3;
+
+        const glowMesh = goalLight.getObjectByName("goalGlowMesh");
+        if (glowMesh) {
+          glowMesh.material.opacity = 0.5 + Math.sin(Date.now() * 0.01) * 0.3;
+        }
+      }
       const now = performance.now();
       const dt = now - lastTime;
       lastTime = now;
 
-      if (gameRunning) { for (const l of lifts) l.update(dt); }
+      if (gameRunning) {
+        for (const l of lifts) l.update(dt);
+        for (const g of ghosts) g.update(dt);
+
+        // Update false floors
+        for (let i = falseFloors.length - 1; i >= 0; i--) {
+          if (falseFloors[i].update(ballPos)) {
+            falseFloors.splice(i, 1);
+          }
+        }
+      }
 
       if (isMoving && !falling) {
         const t = Math.min(1, (now - moveStartTime) / ( (0.5 / MOVE_SPEED) * 1000 ));
