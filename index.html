@@ -91,6 +91,10 @@
           {"type":"falsefloor","position":{"x":1,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":0,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":-1,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":2,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":3,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":4,"y":0,"z":-3}},
+          {"type":"falsefloor","position":{"x":5,"y":0,"z":-3}},
         ]
       },
       {
@@ -201,8 +205,8 @@
     // ------------ Moving platforms, teleporter, crystals ------------
     class Lift {
       constructor(x1,y1,z1,x2,y2,z2) {
-        this.start = new THREE.Vector3(x1,y1,z1);
-        this.end   = new THREE.Vector3(x2,y2,z2);
+        this.start = new THREE.Vector3(x1,y1/3,z1);
+        this.end   = new THREE.Vector3(x2,y2/3,z2);
         this.progress = 0;
         this.forward = true;
         this.waitUntil = 0;
@@ -242,6 +246,19 @@
           pos.copy(this.entry1);
         }
       }
+      checkIfExactlyOnEntry1(pos) {
+        if (Math.abs(pos.x - this.entry1.x) < 0.1 && Math.abs(this.entry1.y + BALL_RADIUS - pos.y) && Math.abs(pos.z - this.entry1.z) < 0.1) {
+          return true;
+        }
+        return false
+      }
+      checkIfExactlyOnEntry2(pos) {
+        if (Math.abs(pos.x - this.entry2.x) < 0.1 && Math.abs(this.entry2.y + BALL_RADIUS - pos.y) && Math.abs(pos.z - this.entry2.z) < 0.1) {
+          return true;
+        }
+        return false
+      }
+
       dispose() {
         scene.remove(this.mesh1);
         scene.remove(this.mesh2);
@@ -266,7 +283,6 @@
 
         // Check same tile (x and z match exactly)
         if (ballPos.x === this.pos.x && ballPos.z === this.pos.z) {
-          //console.log("Ball position:", ballPos, "Crystal position:", this.pos, " y difference: ball: ", ballPos.y,  "crystal: ",this.pos.y);
           // Check vertical closeness
           if (Math.abs(ballPos.y - this.pos.y) < 2) {
             this.collected = true;
@@ -305,122 +321,62 @@
 
 
     class FalseFloor {
-  constructor(pos) {
-    this.pos = new THREE.Vector3(pos.x, pos.y/3, pos.z);
-    this.mesh = new THREE.Mesh(tileGeo, falseMat);
-    this.mesh.position.set(this.pos.x, this.pos.y - TILE_HEIGHT/2, this.pos.z);
-    scene.add(this.mesh);
-
-    this.triggered = false;   // countdown started?
-    this.fallAt = null;       // timestamp when fall starts
-    this.falling = false;     // is falling now
-    this.fallSpeed = 0;       // vertical speed
-  }
-
-  update(ballPos) {
-    // 1) Start countdown when ball steps on tile
-    if (!this.triggered &&
-        Math.abs(ballPos.x - this.pos.x) < 0.2 &&
-        Math.abs(ballPos.z - this.pos.z) < 0.2 &&
-        Math.abs(ballPos.y - (this.pos.y + BALL_RADIUS)) < 0.4) {
-      this.triggered = true;
-      this.fallAt = Date.now() + 3000; // 3s wait
-    }
-
-    // 2) Begin falling after countdown
-    if (this.triggered && !this.falling && Date.now() >= this.fallAt) {
-      this.falling = true;
-      this.fallSpeed = -LIFT_SPEED / 8; // start faster than lifts
-
-      // Remove from safe ground list
-      const idx = tiles.indexOf(this.mesh);
-      if (idx !== -1) tiles.splice(idx, 1);
-
-      // If player is on it → make player fall too
-      if (Math.abs(ballPos.x - this.pos.x) < 0.2 &&
-          Math.abs(ballPos.z - this.pos.z) < 0.2) {
-        falling = true;
-        velocityY = this.fallSpeed;
-      }
-    }
-
-    // 3) Animate falling
-    if (this.falling) {
-      this.fallSpeed -= 0.02;               // gravity
-      this.mesh.position.y += this.fallSpeed;
-
-      // Remove from scene when out of view
-      if (this.mesh.position.y < -5) {
-        scene.remove(this.mesh);
-        this.mesh.geometry.dispose();
-        this.mesh.material.dispose();
-        return true; // signal to delete from array
-      }
-    }
-    return false;
-  }
-
-  dispose() { scene.remove(this.mesh); }
-}
-
-
-
-
-
-    class GhostOld {
-      constructor(pos, patrolTo) {
-        this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
-        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
-        this.pos   = this.start.clone();
-
-        this.mesh = new THREE.Mesh(
-          new THREE.SphereGeometry(0.5, 16, 16),
-          new THREE.MeshBasicMaterial({ color: 0xff00ff })
-        );
-        this.mesh.position.copy(this.pos);
+      constructor(pos) {
+        this.pos = new THREE.Vector3(pos.x, pos.y/3, pos.z);
+        this.mesh = new THREE.Mesh(tileGeo, falseMat);
+        this.mesh.position.set(this.pos.x, this.pos.y - TILE_HEIGHT/2, this.pos.z);
         scene.add(this.mesh);
 
-        this.forward = true;
-        this.progress = 0;
-        this.speed = 1.2; // patrol speed
-        this.tornados = [];
-        this.cooldown = 0;
+        this.triggered = false;   // countdown started?
+        this.fallAt = null;       // timestamp when fall starts
+        this.falling = false;     // is falling now
+        this.fallSpeed = 0;       // vertical speed
       }
 
-      update(dt) {
-        // 🚶 Patrol movement
-        const delta = (dt/1000) * this.speed / this.start.distanceTo(this.end);
-        this.progress += this.forward ? delta : -delta;
-        if (this.progress >= 1) { this.progress = 1; this.forward = false; }
-        if (this.progress <= 0) { this.progress = 0; this.forward = true; }
-        this.pos.lerpVectors(this.start, this.end, this.progress);
-        this.mesh.position.copy(this.pos);
-
-        // 👻 Spin for effect
-        this.mesh.rotation.y += 0.02;
-
-        // 👻 Direct collision with ball
-        if (this.pos.distanceTo(ballPos) < 0.6) {
-          loseGame();
+      update(ballPos) {
+        // 1) Start countdown when ball steps on tile
+        if (!this.triggered &&
+            Math.abs(ballPos.x - this.pos.x) < 0.2 &&
+            Math.abs(ballPos.z - this.pos.z) < 0.2 &&
+            Math.abs(ballPos.y - (this.pos.y + BALL_RADIUS)) < 0.4) {
+          this.triggered = true;
+          this.fallAt = Date.now() + 3000; // 3s wait
         }
 
-        // 🔥 Fire tornado if close
-        if (this.pos.distanceTo(ballPos) < 4 && Date.now() > this.cooldown) {
-          const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
-          this.tornados.push(new Tornado(this.pos, dir));
-          this.cooldown = Date.now() + 2000;
+        // 2) Begin falling after countdown
+        if (this.triggered && !this.falling && Date.now() >= this.fallAt) {
+          this.falling = true;
+          this.fallSpeed = -LIFT_SPEED / 8; // start faster than lifts
+
+          // Remove from safe ground list
+          const idx = tiles.indexOf(this.mesh);
+          if (idx !== -1) tiles.splice(idx, 1);
+
+          // If player is on it → make player fall too
+          if (Math.abs(ballPos.x - this.pos.x) < 0.2 &&
+              Math.abs(ballPos.z - this.pos.z) < 0.2) {
+            falling = true;
+            velocityY = this.fallSpeed;
+          }
         }
 
-        // update tornado projectiles
-        for (let i = this.tornados.length-1; i >= 0; i--) {
-          if (!this.tornados[i].update(dt)) this.tornados.splice(i,1);
+        // 3) Animate falling
+        if (this.falling) {
+          this.fallSpeed -= 0.02;               // gravity
+          this.mesh.position.y += this.fallSpeed;
+
+          // Remove from scene when out of view
+          if (this.mesh.position.y < -5) {
+            scene.remove(this.mesh);
+            this.mesh.geometry.dispose();
+            this.mesh.material.dispose();
+            return true; // signal to delete from array
+          }
         }
+        return false;
       }
 
-      dispose() { 
-        scene.remove(this.mesh); 
-        this.tornados.forEach(t=>scene.remove(t.mesh));
-      }
+      dispose() { scene.remove(this.mesh); }
     }
 
     class Tornado {
@@ -480,82 +436,80 @@
     }
 
     class Ghost {
-  constructor(pos, patrolTo) {
-    this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
-    this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
-    this.pos   = this.start.clone();
+      constructor(pos, patrolTo) {
+        this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
+        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
+        this.pos   = this.start.clone();
 
-    this.mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.5, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0xff00ff })
-    );
-    this.mesh.position.copy(this.pos);
-    scene.add(this.mesh);
+        this.mesh = new THREE.Mesh(
+          new THREE.SphereGeometry(0.5, 16, 16),
+          new THREE.MeshBasicMaterial({ color: 0xff00ff })
+        );
+        this.mesh.position.copy(this.pos);
+        scene.add(this.mesh);
 
-    this.forward = true;
-    this.progress = 0;
-    this.speed = LIFT_SPEED; // 👈 ghost patrol speed matches lifts
-    this.distance = this.start.distanceTo(this.end);
-    this.travelTime = Math.max(0.0001, this.distance / this.speed);
-    this.waitUntil = 0;
-
-    this.tornados = [];
-    this.cooldown = 0;
-  }
-
-  update(dt) {
-    // 🚶 Smooth patrol like lifts
-    if (Date.now() >= this.waitUntil) {
-      const delta = dt / (this.travelTime * 1000);
-      this.progress += this.forward ? delta : -delta;
-
-      if (this.progress >= 1) {
-        this.progress = 1; 
-        this.forward = false;
-        this.waitUntil = Date.now() + LIFT_PAUSE_MS;
-      }
-      if (this.progress <= 0) {
-        this.progress = 0; 
         this.forward = true;
-        this.waitUntil = Date.now() + LIFT_PAUSE_MS;
+        this.progress = 0;
+        this.speed = LIFT_SPEED; // 👈 ghost patrol speed matches lifts
+        this.distance = this.start.distanceTo(this.end);
+        this.travelTime = Math.max(0.0001, this.distance / this.speed);
+        this.waitUntil = 0;
+
+        this.tornados = [];
+        this.cooldown = 0;
+      }
+
+      update(dt) {
+        // 🚶 Smooth patrol like lifts
+        if (Date.now() >= this.waitUntil) {
+          const delta = dt / (this.travelTime * 1000);
+          this.progress += this.forward ? delta : -delta;
+
+          if (this.progress >= 1) {
+            this.progress = 1; 
+            this.forward = false;
+            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
+          }
+          if (this.progress <= 0) {
+            this.progress = 0; 
+            this.forward = true;
+            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
+          }
+        }
+
+        // 👣 Interpolated position
+        this.pos.lerpVectors(this.start, this.end, this.progress);
+
+        // 👻 Apply bobbing effect
+        const bob = 0; //Math.sin(Date.now() * 0.005) * 0.1;
+        this.mesh.position.set(this.pos.x, this.pos.y + bob, this.pos.z);
+
+        // 👻 Spin for effect
+        this.mesh.rotation.y += 0.02;
+
+        // 👻 Direct collision with ball
+        if (this.pos.distanceTo(ballPos) < 0.6) {
+          loseGame();
+        }
+
+        // 🔥 Fire tornado if close
+        if (this.pos.distanceTo(ballPos) < 6 && Date.now() > this.cooldown) {
+          const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
+          this.tornados.push(new Tornado(this.pos, dir));
+          this.cooldown = Date.now() + 2000;
+        }
+
+        // 🌪️ Update tornado projectiles
+        for (let i = this.tornados.length - 1; i >= 0; i--) {
+          if (!this.tornados[i].update(dt)) this.tornados.splice(i, 1);
+        }
+      }
+
+      dispose() {
+        scene.remove(this.mesh);
+        this.tornados.forEach(t => scene.remove(t.mesh));
       }
     }
-
-    // 👣 Interpolated position
-    this.pos.lerpVectors(this.start, this.end, this.progress);
-
-    // 👻 Apply bobbing effect
-    const bob = 0; //Math.sin(Date.now() * 0.005) * 0.1;
-    this.mesh.position.set(this.pos.x, this.pos.y + bob, this.pos.z);
-
-    // 👻 Spin for effect
-    this.mesh.rotation.y += 0.02;
-
-    // 👻 Direct collision with ball
-    if (this.pos.distanceTo(ballPos) < 0.6) {
-      loseGame();
-    }
-
-    // 🔥 Fire tornado if close
-    if (this.pos.distanceTo(ballPos) < 6 && Date.now() > this.cooldown) {
-      const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
-      this.tornados.push(new Tornado(this.pos, dir));
-      this.cooldown = Date.now() + 2000;
-    }
-
-    // 🌪️ Update tornado projectiles
-    for (let i = this.tornados.length - 1; i >= 0; i--) {
-      if (!this.tornados[i].update(dt)) this.tornados.splice(i, 1);
-    }
-  }
-
-  dispose() {
-    scene.remove(this.mesh);
-    this.tornados.forEach(t => scene.remove(t.mesh));
-  }
-}
-
-
 
     // ------------ Level loading ------------
     function loadLevel(index) {
@@ -797,40 +751,65 @@
     let camDistTarget = camDist;
 
     // ------------ Input handling ------------
-    window.addEventListener('keydown', (e) => {
-      if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
-      e.preventDefault();
-      if (isMoving || falling) return;
-      ridingLift = null; dropStartY = null; landStartY = null;
+    document.addEventListener("keydown", (e) => {
+      switch (e.key) {
+        case ",": // camera rotate right
+          dirIndex = (dirIndex + 1) % 4;
+          updateCameraBehind();
+          break;
+        case ".": // camera rotate left
+          dirIndex = (dirIndex + 3) % 4; // same as -1 mod 4
+          updateCameraBehind();
+          break;
+        case "ArrowLeft":
+        case "ArrowRight":
+        case "ArrowDown":
+        case "ArrowUp":
+        case " ":
+          moveHero(e.key);
+          break;
+      }
+    });
 
-      // Rotation-only keys change facing & camera; movement happens on ArrowUp
-      if (e.key === 'ArrowLeft') {
-        dirIndex = (dirIndex + 3) % 4;     // +90°
-      }
-      if (e.key === 'ArrowRight') {
-        dirIndex = (dirIndex + 1) % 4;     // -90°
-      }
-      if (e.key === 'ArrowDown' && !isMoving && !falling) {
-        dirIndex = (dirIndex + 2) % 4;     // 180°
+    function moveHero(key) {
+      let dir = new THREE.Vector3();
+
+      if (key === "ArrowDown")  dir.set(-1, 0, 0);
+      if (key === "ArrowUp") dir.set(1, 0, 0);
+      if (key === "ArrowRight")  dir.set(0, 0, 1);
+      if (key === "ArrowLeft")    dir.set(0, 0, -1);
+      if (key === " ") dir.set(1,0,0);
+
+      // 🔑 rotate relative to dirIndex (camera orientation)
+      for (let i = 0; i < dirIndex; i++) {
+        dir = new THREE.Vector3(-dir.z, 0, dir.x);
       }
 
-      // ArrowUp moves forward in the stored direction
-      const dir = DIRS[dirIndex].clone();
+      // then continue with your existing movement checks...
+      //ballPos.add(dir);
       moveFrom.copy(ballPos);
       moveTo.copy(ballPos).add(dir);
+      if (key === " ") moveTo.copy(ballPos).addScaledVector(dir, 2); // space = reset to start
 
       // If target tile is higher (stairs) lift to its height
       if (moveFrom && moveTo && !falling) {
-        for (const upperTile of tiles) {
-          if (
-            Math.abs(upperTile.position.x - ballPos.x) < 0.1 &&
-            Math.abs(upperTile.position.z - ballPos.z) < 0.1
-          ) {
-            const expectedY = upperTile.position.y + BALL_RADIUS;
-            const diff = expectedY - ballPos.y;
-            // only snap up if close enough and small step (<= 1.5 units)
-            if (diff > 0.05 && diff <= 1.5) {
-              ballPos.y = expectedY;
+        const floorCheck = tiles.find(t => 
+          Math.abs(t.position.x - moveTo.x) < 0.1 && 
+          Math.abs(t.position.z - moveTo.z) < 0.1 &&
+          Math.abs(t.position.y + BALL_RADIUS - moveTo.y) < 0.1
+        );
+        if (floorCheck == null) {
+          for (const upperTile of tiles) {
+            if (
+              Math.abs(upperTile.position.x - ballPos.x) < 0.1 &&
+              Math.abs(upperTile.position.z - ballPos.z) < 0.1
+            ) {
+              const expectedY = upperTile.position.y + BALL_RADIUS;
+              const diff = expectedY - ballPos.y;
+              // only snap up if close enough and small step (<= 1.5 units)
+              if (diff > 0.05 && diff <= 1.5) {
+                ballPos.y = expectedY;
+              }
             }
           }
         }
@@ -847,7 +826,7 @@
 
       // Keep camera behind the new direction while moving
       updateCameraBehind();
-    });
+    };
 
     // Mouse look & wheel still allowed, but next key realigns the camera behind
     let dragging = false, lastX = 0, lastY = 0;
@@ -872,8 +851,60 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    // ------------ Helpers ------------
+    /* ------------ Helpers ------------
     function hasFloorBelow(x, y, z) {
+      var tile = tiles.find(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.y + BALL_RADIUS - y) < 0.1 && Math.abs(t.position.z - z) < 0.1);
+      if (tile) return ['moving', tile]; // found exact match
+
+      var lift = lifts.find(t => Math.abs(t.mesh.position.x - x) < 0.1 && Math.abs(t.mesh.position.y + BALL_RADIUS - y) < 0.1 && Math.abs(t.mesh.position.z - z) < 0.1);
+      if (lift) return ['lift', lift]; // found exact match
+
+      var teleport = teleporters.find(t => t.checkIfExactlyOn(new THREE.Vector3(x, y, z)));
+      if (teleport) return ['moving', teleport]; // found exact match
+
+      tile = tiles.find(t => {
+        if(Math.abs(t.position.x - x) < 0.1 &&
+          Math.abs(t.position.z - z) < 0.1) {
+            const expectedY = t.position.y + BALL_RADIUS;
+            const diff = expectedY - y;
+            // only snap up if close enough and small step (<= 1.5 units)
+            if (diff > 0.05 && diff <= 1.5) {
+              return true; // found a tile below]
+            }
+          }
+      });
+      if (tile) return ['moving', tile]; // found exact match
+
+      // same for lift
+      lift = lifts.find(t => {
+        if(Math.abs(t.mesh.position.x - x) < 0.1 &&
+          Math.abs(t.mesh.position.z - z) < 0.1) {
+            const expectedY = t.mesh.position.y + BALL_RADIUS;
+            const diff = expectedY - y;
+            // only snap up if close enough and small step (<= 1.5 units)
+            if (diff > 0.05 && diff <= 1.5) {
+              return true; // found a tile below]
+            }
+          }
+      });
+      if (lift) return ['lift', lift]; // found exact match
+
+      teleport = teleporters.find(t => t.checkIfOn(new THREE.Vector3(x, y, z)));
+      if (teleport) return ['moving', teleport]; // found exact match
+
+      return ['falling', tiles.find(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1)]; // no floor below
+    } */
+
+    function hasFloorBelow(x, y, z) {
+
+      var teleport = teleporters.find(t => t.checkIfExactlyOnEntry1(new THREE.Vector3(x, y, z)));
+      if (teleport) return teleport.mesh1;
+      teleport = teleporters.find(t => t.checkIfExactlyOnEntry2(new THREE.Vector3(x, y, z)));
+      if (teleport) return teleport.mesh2;
+
+      var tile = tiles.find(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.y + BALL_RADIUS - y) < 0.1 && Math.abs(t.position.z - z) < 0.1);
+      if (tile) return tile; // found exact match
+
       return tiles.find(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1);
     }
 
@@ -928,7 +959,6 @@
         if (t >= 1) {
           isMoving = false;
           ballPos.copy(moveTo);
-          console.log(`483 Ball moved to ${ballPos.x}, ${ballPos.y}, ${ballPos.z}`);
 
           // collect crystals
           for (const c of crystals) c.checkCollect(ballPos);
