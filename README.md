@@ -3,20 +3,20 @@
 This is a remake project inspired by *Magic World* by Funny Arts.  
 The goal is to rebuild the original missions (Desert, Forest, Rocks, etc.) using **Three.js** in modern browsers.
 
-Background Images are from Magic World, a game by Funny Arts. The images are used to create a nostalgic and immersive experience for players, reminiscent of classic games.  
+Background Images are from Magic World, a game by Funny Arts.  
 https://www.funnyarts.com/magicworldindex.php  
 https://www.funnyarts.com/magicworld
 
 ---
-
 ## ✅ Current Implementation (in `index.html`)
 
 - **Game Framework**
-  - Three.js rendering
-  - HUD with moves, time, best score (saved in localStorage)
+  - Three.js rendering (with textures and skybox)
+  - HUD with moves, time, best score (localStorage)
   - Basic menu (Start, Restart, Win/Lose screens)
-  - Smooth camera following behind the ball (tank-style controls)
-  - Ball movement with step-by-step tile navigation
+  - Smooth camera behind the ball (tank-style controls)
+  - Ball movement with tile-based navigation
+  - Fall detection (lose when falling below Y threshold)
 
 - **Level Elements**
   - `floor`: Static tiles
@@ -26,12 +26,18 @@ https://www.funnyarts.com/magicworld
   - `teleporter`: Instant travel between two points
   - `stair`: Multi-height navigation
   - `bonuscrystall`: Collectible crystals (required to unlock the goal)
+  - `falsefloor`: Implemented as basic collapsing floor (needs polish)
+  - `ghost`: Placeholder object (basic presence only)
+  - `custom`: Placeholder for decorative models
 
 - **Game Flow**
   - Win/lose handling (fall detection, reaching goal)
   - Level progression (currently 2 demo levels with instructions in Level 2)
   - Collectibles system (goal unlocks after all crystals are collected)
   - Local best score tracking (time & moves)
+
+- **Levels**
+  - Currently **two demo levels** are hardcoded in JSON format inside `index.html`.
 
 ---
 
@@ -55,55 +61,59 @@ Each level specifies:
 
 ## ❌ Missing Features (Not Yet Implemented in `index.html`)
 
-### 1. Core Gameplay Elements
+### Core Gameplay
 - **Bonuses**
   - `BonusLife`, `BonusTime`, `BonusFreeze`, `BonusShield`
   - `BonusFire`, `BonusBombs`
+
 - **Enemies**
-  - `Mummy`, `Skeleton`, `Monkey`, `Ghost`, `Bat`, `Alligator`, `Scorpion`, `Mage`
+  - `Mummy`, `Skeleton`, `Monkey`, `Bat`, `Alligator`, `Scorpion`, `Mage`
+
 - **Obstacles**
-  - `ElectroShock` (damage)
-  - `FalseFloor` (collapses after stepping)
+  - `ElectroShock` (damage hazard)
+  - `FalseFloor` (implemented but not collapsing yet)
+
 - **Environment**
-  - Custom models (`palm01.x`, `obelisk_desert.x`, etc.)
+  - Decorative models (`palm01.x`, `obelisk_desert.x`, `tree01.x`, `stone_big.x`, etc.)
+  - Animations and sounds missing
 
-### 2. Level/Gameplay Logic
-- Time limit (`DefaultTime`) per level
-- Mission **Instructions** (story text shown before/during level)
-- Enemy AI (movement, attack, detection)
-- Bonus effects (extra time, extra life, freeze enemies, etc.)
-- Hazard interactions (shock damage, floor collapse)
-- Multi-level terrain with stairs and height changes
-- Teleporter transitions with effects
+### Gameplay Logic
+- `DefaultTime` countdown per level
+- Mission `Instructions` display before levels
+- Enemy AI (movement, detection, attack)
+- Bonus effects (extra time, lives, shields, freeze, bombs, etc.)
+- Multi-level terrain with full stair support
+- Teleporter visual effects
 
-### 3. Game Structure
-- Parsing mission files (`.txt`) into level definitions
-- Level progression across **multiple worlds** (Desert, Forest, Rocks…)
-- Full asset pipeline (models, textures, sounds)
+### Game Structure
+- Parser for `.txt` mission files (Desert, Forest, Rocks)
+- Progression across multiple worlds (Desert → Forest → Rocks)
+- Sound effects and background music
 
 ---
 
-## 🚀 Roadmap for Developers
+## 🚀 Roadmap
 
 1. **Parser**
-   - Build a parser to load `.txt` mission files into JSON structures compatible with `index.html`.
+   - Load `.txt` mission files into JSON level data.
 
 2. **Entity System**
-   - Create classes for `Enemy`, `Bonus`, `Obstacle`, `Teleporter`, `Stair`, etc.
-   - Each should handle rendering + behavior.
+   - Create modular classes for `Enemy`, `Bonus`, `Obstacle`, etc.
+   - Each handles rendering + behavior.
 
 3. **Game Loop Integration**
-   - Extend collision detection for:
-     - Picking up bonuses
-     - Triggering hazards
-     - Fighting or avoiding enemies
+   - Extend collision/interaction detection:
+     - Collect bonuses
+     - Trigger hazards
+     - Handle enemy movement
 
-4. **Assets**
-   - Replace placeholder cubes with models (`.glb` or `.gltf`) for trees, statues, enemies.
+4. **UI/UX**
+   - Display mission instructions before each level
+   - Show timers, crystals collected, lives remaining
 
-5. **UI/UX**
-   - Add instruction messages before each level
-   - Display timers, crystals collected, lives remaining
+5. **World Expansion**
+   - Add support for Desert, Forest, Rocks missions
+   - Replace placeholders with actual `.glb` or `.gltf` models
 
 ---
 
@@ -156,6 +166,42 @@ Each level specifies:
   - Static objects (Floor, Exit, Hero).
   - Decorative objects (Custom, Trees, Barrels, Stones).
   - Common bonuses (Crystals, Shields, Life, Bombs, Time).
+
+---
+
+## ✅❌ TODO Checklist
+
+### Implemented
+- [x] Floors, hero, goal
+- [x] Lifts & teleporters
+- [x] Stairs (basic support)
+- [x] Crystals collection system
+- [x] False floors (basic, not collapsing yet)
+- [x] Ghost placeholder
+- [x] HUD (moves, time, best scores)
+- [x] Menu + level restart
+- [x] Two demo levels (hardcoded)
+
+### Pending
+- [ ] Parser for mission `.txt` files
+- [ ] Full false floor collapsing logic
+- [ ] Timer per level (`DefaultTime`)
+- [ ] Mission instructions display
+- [ ] Bonus items (`Life`, `Time`, `Shield`, `Fire`, `Bombs`, `Freeze`)
+- [ ] Enemy AI (`Mummy`, `Skeleton`, `Monkey`, `Bat`, `Alligator`, `Scorpion`, `Mage`)
+- [ ] Hazard (`ElectroShock`)
+- [ ] Multi-world support (Desert, Forest, Rocks)
+- [ ] Decorative models & proper `.glb` assets
+- [ ] Sounds & animations
+
+---
+
+## 🔍 Summary
+
+- **Added so far**: floors, hero, goal, lifts, teleporters, stairs, crystals, ghost (basic), false floors (basic), HUD, level system.  
+- **Pending**: most enemies, all bonuses, ElectroShock, time system, mission instructions, parser, multi-world expansion.  
+- **Next steps**: implement parser, add bonus/enemy systems, connect all mission worlds.
+
 
 ## Table: Object Presence, Position Type, Comment Need
 

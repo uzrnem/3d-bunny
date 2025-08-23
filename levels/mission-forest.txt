@@ -1,0 +1,988 @@
+//=====================================
+// *type*    *(x, y, z)*   *direction*
+//=====================================
+LEVEL (1){
+DefaultTime (80)
+Instruction "Welcome to Magic Forest!"
+Instruction "Your first task is to collect all the "
+Instruction "crystals and find the exit to the next level."  
+Instruction "Tip: To zoom-in, use key 'A', to zoom-out use key 'Z'."
+Instruction "Good Luck!"
+//
+Hero    (0, 0, 0)    back
+// !!!!!!!
+//
+Floor    (-3, 0, 2) - (3, 0, -2)
+Floor    (4, 0, 0) - (5, 0, 0)
+Floor    (6, 0, 1) - (10, 0, -1)
+Floor    (8, 0, 2) - (10, 0, 5)
+Floor    (9, 0, 7) - (6, 0, 7)
+Floor    (2, 0, 3) - (2, 0, 4)
+Floor    (1, 0, 5) - (5, 0, 7)
+Floor    (-4, 0, 0) - (-5, 0, 0)
+Floor    (-6, 0, 1) - (-10, 0, -1)
+Floor    (-10, 0, -2) - (-8, 0, -5)
+Floor    (-7, 0, -4) - (-2, 0, -4)
+Floor    (9, 0, 6)
+Floor    (-2, 0, -3)
+//
+BonusCrystall  (2, 0, 1)
+BonusCrystall  (2, 0, -1)
+BonusCrystall  (-2, 0, -1)
+BonusCrystall  (-2, 0, 1)
+BonusCrystall  (9, 0, 0)
+BonusCrystall  (9, 0, 2)
+BonusCrystall  (9, 0, 4)
+BonusCrystall  (-9, 0, 0)
+BonusCrystall  (-9, 0, -2)
+BonusCrystall  (-9, 0, -4)
+//
+Custom  (3, 0, 2)             tree01.x
+Custom  (3, 0, -2)             tree02.x
+Custom  (-3, 0, -2)             tree01.x
+Custom  (-3, 0, 2)             tree03.x
+Custom  (-9, 0, -3)             barrel.x
+Custom  (4, 0, 6)             barrel.x
+// 
+Exit    (2, 0, 6)
+//
+// 
+}
+//=======================================
+LEVEL (2){
+DefaultTime (80)
+Instruction "Great job! But now things become more difficult. "
+Instruction "Be careful and don't let yourself fall down into the abyss!"
+Instruction "Tip: Use keys 'X' and 'C' to change your camera view"
+Hero    (0, 0, 0)    back
+//
+Floor    (-2, 0, -2) - (2, 0, 2)
+Custom  (-2, 0, -2)             tree02.x
+Custom  (2, 0, 2)              tree01.x
+Stair    (0, 1, 3)               front
+Stair    (3, 1, 0)               right
+Stair    (0, 1, -3)               back
+Stair    (-3, 1, 0)               left
+//
+Floor    (-1, 2, 4) - (1, 2, 6)
+BonusCrystall  (0, 2, 5)
+Stair    (0, 3, 7)               front
+Floor    (-1, 4, 8) - (1, 4, 10)
+//
+//
+Floor    (4, 2, -1) - (6, 2, 1)
+Stair    (7, 3, 1)                right (2)
+BonusCrystall  (5, 2, 0)
+//
+Floor    (9, 6, 2) - (12, 6, -1)
+Custom  (12, 6, 2)             tree03.x
+Stair    (11, 7, -2)               back
+Floor    (9, 8, -3) - (12, 8, -5)
+BonusCrystall  (10, 6, 1)
+BonusCrystall  (10, 6, 0)
+BonusCrystall  (10, 6, -1)
+BonusCrystall  (10, 8, -4)
+BonusCrystall  (10, 8, -5)
+BonusCrystall  (11, 6, 1)
+BonusCrystall  (11, 6, 0)
+BonusCrystall  (11, 6, -1)
+BonusCrystall  (11, 8, -4)
+BonusCrystall  (11, 8, -5)
+//
+Floor    (-2, 2, -4) - (2, 2, -6)
+BonusCrystall  (-1, 2, -5)
+BonusCrystall  (0, 2, -5)
+BonusCrystall  (1, 2, -5)
+//
+//
+Floor    (-6, 2, 0) - (-4, 2, 2)
+Custom  (-6, 2, 0)             figure1.x
+Custom  (-6, 2, 2)              figure1.x
+Stair    (-7, 3, 1)               left (3)
+//
+Floor    (-10, 8, 3) - (-14, 8, 0)
+Stair    (-13, 9, 4)               front (2)
+Floor    (-11, 12, 6) - (-14, 12, 8)
+BonusCrystall  (-11, 8, 2)
+BonusCrystall  (-13, 8, 2)
+BonusCrystall  (-12, 8, 2)
+BonusCrystall  (-13, 8, 1)
+BonusCrystall  (-11, 8, 1)
+BonusCrystall  (-12, 8, 1)
+Custom  (-14, 8, 3)             tree01.x
+BonusCrystall  (-13, 12, 7)
+BonusCrystall  (-12, 12, 7)
+BonusCrystall  (-13, 12, 8)
+BonusCrystall  (-12, 12, 8)
+//
+// 
+Exit    (0, 4, 9)
+//
+//
+}
+//=======================================
+LEVEL (3){
+DefaultTime (80)
+Instruction "Now, things become more interesting. Take a look up!"
+Instruction "See that fellow?  He is not so harmless as he looks." 
+Instruction "You better watch out for him!"
+Hero    (0, 0, 0)    back
+//
+Floor    (-2, 0, -2) - (2, 0, 3)
+Custom  (-1, 0, 2)             barrel.x
+Custom  (1, 0, -2)              tree02.x
+Stair    (3, 1, 3)               right (5)
+Floor    (8, 10, 3) - (9, 10, 3)
+Floor    (9, 10, 3) - (9, 10, 5)
+Alligator    (9, 10, 5)    left
+Stair    (-3, -1, 0)               right
+//
+BonusCrystall  (-1, 0, -1)
+BonusCrystall  (0, 0, -1)
+BonusCrystall  (1, 0, -1)
+BonusCrystall  (-1, 0, 0)
+BonusCrystall  (1, 0, 0)
+BonusCrystall  (1, 0, 1)
+BonusCrystall  (-1, 0, 1)
+BonusCrystall  (0, 0, 1)
+//
+//
+Floor    (-4, -2, 2) - (-8, -2, -3)
+Custom  (-6, -2, 1)             tree03.x
+BonusCrystall  (-7, -2, 0)
+BonusCrystall  (-7, -2, -1)
+BonusCrystall  (-7, -2, -2)
+BonusCrystall  (-6, -2, 0)
+BonusCrystall  (-6, -2, -1)
+BonusCrystall  (-6, -2, -2)
+BonusCrystall  (-5, -2, 0)
+BonusCrystall  (-5, -2, -1)
+BonusCrystall  (-5, -2, -2)
+Stair    (-6, -3, -4)    front
+//
+Floor    (-4, -4, -5) - (-8, -4, -8)
+Stair    (-3, -5, -7)    left
+BonusCrystall  (-6, -4, -6)
+BonusCrystall  (-6, -4, -7)
+BonusCrystall  (-7, -4, -6)
+BonusCrystall  (-5, -4, -6)
+BonusCrystall  (-5, -4, -7)
+BonusCrystall  (-7, -4, -7)
+//
+Floor    (-2, -6, -6) - (-1, -6, -8)
+Floor    (0, -6, -5) - (4, -6, -9)
+Stair    (5, -5, -7)    right (2)
+BonusCrystall  (-1, -6, -7)
+//
+Custom  (2, -6, -7)              barrel.x
+BonusCrystall  (1, -6, -7)
+BonusCrystall  (1, -6, -8)
+BonusCrystall  (2, -6, -8)
+BonusCrystall  (3, -6, -7)
+BonusCrystall  (3, -6, -8)
+BonusCrystall  (1, -6, -6)
+BonusCrystall  (2, -6, -6)
+BonusCrystall  (3, -6, -6)
+//
+//
+Floor    (7, -2, -6) - (10, -2, -7)
+Floor    (10, 2, -3) - (11, 2, -3)
+Stair    (10, -1, -5)    front (2)
+BonusCrystall  (8, -2, -7)
+BonusCrystall  (9, -2, -7)
+BonusCrystall  (10, -2, -7)
+//
+//
+Floor    (11, 6, 0) - (13, 6, 2)
+Stair    (11, 3, -2)    front (2)
+//
+//
+Exit    (12, 6, 2)
+//
+//
+}
+//=======================================
+LEVEL (4){
+DefaultTime (80)
+Instruction "Good job. Be careful of the floor!"
+Instruction "Some parts of it might stay for awhile,"
+Instruction "but then it'll collapse beneath your feet!"
+Hero    (0, 0, 0)    right
+//
+Floor    (-2, 0, -2) - (2, 0, 2)
+BonusCrystall  (1, 0, 1)
+BonusCrystall  (-1, 0, -1)
+Custom  (-1, 0, 2)             figure1.x
+Custom  (1, 0, -2)              figure1.x
+Stair    (3, 1, 1)               right (2)
+//
+Floor    (5, 4, 3) - (9, 4, 5)
+//
+FalseFloor    (5, 4, 2)
+FalseFloor    (6, 4, 2)
+FalseFloor    (7, 4, 2)
+FalseFloor    (8, 4, 2)
+FalseFloor    (9, 4, 2)
+Floor    (5, 4, 1) - (9, 4, 1)
+FalseFloor    (5, 4, 0)
+FalseFloor    (6, 4, 0)
+FalseFloor    (7, 4, 0)
+FalseFloor    (8, 4, 0)
+FalseFloor    (9, 4, 0)
+Floor    (5, 4, -1) - (9, 4, -2)
+BonusCrystall  (6, 4, 3)
+BonusCrystall  (7, 4, 3)
+BonusCrystall  (8, 4, 3)
+BonusCrystall  (6, 4, 1)
+BonusCrystall  (7, 4, 1)
+BonusCrystall  (8, 4, 1)
+BonusCrystall  (6, 4, -1)
+BonusCrystall  (7, 4, -1)
+BonusCrystall  (8, 4, -1)
+//
+Stair    (10, 3, 1)               left
+Floor    (11, 2, -1) - (13, 2, 1)
+BonusCrystall  (12, 2, 0)
+BonusCrystall  (12, 2, -1)
+Stair    (12, -1, -3)               front (2)
+Floor    (11, -2, -4) - (13, -2, -7)
+//exit
+//
+Stair    (7, 1, -4)               front (2)
+Floor    (6, 0, -5) - (9, 0, -8)
+BonusCrystall  (7, 0, -6)
+BonusCrystall  (7, 0, -7)
+Custom  (8, 0, -6)              tree02.x
+Stair    (10, -1, -7)               left
+Stair    (5, -1, -7)               right
+Floor    (4, -2, -5) - (3, -2, -9)
+FalseFloor    (2, -2, -6)
+FalseFloor    (2, -2, -8)
+Floor    (2, -2, -5)
+Floor    (2, -2, -7)
+Floor    (2, -2, -9)
+Floor    (1, -2, -5) - (1, -2, -9)
+FalseFloor    (0, -2, -6)
+FalseFloor    (0, -2, -8)
+Floor    (0, -2, -5)
+Floor    (0, -2, -7)
+Floor    (0, -2, -9)
+Floor    (-1, -2, -5) - (-1, -2, -9)
+FalseFloor    (-2, -2, -6)
+FalseFloor    (-2, -2, -8)
+Floor    (-2, -2, -5)
+Floor    (-2, -2, -7)
+Floor    (-2, -2, -9)
+Floor    (-3, -2, -5) - (-3, -2, -9)
+BonusCrystall  (-2, -2, -6)
+BonusCrystall  (-2, -2, -8)
+BonusCrystall  (2, -2, -7)
+//
+Stair    (8, 5, 6)               front (2)
+Floor    (7, 8, 8) - (9, 8, 11)
+BonusLife (8, 8, 11)
+Monkey    (9, 8, 9)    back
+//
+Exit    (12, -2, -6)
+//
+//
+}
+//=======================================
+LEVEL (5){
+DefaultTime (150)
+Instruction "These elevators go a long way up, but don't be scared"
+Instruction "of heights! Your hard work will reward you."
+
+//
+Hero    (1, 0, 0)    back
+//
+Floor    (-3, 0, -2) - (3, 0, 2)
+Custom  (3, 0, 1)             tree03.x
+BonusCrystall  (-1, 0, 1)
+BonusCrystall  (-1, 0, -1)
+Stair    (-3, 1, -3)              back (2)
+//
+Floor    (-3, 4, -5) - (-9, 4, -8)
+Custom  (-4, 4, -6)             tree01.x
+Custom  (-5, 4, -7)             barrel.x
+Custom  (-7, 4, -6)             tree02.x
+Lift     (-10, 4, -8) - (-10, 12, -8)
+Floor    (-11, 12, -8) - (-13, 12, -10)
+//
+BonusCrystall  (-12, 12, -8)
+BonusCrystall  (-12, 12, -9)
+BonusCrystall  (-12, 12, -10)
+Lift     (-14, 12, -8) - (-14, 20, -8)
+Floor    (-15, 20, -8) - (-17, 20, -14)
+BonusCrystall  (-16, 20, -11)
+BonusCrystall  (-16, 20, -9)
+BonusCrystall  (-16, 20, -10)
+//
+//
+Stair    (3, 1, -3)               back (2)
+Floor    (3, 4, -5) - (5, 4, -7)
+Lift     (6, 4, -7) - (6, 11, -7)
+Floor    (7, 11, -6) - (10, 11, -8)
+BonusCrystall  (8, 11, -7)
+BonusCrystall  (9, 11, -7)
+//
+Lift     (9, 11, -9) - (9, 11, -12)
+Floor    (7, 11, -13) - (10, 11, -16)
+BonusCrystall  (8, 11, -14)
+BonusCrystall  (9, 11, -15)
+BonusCrystall  (8, 11, -15)
+BonusCrystall  (9, 11, -14)
+//
+Stair    (3, 1, 3)              front (2)
+Floor    (3, 4, 5) - (6, 4, 8)
+Lift     (4, 4, 9) - (4, 12, 9)
+Floor    (3, 12, 11) - (4, 12, 10)
+//
+//
+Lift     (3, 12, 12) - (3, 16, 12)
+Floor    (4, 16, 12) - (5, 16, 13)
+BonusCrystall  (4, 16, 13)
+BonusCrystall  (5, 16, 13)
+//
+Lift     (-4, 0, 2) - (-4, 20, 2)
+Floor    (-5, 20, 0) - (-8, 20, 4)
+Custom  (-6, 20, 2)             tree03.x
+Custom  (-8, 20, 2)             tree02.x
+BonusCrystall  (-6, 20, 1)
+BonusCrystall  (-6, 20, 3)
+BonusCrystall  (-8, 20, 0)
+BonusCrystall  (-8, 20, 4)
+BonusCrystall  (-5, 20, 0)
+BonusCrystall  (-5, 20, 4)
+//
+Exit    (-16, 20, -13)
+//
+//
+}
+//=======================================
+LEVEL (6){
+DefaultTime (120)
+Instruction "You did awesome on the last level!"
+Instruction "Tip: Use the ice crystals to help freeze "
+Instruction "the green reptile."
+//
+Hero    (0, 0, -4)    front
+BonusFreeze  (0, 0, -3)
+Floor    (0, 0, -4) - (0, 0, -3)
+//
+Floor    (-2, 0, -2) - (-2, 0, 2)
+Floor    (-1, 0, -2)
+Floor    (-1, 0, 0)
+Floor    (-1, 0, 2)
+FalseFloor    (-1, 0, -1)
+FalseFloor    (-1, 0, 1)
+Floor    (0, 0, -2) - (0, 0, 2)
+Floor    (1, 0, -2)
+Floor    (1, 0, 0)
+Floor    (1, 0, 2)
+FalseFloor    (1, 0, -1)
+FalseFloor    (1, 0, 1)
+Floor    (2, 0, -2) - (2, 0, 2)
+BonusFreeze  (0, 0, 0)
+//
+Stair    (-3, 1, -2)               left
+Stair    (-3, 1, 2)               left
+Floor    (-4, 2, -2) - (-4, 2, 2)
+Floor    (-5, 2, -2)
+Floor    (-5, 2, 0)
+Floor    (-5, 2, 2)
+Floor    (-6, 2, -2)
+Floor    (-6, 2, 0)
+Floor    (-6, 2, 2)
+FalseFloor    (-5, 2, -1)
+FalseFloor    (-5, 2, 1)
+FalseFloor    (-6, 2, -1)
+FalseFloor    (-6, 2, 1)
+Floor    (-7, 2, -2) - (-7, 2, 2)
+BonusCrystall  (-7, 2, -2)
+BonusFreeze  (-6, 2, 0)
+//
+Stair    (3, 1, -2)               right
+Stair    (3, 1, 2)               right
+Floor    (4, 2, -2) - (4, 2, 2)
+Floor    (5, 2, -2)
+Floor    (5, 2, 0)
+Floor    (5, 2, 2)
+Floor    (6, 2, -2)
+Floor    (6, 2, 0)
+Floor    (6, 2, 2)
+FalseFloor    (5, 2, -1)
+FalseFloor    (5, 2, 1)
+FalseFloor    (6, 2, -1)
+FalseFloor    (6, 2, 1)
+Floor    (7, 2, -2) - (7, 2, 2)
+BonusCrystall  (7, 2, -2)
+BonusFreeze  (6, 2, 0)
+//
+Stair    (0, 1, 3)               front (2)
+Floor    (0, 4, 5) - (1, 4, 5)
+Stair    (1, 5, 6)               front
+Floor    (0, 6, 7) - (1, 6, 7)
+Stair    (0, 7, 8)               front
+//
+Floor    (-2, 8, 9) - (2, 8, 9)
+Floor    (-2, 8, 10)
+Floor    (0, 8, 10)
+Floor    (2, 8, 10)
+FalseFloor    (-1, 8, 10)
+FalseFloor    (1, 8, 10)
+//
+Floor    (-5, 8, 9) - (-9, 8, 9)
+Floor    (-9, 8, 10)
+Floor    (-7, 8, 10)
+Floor    (-5, 8, 10)
+FalseFloor    (-6, 8, 10)
+FalseFloor    (-8, 8, 10)
+//
+Floor    (5, 8, 9) - (9, 8, 9)
+Floor    (9, 8, 10)
+Floor    (7, 8, 10)
+Floor    (5, 8, 10)
+FalseFloor    (6, 8, 10)
+FalseFloor    (8, 8, 10)
+//
+Floor    (-9, 8, 11) - (9, 8, 11)
+//
+Floor    (-2, 8, 13) - (2, 8, 13)
+Floor    (-2, 8, 12)
+Floor    (0, 8, 12)
+Floor    (2, 8, 12)
+FalseFloor    (-1, 8, 12)
+FalseFloor    (1, 8, 12)
+BonusLife (-2, 8, 13)
+//
+Floor    (-5, 8, 13) - (-9, 8, 13)
+Floor    (-9, 8, 12)
+Floor    (-7, 8, 12)
+Floor    (-5, 8, 12)
+FalseFloor    (-8, 8, 12)
+FalseFloor    (-6, 8, 12)
+BonusCrystall  (-9, 8, 13)
+BonusFreeze  (-7, 8, 11)
+//
+Floor    (5, 8, 13) - (9, 8, 13)
+Floor    (5, 8, 12)
+Floor    (7, 8, 12)
+Floor    (9, 8, 12)
+FalseFloor    (6, 8, 12)
+FalseFloor    (8, 8, 12)
+BonusCrystall  (9, 8, 13)
+BonusFreeze  (7, 8, 11)
+//
+//
+Alligator    (0, 0, 2)    front
+//
+Exit    (0, 8, 11)
+//
+//
+}
+//=======================================
+LEVEL (7){
+DefaultTime (60)
+Instruction "Tip: The teleporters will help you move fast. "
+//
+Hero    (0, 0, 0)    back
+//
+Floor    (-4, 0, -4) - (4, 0, 4)
+Custom  (3, 0, -2)             tree01.x
+Custom  (1, 0, -2)             tree02.x
+Custom  (2, 0, -3)             tree03.x
+Custom  (2, 0, -2)             barrel.x
+//
+Floor    (6, 5, 6) - (9, 5, 10)
+BonusCrystall  (6, 5, 7)
+//
+Floor    (-12, 5, 5) - (-9, 5, 7)
+BonusCrystall  (-12, 5, 5)
+//
+Floor    (7, 10, -5) - (12, 10, -12)
+Custom  (8, 10, -9)             tree02.x
+BonusCrystall  (9, 10, -10)
+//
+Floor    (-7, 20, -8) - (-11, 20, -12)
+BonusCrystall  (-8, 20, -9)
+Stair    (-11, 21, -13)               back
+Floor    (-11, 22, -14) - (-10, 22, -14)
+Stair    (-9, 23, -14)               right (2)
+Floor    (-7, 26, -14) - (-6, 26, -14)
+Stair    (-6, 27, -13)               front (2)
+Floor    (-6, 30, -11) - (-8, 30, -9)
+//
+Teleporter (8, 5, 8) - (-2, 0, 2)
+Teleporter (-10, 5, 6) - (2, 0, 2)
+Teleporter (10, 10, -7) - (-2, 0, -2)
+Teleporter (-10, 20, -11) - (11, 10, -11)
+//
+//
+Exit    (-7, 30, -10)
+//
+//
+}
+//=======================================
+LEVEL (8){
+DefaultTime (120)
+Instruction "Use bombs to destroy your enemies. "
+Instruction "Tip: Just press the 'B' key to throw the bomb. "
+//
+Hero    (-20, 0, 0)    right
+Floor    (-20, 0, 0) - (-4, 0, 0)
+BonusBombs  (-18, 0, 0)
+Alligator    (-4, 0, 0)    left
+//
+Floor    (-3, 0, -3) - (3, 0, 3)
+Floor    (0, 0, 4) - (0, 0, 6)
+BonusCrystall  (-3, 0, -3)
+BonusCrystall  (-3, 0, 3)
+BonusCrystall  (3, 0, -3)
+BonusCrystall  (3, 0, 3)
+BonusBombs  (-1, 0, -2)
+Custom  (2, 0, 0)             tree01.x
+Custom  (3, 0, -1)             tree02.x
+Custom  (-2, 0, -2)             figure1.x
+//
+Floor    (9, 6, 0) - (9, 6, 6)
+Floor    (7, 6, 7) - (12, 6, 12)
+BonusCrystall  (7, 6, 7)
+BonusCrystall  (7, 6, 12)
+BonusCrystall  (12, 6, 7)
+BonusCrystall  (12, 6, 12)
+Stair    (13, 7, 9)               right (2)
+Floor    (15, 10, 9) - (17, 10, 9)
+BonusBombs  (11, 6, 8)
+Custom  (10, 6, 8)             figure1.x
+//
+Floor    (-10, -20, -8) - (20, -20, -8)
+Custom  (10, -20, -9)             barrel.x
+Custom  (13, -20, -7)             barrel.x
+BonusLife (18, -20, -8)
+Floor    (0, -20, -7) - (4, -20, -9)
+BonusCrystall  (0, -20, -7)
+BonusCrystall  (0, -20, -9)
+BonusCrystall  (4, -20, -7)
+BonusCrystall  (4, -20, -9)
+//
+Alligator    (7, 5, 12)    left
+//
+Alligator    (4, -19, -9)    left
+//
+//
+//
+Teleporter (9, 6, 0) - (0, 0, 6)
+Teleporter (17, 10, 9) - (-10, -20, -8)
+//
+//
+Exit    (20, -20, -8)
+//
+//
+}
+//=======================================
+LEVEL (9){
+DefaultTime (120)
+Instruction "You are deep in the forest! "
+Instruction "Tip: Use your teleports carefully!"
+//
+//
+Hero    (2, 0, 1)    back
+//
+Floor    (0, 0, 0) - (3, 0, 3)
+Custom  (1, 0, 1)             barrel.x
+BonusCrystall  (2, 0, 2)
+BonusCrystall  (2, 0, 3)
+BonusCrystall  (3, 0, 2)
+BonusCrystall  (3, 0, 3)
+Stair    (-1, 1, 0)              left (4)
+//
+Floor    (-5, 8, 0) - (-5, 8, 1)
+Stair    (-4, 9, 1)              right (4)
+Floor    (0, 16, 1) - (0, 16, 0)
+Stair    (-1, 17, 0)              left (3)
+Floor    (-4, 22, 0) - (-4, 22, 1)
+Stair    (-3, 23, 1)              right (3)
+Floor    (0, 28, 1)
+Floor    (1, 28, 1) - (2, 28, 2)
+BonusCrystall  (1, 28, 1)
+//
+BonusCrystall  (-5, 8, 1)
+BonusCrystall  (0, 16, 0)
+BonusCrystall  (-4, 22, 1)
+//
+Lift     (3, 28, 2) - (3, 18, 2)
+Floor    (4, 18, 2)
+Floor    (5, 18, 2) - (6, 18, 3)
+BonusCrystall  (4, 18, 2)
+BonusCrystall  (6, 18, 3)
+//
+//
+Stair    (7, 19, 2)               right (2)
+Floor    (9, 22, 2) - (9, 22, 3)
+Stair    (8, 23, 3)               left (2)
+Floor    (5, 26, 1)
+Floor    (6, 26, 3) - (5, 26, 2)
+BonusCrystall  (9, 22, 3)
+BonusCrystall  (5, 26, 3)
+//
+Lift     (5, 26, 0) - (5, 26, -6)
+Floor    (5, 26, -7) - (5, 26, -8)
+Floor    (6, 26, -8) - (9, 26, -8)
+BonusCrystall  (8, 26, -8)
+BonusCrystall  (7, 26, -8)
+BonusCrystall  (9, 26, -8)
+Stair    (10, 27, -8)               right (2)
+Floor    (12, 30, -7) - (13, 30, -8)
+BonusCrystall  (13, 30, -8)
+//
+Lift     (4, 50, -7) - (4, 26, -7)
+Floor    (5, 50, -7) - (6, 50, -7)
+BonusLife (6, 50, -7)
+//
+//
+Stair    (13, 31, -6)               front (4)
+Floor    (11, 38, -2) - (13, 38, -1)
+BonusCrystall  (11, 38, -1)
+BonusCrystall  (12, 38, -1)
+BonusCrystall  (13, 38, -2)
+//
+Lift     (12, 38, 0) - (12, 38, 5)
+Floor    (13, 38, 10) - (11, 38, 6)
+BonusCrystall  (12, 38, 7)
+BonusCrystall  (12, 38, 8)
+BonusCrystall  (12, 38, 9)
+Lift     (13, 20, 11) - (13, 38, 11)
+Floor    (13, 20, 12) - (15, 20, 14)
+//
+Teleporter (14, 20, 13) - (7, 10, 6)
+Floor    (6, 10, 6) - (7, 10, 6)
+Lift     (5, 10, 6) - (2, 10, 6)
+//
+//
+Exit    (1, 10, 6)
+//
+//
+//
+//
+}
+//=======================================
+LEVEL (10){
+//
+Instruction "Some floors here will fall, so watch your way."
+//
+//
+Hero    (0, 0, 0)    left
+//
+Floor    (-1, 0, -1) - (1, 0, 1)
+FalseFloor    (-2, 0, 0)
+FalseFloor    (-3, 0, 0)
+FalseFloor    (2, 0, 0)
+FalseFloor    (3, 0, 0)
+//
+FalseFloor    (0, 0, 2)
+FalseFloor    (0, 0, 3)
+FalseFloor    (0, 0, -2)
+FalseFloor    (0, 0, -3)
+Floor    (-1, 0, -4) - (1, 0, -5)
+Floor    (-1, 0, 4) - (1, 0, 5)
+//
+FalseFloor    (-2, 0, -5)
+FalseFloor    (-3, 0, -5)
+FalseFloor    (2, 0, -5)
+FalseFloor    (3, 0, -5)
+FalseFloor    (-2, 0, 5)
+FalseFloor    (-3, 0, 5)
+FalseFloor    (2, 0, 5)
+FalseFloor    (3, 0, 5)
+//
+Floor    (4, -2, 4) - (6, -2, 6)
+FalseFloor    (5, -2, 2)
+FalseFloor    (5, -2, 3)
+Floor    (4, -2, 1) - (6, -2, -1)
+//
+//
+BonusCrystall  (5, -2, -5)
+BonusCrystall  (-5, -2, -5)
+BonusCrystall  (-5, -2, 0)
+BonusCrystall  (-5, -2, 5)
+//
+Floor    (4, -2, -6) - (6, -2, -4)
+Floor    (3, -2, -6) - (-3, -2, -6)
+Floor    (-4, -2, -6) - (-6, -2, -4)
+//
+FalseFloor    (-5, -2, -2)
+FalseFloor    (-5, -2, -3)
+Floor    (-4, -2, -1) - (-6, -2, 1)
+FalseFloor    (-5, -2, 2)
+FalseFloor    (-5, -2, 3)
+Floor    (-4, -2, 4) - (-6, -2, 6)
+//
+Floor    (-7, -4, -6) - (-9, -4, -4)
+FalseFloor    (-8, -4, -2)
+FalseFloor    (-8, -4, -3)
+Floor    (-7, -4, -1) - (-9, -4, 1)
+FalseFloor    (-8, -4, 2)
+FalseFloor    (-8, -4, 3)
+Floor    (-7, -4, 4) - (-9, -4, 6)
+BonusCrystall  (-8, -4, -5)
+BonusCrystall  (-8, -4, 0)
+BonusCrystall  (-8, -4, 5)
+//
+Floor    (-10, -6, -6) - (-12, -6, -4)
+FalseFloor    (-11, -6, -2)
+FalseFloor    (-11, -6, -3)
+Floor    (-10, -6, -1) - (-12, -6, 1)
+FalseFloor    (-11, -6, 2)
+FalseFloor    (-11, -6, 3)
+Floor    (-10, -6, 4) - (-12, -6, 6)
+BonusCrystall  (-11, -6, -5)
+BonusCrystall  (-11, -6, 0)
+BonusCrystall  (-11, -6, 5)
+//
+Teleporter (5, -2, 0) - (6, -2, -6)
+//
+Floor    (-5, -2, -7) - (-5, -2, -8)
+Floor    (-4, -2, -9) - (-6, -2, -11)
+Floor    (-11, -6, 7) - (-11, -6, 8)
+Floor    (-10, -6, 9) - (-12, -6, 11)
+Teleporter (-5, -2, -10) - (-11, -6, 10)
+//
+//
+Exit    (5, -2, 5)
+//
+//
+}
+//=======================================
+LEVEL (11){
+DefaultTime (80)
+Instruction "Are you ready for a run? Let's get to it!"
+//
+Hero    (0, 0, 0)    front
+//
+Floor    (3, -2, 0) - (16, -2, 0)
+Stair    (2, -1, 0)               left 
+//
+Floor    (-1, 0, -1) - (1, 0, 1)
+Stair    (0, 1, 2)               front 
+//
+Floor    (0, 2, 3) - (0, 2, 17)
+Stair    (1, 3, 17)               right 
+//
+Floor    (2, 4, 17) - (16, 4, 17)
+Stair    (16, 5, 16)               back 
+//
+Floor    (16, 6, 15) - (16, 6, 1)
+Stair    (15, 7, 1)               left 
+//
+Floor    (14, 8, 1) - (2, 8, 1)
+Stair    (2, 9, 2)               front
+//
+Floor    (2, 10, 3) - (2, 10, 15)
+Stair    (3, 11, 15)               right
+//
+Floor    (4, 12, 15) - (14, 12, 15)
+Stair    (14, 13, 14)               back 
+//
+Floor    (14, 14, 13) - (14, 14, 4)
+Stair    (13, 15, 4)               left 
+//
+Floor    (12, 16, 4) - (4, 16, 4)
+Stair    (4, 17, 5)               front 
+//
+Floor    (12, 18, 6) - (4, 18, 12)
+BonusCrystall  (6, 18, 7)
+BonusCrystall  (7, 18, 7)
+BonusCrystall  (8, 18, 7)
+BonusCrystall  (9, 18, 7)
+BonusCrystall  (10, 18, 7)
+BonusCrystall  (6, 18, 9)
+BonusCrystall  (7, 18, 9)
+BonusLife  (8, 18, 9)
+BonusCrystall  (9, 18, 9)
+BonusCrystall  (10, 18, 9)
+BonusCrystall  (6, 18, 11)
+BonusCrystall  (7, 18, 11)
+BonusCrystall  (8, 18, 11)
+BonusCrystall  (9, 18, 11)
+BonusCrystall  (10, 18, 11)
+//
+//
+Custom  (12, 18, 12)             barrel.x
+Custom  (4, 18, 12)             barrel.x
+//
+//
+//
+Exit    (16, -2, 0)
+//
+//
+}
+//=======================================
+//=======================================
+LEVEL (12){
+DefaultTime (160)
+Instruction "You made it! You are one step closer."
+Instruction "Good Luck!"
+//
+//BonusBombs  (-18, 0, 0)
+//BonusFreeze  (-6, 2, 0)
+//
+Hero    (2, 0, -2)    right
+Floor    (0, 0, 0) - (0, 0, -4)
+FalseFloor    (1, 0, -1)
+FalseFloor    (1, 0, -3)
+Floor    (1, 0, 0)
+Floor    (1, 0, -2)
+Floor    (1, 0, -4)
+Floor    (2, 0, 0) - (2, 0, -4)
+FalseFloor    (3, 0, -1)
+FalseFloor    (3, 0, -3)
+Floor    (3, 0, 0)
+Floor    (3, 0, -2)
+Floor    (3, 0, -4)
+Floor    (4, 0, 0) - (4, 0, -4)
+BonusCrystall  (0, 0, -1)
+BonusCrystall  (0, 0, -3)
+BonusCrystall  (0, 0, -2)
+//
+Stair    (5, 1, 0)               right
+Stair    (5, 1, -2)               right
+Stair    (5, 1, -4)               right
+Stair    (0, 1, -5)               back
+Stair    (2, 1, -5)               back
+Stair    (4, 1, -5)               back
+//
+Floor    (0, 2, -6) - (4, 2, -6)
+FalseFloor    (0, 2, -7)
+Floor    (1, 2, -7) - (4, 2, -7)
+Floor    (0, 2, -8) - (4, 2, -10)
+BonusCrystall  (1, 2, -9)
+BonusCrystall  (2, 2, -9)
+BonusCrystall  (3, 2, -9)
+BonusFreeze  (2, 2, -8)
+//
+Floor    (6, 2, 0) - (9, 2, -4)
+FalseFloor    (10, 2, -2)
+Floor    (10, 2, 0) - (10, 2, -1)
+Floor    (10, 2, -3) - (10, 2, -4)
+BonusCrystall  (8, 2, -1)
+BonusCrystall  (8, 2, -3)
+BonusCrystall  (8, 2, -2)
+BonusFreeze  (7, 2, -2)
+//
+Stair    (5, 3, -6)               right
+Stair    (5, 3, -10)               right
+Stair    (6, 3, -5)               back
+Stair    (10, 3, -5)               back
+//
+Floor    (6, 4, -6) - (10, 4, -7)
+Floor    (6, 4, -8)
+FalseFloor    (7, 4, -8)
+Floor    (8, 4, -8) - (10, 4, -8)
+Floor    (6, 4, -9) - (10, 4, -12)
+BonusCrystall  (8, 4, -7)
+BonusCrystall  (8, 4, -9)
+BonusCrystall  (8, 4, -11)
+BonusBombs  (9, 4, -10)
+//
+Stair    (11, 5, -7)               right
+Stair    (11, 5, -9)               right
+Stair    (11, 5, -11)               right
+//
+Floor    (12, 6, -7) - (16, 6, -7)
+Floor    (12, 6, -8) - (15, 6, -8)
+FalseFloor    (16, 6, -8)
+Floor    (12, 6, -9) - (16, 6, -11)
+BonusCrystall  (13, 6, -9)
+BonusCrystall  (14, 6, -9)
+BonusCrystall  (15, 6, -9)
+BonusFreeze  (14, 6, -8)
+//!
+Alligator    (15, 6, -10)    back
+//
+Stair    (11, 3, 0)               right (3)
+Floor    (14, 8, 0) - (14, 8, 1)
+Stair    (13, 9, 1)               left (3)
+Floor    (10, 14, 1) - (10, 14, 2)
+Stair    (11, 15, 2)               right (2)
+Floor    (13, 18, 2)
+Floor    (14, 18, 2) - (15, 18, 3)
+BonusCrystall  (15, 18, 3)
+BonusBombs  (14, 18, 2)
+//
+Lift     (15, 18, 4) - (15, 18, 7)
+Floor    (14, 18, 8) - (16, 18, 12)
+BonusCrystall  (15, 18, 9)
+BonusCrystall  (15, 18, 10)
+BonusCrystall  (15, 18, 11)
+//!
+Monkey   (14, 18, 8)   back 
+//  
+Stair    (14, 17, 13)               back
+Stair    (16, 17, 13)               back
+Floor    (12, 16, 14) - (16, 16, 16)
+//
+Stair    (11, 15, 14)               right
+Stair    (11, 15, 16)               right
+Floor    (6, 14, 16) - (6, 14, 12)
+Floor    (8, 14, 16) - (8, 14, 12)
+Floor    (10, 14, 16) - (10, 14, 12)
+FalseFloor    (7, 14, 13)
+FalseFloor    (7, 14, 15)
+Floor    (7, 14, 12)
+Floor    (7, 14, 14)
+Floor    (7, 14, 16)
+FalseFloor    (9, 14, 13)
+FalseFloor    (9, 14, 15)
+Floor    (9, 14, 12)
+Floor    (9, 14, 14)
+Floor    (9, 14, 16)
+BonusCrystall  (7, 14, 14)
+BonusCrystall  (8, 14, 14)
+BonusCrystall  (9, 14, 14)
+//
+Stair    (5, 13, 12)               right
+Stair    (5, 13, 16)               right
+Floor    (4, 12, 16) - (2, 12, 8)
+Custom  (3, 12, 10)             tree01.x
+Custom  (2, 12, 15)             tree02.x
+BonusCrystall  (3, 12, 14)
+BonusCrystall  (3, 12, 13)
+BonusCrystall  (3, 12, 12)
+BonusCrystall  (3, 12, 11)
+Stair    (4, 11, 7)               front
+Stair    (2, 11, 7)               front
+Floor    (2, 10, 6) - (4, 10, 4)
+BonusCrystall  (2, 10, 4)
+Custom   (3, 10, 5)                barrel.x
+BonusCrystall  (4, 10, 6)
+//
+Stair    (17, 15, 14)               left
+Stair    (17, 15, 16)               left
+Floor    (18, 14, 11) - (22, 14, 10)
+Floor    (18, 14, 13) - (22, 14, 13)
+Floor    (18, 14, 15) - (22, 14, 16)
+FalseFloor    (20, 14, 12)
+FalseFloor    (20, 14, 14)
+Floor    (18, 14, 12) - (19, 14, 14)
+Floor    (21, 14, 12) - (22, 14, 14)
+BonusCrystall  (19, 14, 11)
+BonusCrystall  (21, 14, 13)
+BonusCrystall  (19, 14, 15)
+Custom  (21, 14, 11)             tree03.x
+Custom  (19, 14, 14)             tree02.x
+//
+Stair    (19, 13, 9)               front
+Stair    (22, 13, 9)               front
+Floor    (22, 12, 8) - (19, 12, 4)
+Custom   (20, 12, 7)                barrel.x
+BonusCrystall  (20, 12, 5)
+BonusCrystall  (21, 12, 6)
+Stair    (20, 13, 3)               back (2)
+Floor    (20, 16, 1) - (20, 16, -1)
+//
+//
+Exit    (20, 16, -1)
+//
+//
+}

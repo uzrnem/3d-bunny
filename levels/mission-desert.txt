@@ -1,0 +1,1249 @@
+//=====================================
+// *type*    *(x, y, z)*   *direction*
+//=====================================
+LEVEL (1){
+DefaultTime (60)
+Instruction "You are in the Magic Desert."
+Instruction "Tip: Use the shields to protect yourself from the bombs!"
+//
+Hero    (0, 0, 0)    back
+//
+Floor    (-1, 0, -1) - (1, 0, 1)
+Floor    (-2, 0, 0)
+ElectroShock (-3, 0, 0) 
+Floor    (-4, 0, 0)
+Floor    (-5, 0, -1) - (-7, 0, 1)
+Floor    (-6, 0, 2) - (-6, 0, 4)
+//
+Floor    (-7, 0, 5) - (-5, 0, 7)
+BonusShield  (-6, 0, 5)
+Teleporter (-6, 0, 6) - (0, 10, 5)
+//
+Floor    (-1, 10, 4) - (1, 10, 6)
+BonusCrystall  (0, 10, 4)
+Floor    (0, 10, 7)
+Mummy    (-1, 10, 4)    right
+Floor    (-1, 10, 8) - (1, 0, 10)
+Teleporter (0, 10, 9) - (-9, 20, 0)
+//
+Floor    (-8, 20, -1) - (-10, 20, 1)
+FalseFloor    (-9, 20, 2)
+Floor    (-10, 20, 3) - (-8, 20, 5)
+BonusLife  (-9, 20, 4)
+//
+Floor    (-9, 20, 6) - (-9, 20, 8)
+Floor    (-8, 20, 9) - (-10, 20, 11)
+Floor    (-5, 20, 10)
+Floor    (-7, 20, 10)
+ElectroShock (-6, 20, 10) 
+Floor    (-4, 20, 9) - (-2, 20, 11)
+//
+Floor    (-1, 20, 10) - (1, 20, 10)
+Floor    (2, 20, 9) - (4, 20, 11)
+Teleporter (2, 26, 4) - (3, 20, 10)
+//
+Floor    (3, 20, 8) - (3, 20, 0)
+BonusCrystall  (3, 20, 0)
+//
+//
+Custom  (-9, 20, 10)           obelisk_desert.x  
+Custom  (1, 0, 1)             palm02.x
+Custom  (-5, 0, -1)            palm03.x
+Custom  (-7, 0, 1)             palm01.x
+Custom  (-1, 0, -1)           palm01.x
+// 
+Floor    (1, 26, 4) - (-1, 26, 4)
+Floor    (-3, 26, 3) - (-1, 26, 5)
+Exit    (-2, 26, 4)
+//
+//
+}
+//=====================================
+LEVEL (2){
+DefaultTime (50)
+Instruction "Magic pyramid! The Crystals are flying in the air."
+Instruction "It must be the Wizard's work. Be careful!"
+//
+Hero    (0, -6, -15)    back
+//
+Floor    (-14, -6, 15) - (14, -6, 15)
+Floor    (-14, -6, -15) - (14, -6, -15)
+Floor    (15, -6, 14) - (15, -6, -14)
+Floor    (-15, -6, 14) - (-15, -6, -14)
+//
+Stair    (0, -5, -14)               front  (4)
+Stair    (-14, -5, 0)              right  (4)
+Stair    (0, -5, 14)              back   (4)
+Stair    (14, -5, 0)               left   (4)
+//
+Lift     (-14, -6, -14) - (-10, 2, -10)
+Lift     (-14, -6, 14) - (-10, 2, 10)
+Lift     (14, -6, 14) - (10, 2, 10)
+Lift     (14, -6, -14) - (10, 2, -10)
+//
+BonusCrystall  (-13, -4, -13)
+BonusCrystall  (-12, -2, -12)
+BonusCrystall  (-11, 0, -11)
+//
+BonusCrystall  (-13, -4, 13)
+BonusCrystall  (-12, -2, 12)
+BonusCrystall  (-11, 0, 11)
+//
+BonusCrystall  (13, -4, -13)
+BonusCrystall  (12, -2, -12)
+BonusCrystall  (11, 0, -11)
+//
+BonusCrystall  (13, -4, 13)
+BonusCrystall  (12, -2, 12)
+BonusCrystall  (11, 0, 11)
+//
+//
+Floor    (-9, 2, 10) - (9, 2, 10)
+Floor    (-9, 2, -10) - (9, 2, -10)
+Floor    (10, 2, 9) - (10, 2, -9)
+Floor    (-10, 2, 9) - (-10, 2, -9)
+//
+Stair    (0, 3, -9)               front  (4)
+Stair    (-9, 3, 0)              right  (4)
+Stair    (0, 3, 9)              back   (4)
+Stair    (9, 3, 0)               left   (4)
+//
+Lift     (-9, 2, -9) - (-5, 10, -5)
+Lift     (-9, 2, 9) - (-5, 10, 5)
+Lift     (9, 2, 9) - (5, 10, 5)
+Lift     (9, 2, -9) - (5, 10, -5)
+//
+BonusCrystall  (-8, 4, -8)
+BonusCrystall  (-7, 6, -7)
+BonusCrystall  (-6, 8, -6)
+//
+BonusCrystall  (-8, 4, 8)
+BonusCrystall  (-7, 6, 7)
+BonusCrystall  (-6, 8, 6)
+//
+BonusCrystall  (8, 4, 8)
+BonusCrystall  (7, 6, 7)
+BonusCrystall  (6, 8, 6)
+//
+BonusCrystall  (8, 4, -8)
+BonusCrystall  (7, 6, -7)
+BonusCrystall  (6, 8, -6)
+//
+Floor    (-4, 10, 5) - (4, 10, 5)
+Floor    (-4, 10, -5) - (4, 10, -5)
+Floor    (5, 10, 4) - (5, 10, -4)
+Floor    (-5, 10, 4) - (-5, 10, -4)
+BonusTime  (-5, 10, 0)
+BonusTime  (5, 10, 0)
+//
+//
+Stair    (0, 11, -4)               front  (4)
+Stair    (-4, 11, 0)              right  (4)
+Stair    (0, 11, 4)              back   (4)
+Stair    (4, 11, 0)               left   (4)
+//
+// 
+Exit    (0, 18, 0)
+//
+}
+//=======================================
+//=====================================
+// *type*    *(x, y, z)*   *direction*
+//=====================================
+LEVEL (3){
+DefaultTime (90)
+Instruction "Tip: Look around. Evil Skeletons are hiding!"
+
+//
+Hero    (0, 0, 0)    front
+//
+Floor    (-3, 0, -3) - (3, 0, 3)
+Floor    (-9, 3, 9) - (-7, 3, 7)
+Floor    (-9, 3, -9) - (-7, 3, -7)
+Floor    (9, 3, 9) - (7, 3, 7)
+Floor    (9, 3, -9) - (7, 3, -7)
+//
+Teleporter (-8, 3, 8) - (-2, 0, 2)
+Teleporter (-8, 3, -8) - (-2, 0, -2)
+Teleporter (8, 3, 8) - (2, 0, 2)
+Teleporter (8, 3, -8) - (2, 0, -2)
+//
+BonusCrystall  (0, 0, 3)
+BonusCrystall  (0, 0, -3)
+BonusCrystall  (-8, 3, 9)
+BonusCrystall  (-8, 3, 7)
+BonusCrystall  (8, 3, 9)
+BonusCrystall  (8, 3, 7)
+BonusCrystall  (-8, 3, -9)
+BonusCrystall  (-8, 3, -7)
+BonusCrystall  (8, 3, -9)
+BonusCrystall  (8, 3, -7)
+//
+Lift (0, 0, 4) - (0, 10, 4)
+Floor    (0, 10, 5) - (0, 10, 8)
+Exit    (0, 10, 8)
+// 
+Mummy    (-9, 3, -8)    front
+Mummy    (9, 3, -8)    front
+Mummy    (-9, 3, 8)    front
+Mummy    (9, 3, 8)    front
+//
+Custom  (0, 0, 2)             palm01.x
+Custom  (0, 0, -2)             palm01.x
+}
+//=======================================
+LEVEL (4){
+DefaultTime (90)
+Instruction "Run fast, but be wise."
+Instruction "You are closer and closer on your way home."
+//
+Hero    (0, 0, 0)    front
+Custom  (-1, 0, 0)             palm02.x
+Custom  (1, 0, 0)              palm02.x
+//
+Floor    (-1, 0, -1) - (1, 0, 1)
+Floor    (0, 0, 0) - (0, 0, 55)
+//
+ElectroShock (0, 0, 10) 
+Custom  (-1, 0, 10)             figure1.x
+Floor    (1, 0, 10) - (10, 0, 10)
+BonusCrystall  (10, 0, 10)
+Floor    (10, 0, 11) - (10, 0, 15)
+BonusFire   (10, 0, 15)
+BonusBombs   (10, 0, 14)
+//
+ElectroShock (0, 0, 20) 
+Custom  (-1, 0, 20)             figure1.x
+Floor    (1, 0, 20) - (10, 0, 20)
+BonusCrystall  (10, 0, 20)
+Floor    (10, 0, 21) - (10, 0, 25)
+Custom  (10, 0, 25)             obelisk_desert.x
+//
+ElectroShock (0, 0, 30) 
+Custom  (-1, 0, 30)             figure1.x
+Floor    (1, 0, 30) - (10, 0, 30)
+BonusCrystall  (10, 0, 30)
+Floor    (10, 0, 31) - (10, 0, 35)
+Custom  (10, 0, 35)             obelisk_desert.x
+//
+ElectroShock (0, 0, 40) 
+Custom  (-1, 0, 40)             figure1.x
+Floor    (1, 0, 40) - (10, 0, 40)
+BonusCrystall  (10, 0, 40)
+Floor    (10, 0, 41) - (10, 0, 42)
+FalseFloor    (10, 0, 43)
+Floor    (10, 0, 44) - (10, 0, 45)
+BonusTime   (10, 0, 45)
+//
+ElectroShock (0, 0, 50) 
+Custom  (-1, 0, 50)             figure1.x
+Floor    (1, 0, 50) - (10, 0, 50)
+BonusCrystall  (10, 0, 50)
+FalseFloor    (10, 0, 51)
+Floor    (10, 0, 52) - (10, 0, 55)
+BonusLife   (10, 0, 55)
+// Mages
+ElectroShock (0, 0, 5) 
+Stair    (-1, 1, 5)            left (3)
+Floor    (-4, 6, 5) - (-4, 6, 10)
+Mage   (-4, 6, 10)
+//
+ElectroShock (0, 0, 15) 
+Stair    (-1, 1, 15)            left (3)
+Floor    (-4, 6, 15) - (-4, 6, 20)
+BonusCrystall  (-4, 6, 20)
+//
+ElectroShock (0, 0, 25) 
+Stair    (-1, 1, 25)            left (3)
+Floor    (-4, 6, 25) - (-4, 6, 30)
+Mage   (-4, 6, 30)
+//
+ElectroShock (0, 0, 35) 
+Stair    (-1, 1, 35)            left (3)
+Floor    (-4, 6, 35) - (-4, 6, 40)
+BonusCrystall  (-4, 6, 40)
+//
+ElectroShock (0, 0, 45) 
+Stair    (-1, 1, 45)            left (3)
+Floor    (-4, 6, 45) - (-4, 6, 50)
+Mage   (-4, 6, 50)
+//
+Exit    (0, 0, 55)
+Custom  (-1, 0, 55)            palm01.x
+Custom  (-1, 0, 56)            palm02.x
+Custom  (0, 0, 56)             palm03.x
+Custom  (1, 0, 56)             palm02.x
+Custom  (1, 0, 55)             palm01.x
+}
+//=======================================
+LEVEL (5){
+DefaultTime (30)
+Instruction "Good job. Now, collect all of the crystals."
+Instruction "Watch the time. It's running out. Go!"
+//
+Hero    (0, 0, 0)    front
+//
+Floor    (-12, 0, -7) - (12, 0, 7)
+// "M"
+BonusCrystall  (-9, 0, 5)           
+BonusCrystall  (-9, 0, 4)            
+BonusCrystall  (-9, 0, 3)           
+BonusCrystall  (-9, 0, 2)           
+BonusCrystall  (-5, 0, 5)             
+BonusCrystall  (-5, 0, 4)          
+BonusCrystall  (-5, 0, 3)     
+BonusCrystall  (-5, 0, 2)           
+BonusCrystall  (-8, 0, 5)        
+BonusCrystall  (-7, 0, 4)         
+BonusCrystall  (-6, 0, 5)            
+// "A"
+BonusCrystall  (-3, 0, 4)           
+BonusCrystall  (-3, 0, 3)             
+BonusCrystall  (-3, 0, 2)           
+BonusCrystall  (-1, 0, 5)        
+BonusCrystall  (-1, 0, 4)    
+BonusCrystall  (-1, 0, 3)             
+BonusCrystall  (-1, 0, 2)             
+BonusCrystall  (-2, 0, 5)             
+BonusCrystall  (-2, 0, 3)         
+// "G"
+BonusCrystall  (1, 0, 5)           
+BonusCrystall  (1, 0, 4)             
+BonusCrystall  (1, 0, 3)        
+BonusCrystall  (1, 0, 2)       
+BonusCrystall  (2, 0, 5)         
+BonusCrystall  (3, 0, 5)         
+BonusCrystall  (2, 0, 2)          
+BonusCrystall  (3, 0, 2)          
+BonusCrystall  (3, 0, 3)             
+// "I"
+BonusCrystall  (5, 0, 5)           
+BonusCrystall  (5, 0, 4)           
+BonusCrystall  (5, 0, 3)            
+BonusCrystall  (5, 0, 2)           
+// "C"
+BonusCrystall  (7, 0, 5)         
+BonusCrystall  (7, 0, 4)           
+BonusCrystall  (7, 0, 3)            
+BonusCrystall  (7, 0, 2)         
+BonusCrystall  (8, 0, 5)           
+BonusCrystall  (9, 0, 5)            
+BonusCrystall  (8, 0, 2)          
+BonusCrystall  (9, 0, 2)             
+// "W"
+//BonusCrystall  (-9, 0, -5)            
+BonusCrystall  (-9, 0, -4)             
+BonusCrystall  (-9, 0, -3)            
+BonusCrystall  (-9, 0, -2)            
+//BonusCrystall  (-5, 0, -5)           
+BonusCrystall  (-5, 0, -4)            
+BonusCrystall  (-5, 0, -3)           
+BonusCrystall  (-5, 0, -2)           
+BonusCrystall  (-8, 0, -5)           
+BonusCrystall  (-7, 0, -4)             
+BonusCrystall  (-6, 0, -5)             
+// "O"
+BonusCrystall  (-3, 0, -5)         
+BonusCrystall  (-3, 0, -4)           
+BonusCrystall  (-3, 0, -3)           
+BonusCrystall  (-3, 0, -2)           
+BonusCrystall  (-1, 0, -5)            
+BonusCrystall  (-1, 0, -4)            
+BonusCrystall  (-1, 0, -3)            
+BonusCrystall  (-1, 0, -2)             
+BonusCrystall  (-2, 0, -5)           
+BonusCrystall  (-2, 0, -2)           
+// "R"
+BonusCrystall  (1, 0, -5)             
+BonusCrystall  (1, 0, -4)            
+BonusCrystall  (1, 0, -3)             
+BonusCrystall  (1, 0, -2)            
+BonusCrystall  (2, 0, -2)            
+BonusCrystall  (3, 0, -2)           
+BonusCrystall  (3, 0, -3)             
+BonusCrystall  (2, 0, -4)            
+BonusCrystall  (3, 0, -5)             
+// "L"
+BonusCrystall  (5, 0, -5)          
+BonusCrystall  (5, 0, -4)         
+BonusCrystall  (5, 0, -3)           
+BonusCrystall  (5, 0, -2)          
+BonusCrystall  (6, 0, -5)            
+BonusCrystall  (7, 0, -5)           
+// "D"
+BonusCrystall  (9, 0, -5)             
+BonusCrystall  (9, 0, -4)           
+BonusCrystall  (9, 0, -3)          
+BonusCrystall  (9, 0, -2)           
+BonusCrystall  (10, 0, -5)            
+BonusCrystall  (10, 0, -2)             
+BonusCrystall  (11, 0, -4)            
+BonusCrystall  (11, 0, -3)           
+//
+Floor    (13, 0, 0) - (20, 0, 0)
+Teleporter (20, 0, 0) - (40, 10, 0)
+Exit (41, 10, 0)
+//
+Mummy    (-12, 0, -7)    front
+Mummy    (12, 0, 7)    front
+Mummy    (5, 0, 0)    front
+//
+ElectroShock (13, 0, 0)
+ElectroShock (19, 0, 0)
+//
+BonusTime  (15, 0, 0)      
+BonusFreeze  (0, 0, 7)      
+BonusShield  (0, 0, -7)      
+}
+//=======================================
+LEVEL (6){
+DefaultTime (30)
+Instruction "You are halfway home. Tip: You can hide in the trees, "
+Instruction "but you are not the only one who knows that. "
+//
+Hero    (0, 0, 0)    front
+//
+Floor    (-7, 0, 0) - (7, 0, 14)
+Floor    (-13, -10, 20) - (-13, -10, -6)
+Floor    (13, -10, 20) - (13, -10, -6)
+Floor    (-12, -10, 20) - (12, -10, 20)
+Floor    (-12, -10, -6) - (12, -10, -6)
+//
+Stair    (0, -9, -5)            front (5)
+Stair    (0, -9, 19)            back (5)
+Stair    (-12, -9, 7)            right (5)
+Stair    (12, -9, 7)            left (5)
+//
+Custom  (3, 0, 9)             palm01.x
+Custom  (4, 0, 8)             palm02.x
+Custom  (3, 0, 7)             palm01.x
+Custom  (4, 0, 6)             palm03.x
+Custom  (3, 0, 5)             palm01.x
+//
+Custom  (-3, 0, 9)             palm01.x
+Custom  (-4, 0, 8)             palm02.x
+Custom  (-3, 0, 7)             palm01.x
+Custom  (-4, 0, 6)             palm03.x
+Custom  (-3, 0, 5)             palm01.x
+//
+Custom  (-4, 0, 3)             palm02.x
+Custom  (-3, 0, 2)             palm01.x
+Custom  (-2, 0, 3)             palm03.x
+Custom  (-1, 0, 2)             palm01.x
+Custom  (0, 0, 3)             palm01.x
+Custom  (1, 0, 2)             palm02.x
+Custom  (2, 0, 3)             palm01.x
+Custom  (3, 0, 2)             palm03.x
+Custom  (4, 0, 3)             palm01.x
+//
+Custom  (-4, 0, 11)             palm02.x
+Custom  (-3, 0, 12)             palm01.x
+Custom  (-2, 0, 11)             palm03.x
+Custom  (-1, 0, 12)             palm01.x
+Custom  (0, 0, 11)             palm01.x
+Custom  (1, 0, 12)             palm02.x
+Custom  (2, 0, 11)             palm01.x
+Custom  (3, 0, 12)             palm03.x
+Custom  (4, 0, 11)             palm01.x
+//
+BonusTime  (-13, -10, 20)
+BonusTime  (-13, -10, -6)
+BonusTime  (13, -10, 20)
+BonusTime  (13, -10, -6)
+//
+BonusCrystall  (-13, -10, 7)
+BonusCrystall  (13, -10, 7)
+BonusCrystall  (0, -10, -6)
+BonusCrystall  (0, -10, 20)
+//
+BonusCrystall  (-1, 0, 3)
+BonusCrystall  (1, 0, 3)
+BonusCrystall  (-3, 0, 3)
+BonusCrystall  (3, 0, 3)
+BonusCrystall  (-1, 0, 11)
+BonusCrystall  (1, 0, 11)
+BonusCrystall  (-3, 0, 11)
+BonusCrystall  (3, 0, 11)
+//
+BonusCrystall  (-3, 0, 6)
+BonusCrystall  (-3, 0, 8)
+BonusCrystall  (3, 0, 6)
+BonusCrystall  (3, 0, 8)
+//
+Mummy    (-7, 0, 14)    front
+Mage     (7, 0, 14)    front
+//
+Teleporter (0, 0, 7) - (0, -20, 30)
+FalseFloor    (-1, -20, 31)
+FalseFloor    (-1, -20, 30)
+FalseFloor    (-1, -20, 29)
+FalseFloor    (0, -20, 31)
+FalseFloor    (0, -20, 29)
+FalseFloor    (1, -20, 31)
+FalseFloor    (1, -20, 30)
+FalseFloor    (1, -20, 29)
+//
+Lift (-1, -20, 32) - (-1, -20, 36)
+Exit (0, -21, 36)
+}
+//=======================================
+LEVEL (7){
+DefaultTime (360)
+Instruction "Tip: Use power shields for protection."
+Hero    (0, 0, 0)    front
+// Main
+Floor    (-1, 0, -1) - (1, 0, 1)
+BonusShield  (-1, 0, -1)
+BonusShield  (-1, 0, 1)
+BonusShield  (1, 0, -1)
+BonusShield  (1, 0, 1)
+Teleporter   (-2, 0, 0) - (-27, 5, 0)
+Teleporter   (2, 0, 0) - (27, 5, 0)
+Teleporter   (0, 0, -2) - (0, 5, -27)
+Teleporter   (0, 0, 2) - (0, 5, 27)
+// Pyramide 1 (back)
+Floor    (-2, 5, -28) - (2, 5, -32)
+Custom  (0, 5, -30)              obelisk_desert.x
+Custom  (-2, 5, -28)             palm03.x
+Custom  (2, 5, -32)             palm03.x
+Custom  (2, 5, -28)             palm03.x
+Custom  (-2, 5, -32)             palm03.x
+//
+BonusCrystall (-1, 5, -28)
+BonusCrystall (0, 5, -28)
+BonusCrystall (1, 5, -28)
+BonusCrystall (-1, 5, -32)
+BonusCrystall (0, 5, -32)
+BonusCrystall (1, 5, -32)
+BonusCrystall (-2, 5, -29)
+BonusCrystall (-2, 5, -30)
+BonusCrystall (-2, 5, -31)
+BonusCrystall (2, 5, -29)
+BonusCrystall (2, 5, -30)
+BonusCrystall (2, 5, -31)
+Stair    (0, 4, -33)            front
+BonusFreeze (-1, 5, -30)
+BonusFreeze (1, 5, -30)
+//
+Floor    (-4, 3, -34) - (4, 3, -34)
+Floor    (-4, 3, -26) - (4, 3, -26)
+Floor    (-4, 3, -27) - (-4, 3, -33)
+Floor    (4, 3, -27) - (4, 3, -33)
+BonusCrystall (-1, 3, -26)
+BonusCrystall (0, 3, -26)
+BonusCrystall (1, 3, -26)
+BonusShield (-2, 3, -26)
+//
+Mage   (0, 5, -31) front
+Mage   (0, 3, -26) front
+// Pyramide 2 (front)
+Floor    (-2, 5, 28) - (2, 5, 32)
+Custom  (0, 5, 30)              obelisk_desert.x
+Custom  (-2, 5, 28)             palm03.x
+Custom  (2, 5, 32)             palm03.x
+Custom  (2, 5, 28)             palm03.x
+Custom  (-2, 5, 32)             palm03.x
+//
+BonusCrystall (-1, 5, 28)
+BonusCrystall (0, 5, 28)
+BonusCrystall (1, 5, 28)
+BonusCrystall (-1, 5, 32)
+BonusCrystall (0, 5, 32)
+BonusCrystall (1, 5, 32)
+BonusCrystall (-2, 5, 29)
+BonusCrystall (-2, 5, 30)
+BonusCrystall (-2, 5, 31)
+BonusCrystall (2, 5, 29)
+BonusCrystall (2, 5, 30)
+BonusCrystall (2, 5, 31)
+Stair    (0, 4, 33)            back
+BonusFreeze (-1, 5, 30)
+BonusFreeze (1, 5, 30)
+//
+Floor    (-4, 3, 34) - (4, 3, 34)
+Floor    (-4, 3, 26) - (4, 3, 26)
+Floor    (-4, 3, 27) - (-4, 3, 33)
+Floor    (4, 3, 27) - (4, 3, 33)
+BonusCrystall (-1, 3, 26)
+BonusCrystall (0, 3, 26)
+BonusCrystall (1, 3, 26)
+BonusShield (-2, 3, 26)
+//
+Mage   (0, 5, 31) front
+Mage   (0, 3, 26) front
+// Pyramide 3 (right)
+Floor    (28, 5, -2) - (32, 5, 2)
+Custom  (30, 5, 0)              obelisk_desert.x
+Custom  (28, 5, -2)             palm03.x
+Custom  (32, 5, 2)             palm03.x
+Custom  (28, 5, 2)             palm03.x
+Custom  (32, 5, -2)             palm03.x
+//
+BonusCrystall (28, 5, -1)
+BonusCrystall (28, 5, 0)
+BonusCrystall (28, 5, 1)
+BonusCrystall (32, 5, -1)
+BonusCrystall (32, 5, 0)
+BonusCrystall (32, 5, 1)
+BonusCrystall (29, 5, -2)
+BonusCrystall (30, 5, -2)
+BonusCrystall (31, 5, -2)
+BonusCrystall (29, 5, 2)
+BonusCrystall (30, 5, 2)
+BonusCrystall (31, 5, 2)
+Stair    (33, 4, 0)            left
+BonusFreeze (30, 5, -1)
+BonusFreeze (30, 5, 1)
+//
+Floor    (34, 3, -4) - (34, 3, 4)
+Floor    (26, 3, -4) - (26, 3, 4)
+Floor    (27, 3, -4) - (33, 3, -4)
+Floor    (27, 3, 4) - (33, 3, 4)
+BonusCrystall (26, 3, -1)
+BonusCrystall (26, 3, 0)
+BonusCrystall (26, 3, 1)
+BonusShield (26, 3, -2)
+//
+Mage   (31, 5, 0) front
+Mage   (26, 3, 0) front
+// Pyramide 4 (left)
+Floor    (-28, 5, -2) - (-32, 5, 2)
+Custom  (-30, 5, 0)              obelisk_desert.x
+Custom  (-28, 5, -2)             palm03.x
+Custom  (-32, 5, 2)             palm03.x
+Custom  (-28, 5, 2)             palm03.x
+Custom  (-32, 5, -2)             palm03.x
+//
+BonusCrystall (-28, 5, -1)
+BonusCrystall (-28, 5, 0)
+BonusCrystall (-28, 5, 1)
+BonusCrystall (-32, 5, -1)
+BonusCrystall (-32, 5, 0)
+BonusCrystall (-32, 5, 1)
+BonusCrystall (-29, 5, -2)
+BonusCrystall (-30, 5, -2)
+BonusCrystall (-31, 5, -2)
+BonusCrystall (-29, 5, 2)
+BonusCrystall (-30, 5, 2)
+BonusCrystall (-31, 5, 2)
+Stair    (-33, 4, 0)            right
+BonusFreeze (-30, 5, -1)
+BonusFreeze (-30, 5, 1)
+//
+Floor    (-34, 3, -4) - (-34, 3, 4)
+Floor    (-26, 3, -4) - (-26, 3, 4)
+Floor    (-27, 3, -4) - (-33, 3, -4)
+Floor    (-27, 3, 4) - (-33, 3, 4)
+BonusCrystall (-26, 3, -1)
+BonusCrystall (-26, 3, 0)
+BonusCrystall (-26, 3, 1)
+BonusShield (-26, 3, -2)
+//
+Mage   (-31, 5, 0) front
+Mage   (-26, 3, 0) front
+//
+// Bombs layer
+Lift   (-2, 0, 1) - (-2, 10, 1)
+Floor  (-2, 10, 2) - (-2, 10, 5)
+BonusBombs (-2, 10, 5)
+BonusFire (-2, 10, 4)
+// Exit layer
+Lift   (2, 0, 1) - (2, 20, 1)
+FalseFloor   (2, 20, 2)
+FalseFloor   (2, 20, 3)
+FalseFloor   (2, 20, 4)
+FalseFloor   (2, 20, 5)
+ElectroShock (2, 20, 6)
+Exit (2, 20, 7)
+}
+//=======================================
+LEVEL (8){
+DefaultTime (180)
+Instruction "This is a huge maze. Don't worry,"
+Instruction "you have enough skills to pass it!"
+Hero    (0, 0, 0)    front
+// Layer 0, y=0
+Floor    (-15, 0, -1) - (15, 0, 1)
+Stair    (-15, 1, 2)           front (10)
+Stair    (15, 1, 2)            front (10)
+Lift   (-16, 0, 0) - (-16, 30, 0)
+Lift   (16, 0, 0) - (16, -15, 0)
+BonusCrystall (-14, 0, 0)
+BonusCrystall (-13, 0, 0)
+BonusCrystall (-12, 0, 0)
+BonusCrystall (12, 0, 0)
+BonusCrystall (13, 0, 0)
+BonusCrystall (14, 0, 0)
+//
+BonusFreeze   (-5, 0, 1)
+BonusFreeze   (5, 0, 1)
+//
+Custom  (-7, 0, 0)             obelisk_desert.x
+Custom  (7, 0, 0)             obelisk_desert.x
+// Layer 1, y=20
+Floor    (-15, 20, 12) - (-12, 20, 15)
+BonusCrystall (-14, 20, 13)
+BonusCrystall (-13, 20, 13)
+BonusCrystall (-14, 20, 14)
+BonusCrystall (-13, 20, 14)
+Mummy    (-15, 20, 12)    front
+// Layer 2, y=20
+Floor    (15, 20, 12) - (12, 20, 15)
+Lift   (12, 20, 16) - (12, 30, 16)
+BonusCrystall (14, 20, 13)
+BonusCrystall (13, 20, 13)
+BonusCrystall (14, 20, 14)
+BonusCrystall (13, 20, 14)
+// Layer 3, y=30
+FalseFloor   (11, 30, 18)
+FalseFloor   (12, 30, 18)
+FalseFloor   (13, 30, 18)
+FalseFloor   (11, 30, 17)
+FalseFloor   (12, 30, 17)
+FalseFloor   (13, 30, 17)
+FalseFloor   (11, 30, 16)
+FalseFloor   (13, 30, 16)
+BonusLife    (13, 30, 18)
+BonusTime    (11, 30, 16)
+Floor    (12, 30, 19) - (12, 30, 40)
+Mummy    (12, 30, 40)
+// Layer 4, y=-15
+FalseFloor   (15, -15, 0)
+FalseFloor   (17, -15, 0)
+FalseFloor   (15, -15, -1)
+FalseFloor   (16, -15, -1)
+FalseFloor   (17, -15, -1)
+FalseFloor   (15, -15, -2)
+FalseFloor   (16, -15, -2)
+FalseFloor   (17, -15, -2)
+BonusLife    (17, -15, -2)
+BonusTime    (15, -15, 0)
+Floor    (16, -15, -3) - (16, -15, -25)
+Mummy    (16, -15, -25)
+// Layer 5, y=-20
+Floor    (-5, -20, -12) - (5, -20, -15)
+Stair    (0, -19, -11)            front (10)
+Stair    (-5, -19, -16)            back (5)
+BonusShield   (0, -20, -14)
+//
+BonusCrystall (-4, -20, -13)
+BonusCrystall (-4, -20, -14)
+BonusCrystall (-3, -20, -13)
+BonusCrystall (-3, -20, -14)
+BonusCrystall (4, -20, -13)
+BonusCrystall (4, -20, -14)
+BonusCrystall (3, -20, -13)
+BonusCrystall (3, -20, -14)
+//
+Custom  (-5, -20, -12)             palm01.x
+Custom  (-2, -20, -15)             palm02.x
+Custom  (-3, -20, -12)             palm03.x
+// Layer 6, y=-10
+Floor    (-6, -10, -21) - (-4, -10, -23)
+Teleporter   (-5, -10, -22) - (-25, -10, -22)
+// Layer 7, y=-10
+Floor    (-28, -10, -19) - (-22, -10, -19)
+Floor    (-28, -10, -25) - (-22, -10, -25)
+Floor    (-28, -10, -20) - (-28, -10, -24)
+Floor    (-22, -10, -20) - (-22, -10, -24)
+Floor    (-24, -10, -22) - (-23, -10, -22)
+//
+BonusCrystall (-25, -10, -19)
+BonusCrystall (-25, -10, -25)
+BonusCrystall (-22, -10, -22)
+BonusCrystall (-28, -10, -22)
+Mummy    (-28, -10, -19)    front
+// Layer 8, y=30
+Floor    (-17, 30, 1) - (-15, 30, 10)
+Stair    (-18, 31, 1)            left (5)
+//
+BonusCrystall (-16, 30, 2)
+BonusCrystall (-16, 30, 3)
+BonusCrystall (-16, 30, 4)
+BonusCrystall (-16, 30, 5)
+BonusCrystall (-16, 30, 6)
+BonusCrystall (-16, 30, 7)
+BonusCrystall (-16, 30, 8)
+BonusCrystall (-16, 30, 9)
+//
+Custom  (-17, 30, 2)             palm01.x
+Custom  (-15, 30, 10)             palm01.x
+Custom  (-17, 30, 10)             palm01.x
+Custom  (-15, 30, 1)             palm01.x
+
+// Layer 9, y=40
+Floor    (-23, 40, 0) - (-25, 40, 2)
+Lift   (-24, 40, 3) - (-24, 50, 3)
+Lift   (-24, 40, -1) - (-24, 30, -1)
+BonusCrystall (-24, 40, 1)
+// Layer 10, y=30
+Floor    (-25, 30, -1) - (-40, 30, -1)
+Stair    (-40, 31, 0)            front (5)
+Stair    (-40, 31, -2)            back (5)
+BonusShield   (-40, 30, -1)
+//
+Custom  (-25, 30, 0)             figure1.x
+Custom  (-25, 30, -2)             figure1.x
+// Layer 11, y=40
+Floor    (-41, 40, 5) - (-39, 40, 7)
+Floor    (-41, 40, -7) - (-39, 40, -9)
+Teleporter   (-40, 40, 6) - (-40, 40, -8)
+//
+BonusCrystall (-39, 40, 5)
+BonusCrystall (-40, 40, 5)
+BonusCrystall (-41, 40, 5)
+BonusCrystall (-39, 40, 6)
+BonusCrystall (-41, 40, 6)
+BonusCrystall (-39, 40, 7)
+BonusCrystall (-40, 40, 7)
+BonusCrystall (-41, 40, 7)
+Mummy    (-39, 40, 5)    front
+// Layer 12, y=50
+FalseFloor   (-24, 50, 4)
+Stair    (-25, 51, 4)            left (10)
+FalseFloor   (-35, 70, 4)
+Stair    (-35, 71, 5)            front (10)
+Exit   (-35, 90, 15)
+}
+//=======================================
+LEVEL (9){
+DefaultTime (120)
+Instruction "All the way up and down."
+Instruction "Watch out for the skeletons."
+Hero    (0, -102, 0)    front
+//
+Floor    (0, -102, 4) - (0, -102, 20)
+Floor    (0, -102, 0) - (-3, -102, 3)
+//
+BonusCrystall (-1, -102, 1)
+BonusCrystall (-2, -102, 1)
+BonusCrystall (-1, -102, 2)
+BonusCrystall (-2, -102, 2)
+Custom  (-3, -102, 3)             palm01.x
+Custom  (-3, -102, 0)             palm01.x
+//
+Lift    (0, -102, -1) - (0, 124, -1)
+Stair    (1, -101, 20)            right (14)
+Floor    (15, -74, 20) - (18, -74, 23)
+//
+BonusCrystall (16, -74, 21)
+BonusCrystall (17, -74, 21)
+BonusCrystall (16, -74, 22)
+BonusCrystall (17, -74, 22)
+Custom  (18, -74, 20)             palm01.x
+Custom  (15, -74, 23)             palm01.x
+Custom  (18, -74, 23)             palm01.x
+//
+Stair    (15, -73, 19)           back (29)
+Floor    (15, -16, -10) - (18, -16, -13)
+//
+BonusCrystall (16, -16, -11)
+BonusCrystall (17, -16, -11)
+BonusCrystall (16, -16, -12)
+BonusCrystall (17, -16, -12)
+Custom  (18, -16, -13)             palm01.x
+Custom  (18, -16, -10)             palm01.x
+Custom  (15, -16, -13)             palm01.x
+BonusShield   (15, -16, -11)
+Mummy   (15, -16, -12)    front
+//
+Stair    (14, -15, -10)           left (24)
+Floor    (-10, 32, -10) - (-13, 32, -13)
+//
+BonusCrystall (-11, 32, -11)
+BonusCrystall (-12, 32, -11)
+BonusCrystall (-11, 32, -12)
+BonusCrystall (-12, 32, -12)
+Custom  (-10, 32, -13)             palm01.x
+Custom  (-13, 32, -10)             palm01.x
+Custom  (-13, 32, -13)             palm01.x
+BonusFreeze  (-13, 32, -11) 
+BonusFreeze  (-13, 32, -12) 
+//
+Stair    (-10, 33, -9)           front (19)
+Floor    (-10, 70, 10) - (-13, 70, 13)
+//
+BonusCrystall (-11, 70, 11)
+BonusCrystall (-12, 70, 11)
+BonusCrystall (-11, 70, 12)
+BonusCrystall (-12, 70, 12)
+Custom  (-13, 70, 10)             palm01.x
+Custom  (-13, 70, 13)             palm01.x
+Custom  (-10, 70, 13)             palm01.x
+BonusFreeze  (-10, 70, 11) 
+BonusFreeze  (-10, 70, 12) 
+//
+Stair    (-9, 71, 10)           right (14)
+Floor    (5, 98, 10) - (8, 98, 13)
+//
+BonusCrystall (6, 98, 11)
+BonusCrystall (7, 98, 11)
+BonusCrystall (6, 98, 12)
+BonusCrystall (7, 98, 12)
+Custom  (5, 98, 13)             palm01.x
+Custom  (8, 98, 10)             palm01.x
+Custom  (8, 98, 13)             palm01.x
+BonusTime  (8, 98, 11) 
+BonusFreeze  (8, 98, 12) 
+Mummy   (8, 98, 12)    front
+//
+Stair    (5, 99, 9)           back (9)
+Floor    (5, 116, 0) - (8, 116, -3)
+//
+BonusCrystall (6, 116, -1)
+BonusCrystall (7, 116, -1)
+BonusCrystall (6, 116, -2)
+BonusCrystall (7, 116, -2)
+Custom  (5, 116, -3)             palm01.x
+Custom  (8, 116, 0)             palm01.x
+Custom  (8, 116, -3)             palm01.x
+BonusFreeze  (8, 116, -2) 
+BonusFreeze  (8, 116, -1) 
+//
+Stair    (4, 117, 0)           left (4)
+Floor    (0, 124, 0) - (-3, 124, 3)
+//
+BonusCrystall (-1, 124, 1)
+BonusCrystall (-2, 124, 1)
+BonusCrystall (-1, 124, 2)
+BonusCrystall (-2, 124, 2)
+Custom  (0, 124, 3)             palm01.x
+Custom  (-3, 124, 0)             palm01.x
+Custom  (-3, 124, 3)             palm01.x
+BonusTime  (-2, 124, 0) 
+BonusFreeze  (-1, 124, 0) 
+//
+Exit  (-1, -102, 3)
+}
+//=======================================
+LEVEL (10){
+DefaultTime (150)
+Instruction "Avoid the false floor! "
+Instruction "Tip: Use the camera zoom to overview." 
+Hero    (0, 0, 0)    front
+// Layer 1, y=0
+Floor    (0, 0, 0)
+FalseFloor  (-2, 0, 1)
+FalseFloor  (-1, 0, 1)
+FalseFloor  (-0, 0, 1)
+FalseFloor  (1, 0, 1)
+FalseFloor  (2, 0, 1)
+FalseFloor  (-1, 0, 0)
+FalseFloor  (1, 0, 0)
+FalseFloor  (-2, 0, -1)
+FalseFloor  (-1, 0, -1)
+FalseFloor  (-0, 0, -1)
+FalseFloor  (1, 0, -1)
+FalseFloor  (2, 0, -1)
+BonusCrystall   (-1, 0, 1)
+BonusCrystall   (0, 0, 1)
+BonusCrystall   (1, 0, 1)
+BonusCrystall   (-1, 0, -1)
+BonusCrystall   (0, 0, -1)
+BonusCrystall   (1, 0, -1)
+// Layer 2, y=-10
+Floor    (-30, -10, -1) - (-32, -10, 1)
+FalseFloor  (-33, -10, 0)
+FalseFloor  (-34, -10, 0)
+ElectroShock  (-35, -10, 0)
+Floor    (-35, -10, -1) - (-36, -10, 1)
+BonusCrystall   (-36, -10, 0)
+BonusLife       (-35, -10, -1)
+// Layer 3, y=-10
+Floor    (30, -10, -1) - (37, -10, 3)
+Floor    (30, -10, -3) - (34, -10, -2)
+FalseFloor  (35, -10, -2)
+FalseFloor  (36, -10, -2)
+FalseFloor  (37, -10, -2)
+FalseFloor  (35, -10, -3)
+FalseFloor  (36, -10, -3)
+BonusBombs  (36, -10, -3)
+//
+Custom  (30, -10, 3)             palm02.x
+Custom  (32, -10, 2)             palm02.x
+Custom  (34, -10, 3)             palm02.x
+Custom  (36, -10, 2)             palm02.x
+Custom  (31, -10, -2)             palm02.x
+Custom  (33, -10, -3)             palm02.x
+//
+BonusCrystall   (32, -10, 1)
+BonusCrystall   (33, -10, 1)
+BonusCrystall   (34, -10, 1)
+BonusCrystall   (35, -10, 1)
+BonusCrystall   (32, -10, 0)
+BonusCrystall   (33, -10, 0)
+BonusCrystall   (34, -10, 0)
+BonusCrystall   (35, -10, 0)
+BonusCrystall   (32, -10, -1)
+BonusCrystall   (33, -10, -1)
+BonusCrystall   (34, -10, -1)
+BonusCrystall   (35, -10, -1)
+// Layer 4, y=0
+Floor    (30, 0, -20) - (32, 0, -26)
+Floor    (34, 0, -20) - (36, 0, -26)
+Custom  (33, 0, -20)             obelisk_desert.x
+Custom  (33, 0, -21)             obelisk_desert.x
+FalseFloor  (33, 0, -22)
+Custom  (33, 0, -23)             palm01.x
+FalseFloor  (33, 0, -24)
+Custom  (33, 0, -25)             obelisk_desert.x
+Custom  (33, 0, -26)             obelisk_desert.x
+Lift   (37, 0, -26) - (37, -25, -26)
+// Layer 7
+Floor    (32, -25, -27) - (42, -25, -37)
+Mage    (42, -25, -37)
+Mage    (37, -25, -37)
+Mage    (32, -25, -37)
+//
+BonusCrystall   (35, -25, -36)
+BonusCrystall   (36, -25, -36)
+BonusCrystall   (37, -25, -36)
+BonusCrystall   (38, -25, -36)
+BonusCrystall   (39, -25, -36)
+BonusCrystall   (35, -25, -35)
+BonusCrystall   (36, -25, -35)
+BonusCrystall   (37, -25, -35)
+BonusCrystall   (38, -25, -35)
+BonusCrystall   (39, -25, -35)
+BonusCrystall   (35, -25, -34)
+BonusCrystall   (36, -25, -34)
+BonusCrystall   (37, -25, -34)
+BonusCrystall   (38, -25, -34)
+BonusCrystall   (39, -25, -34)
+BonusCrystall   (35, -25, -33)
+BonusCrystall   (36, -25, -33)
+BonusCrystall   (37, -25, -33)
+BonusCrystall   (38, -25, -33)
+BonusCrystall   (39, -25, -33)
+// Layer 5, y=-10
+FalseFloor  (-1, -10, -30)
+FalseFloor  (-1, -10, -31)
+FalseFloor  (0, -10, -31)
+FalseFloor  (-1, -10, -32)
+FalseFloor  (0, -10, -32)
+FalseFloor  (-1, -10, -33)
+FalseFloor  (0, -10, -33)
+//
+FalseFloor  (-2, -10, -32)
+FalseFloor  (-1, -10, -32)
+FalseFloor  (-2, -10, -33)
+FalseFloor  (-1, -10, -33)
+ElectroShock  (-3, -10, -32)
+ElectroShock  (-3, -10, -33)
+FalseFloor  (-4, -10, -28)
+FalseFloor  (-5, -10, -28)
+FalseFloor  (-4, -10, -29)
+FalseFloor  (-5, -10, -29)
+FalseFloor  (-4, -10, -30)
+FalseFloor  (-5, -10, -30)
+FalseFloor  (-4, -10, -31)
+FalseFloor  (-5, -10, -31)
+FalseFloor  (-4, -10, -32)
+FalseFloor  (-5, -10, -32)
+FalseFloor  (-4, -10, -33)
+FalseFloor  (-5, -10, -33)
+//
+FalseFloor  (-6, -10, -28)
+FalseFloor  (-7, -10, -28)
+FalseFloor  (-6, -10, -29)
+// Layer 6, y=5
+FalseFloor  (-34, 5, -19)
+ElectroShock  (-33, 5, -19)
+FalseFloor  (-32, 5, -19)
+FalseFloor  (-31, 5, -19)
+FalseFloor  (-30, 5, -19)
+FalseFloor  (-34, 5, -20)
+BonusCrystall   (-34, 5, -20)
+FalseFloor  (-33, 5, -20)
+BonusCrystall   (-33, 5, -20)
+Custom  (-32, 5, -20)             palm03.x
+FalseFloor  (-31, 5, -20)
+Custom  (-34, 5, -21)             palm03.x
+FalseFloor  (-33, 5, -21)
+ElectroShock  (-32, 5, -21)
+FalseFloor  (-31, 5, -21)
+FalseFloor  (-30, 5, -21)
+FalseFloor  (-34, 5, -22)
+BonusTime  (-34, 5, -22)
+FalseFloor  (-33, 5, -22)
+FalseFloor  (-32, 5, -22)
+Custom  (-31, 5, -22)             palm03.x
+Custom  (-30, 5, -22)             palm03.x
+//
+Teleporter  (-2, 0, 0) - (-30, -10, 0)
+Teleporter  (2, 0, 0) - (30, -10, 0)
+Teleporter  (37, -10, -3) - (36, 0, -20)
+Teleporter  (0, -10, -30) - (30, 0, -22)
+Teleporter  (-7, -10, -29) - (-30, 5, -20)
+//
+Exit   (37, -25, -32)
+//Mummy   (37, -25, -32)
+}
+//=======================================
+LEVEL (11){
+DefaultTime (300)
+Instruction "Be very careful. The Wizards are dangerous!"
+//
+Hero    (0, 0, 0)    front
+// *** Layer 0
+FalseFloor    (0, 0, 0)
+Teleporter (0, 0, 1) - (8, 4, 0)
+// *** Layer 1
+Floor    (8, 4, -3) - (8, 4, 3)
+Floor    (-8, 4, -3) - (-8, 4, 3)
+Floor    (-3, 4, 8) - (3, 4, 8)
+Floor    (-3, 4, -8) - (3, 4, -8)
+Lift     (4, 4, 8) - (8, 4, 4)
+Lift     (8, 4, -4) - (4, 4, -8)
+Lift     (-4, 4, -8) - (-8, 4, -4)
+Lift     (-8, 4, 4) - (-4, 4, 8)
+Teleporter (-8, 4, 0) - (-16, 8, 0)
+// *** Layer 2
+Floor    (16, 8, -7) - (16, 8, 7)
+Floor    (-16, 8, -7) - (-16, 8, 7)
+Floor    (-7, 8, 16) - (7, 8, 16)
+Floor    (-7, 8, -16) - (7, 8, -16)
+Lift     (8, 8, 16) - (16, 8, 8)
+Lift     (16, 8, -8) - (8, 8, -16)
+Lift     (-8, 8, -16) - (-16, 8, -8)
+Lift     (-16, 8, 8) - (-8, 8, 16)
+Teleporter (16, 8, 0) - (24, 12, 0)
+// *** Layer 3
+Floor    (24, 12, -11) - (24, 12, 11)
+Floor    (-24, 12, -11) - (-24, 12, 11)
+Floor    (-11, 12, 24) - (11, 12, 24)
+Floor    (-11, 12, -24) - (11, 12, -24)
+Lift     (12, 12, 24) - (24, 12, 12)
+Lift     (24, 12, -12) - (12, 12, -24)
+Lift     (-12, 12, -24) - (-24, 12, -12)
+Lift     (-24, 12, 12) - (-12, 12, 24)
+//
+BonusCrystall  (-3, 4, 8)
+BonusCrystall  (3, 4, 8)
+BonusCrystall  (-7, 8, 16)
+BonusCrystall  (7, 8, 16)
+BonusCrystall  (-11, 12, 24)
+BonusCrystall  (11, 12, 24)
+//
+BonusCrystall  (-3, 4, -8)
+BonusCrystall  (3, 4, -8)
+BonusCrystall  (-7, 8, -16)
+BonusCrystall  (7, 8, -16)
+BonusCrystall  (-11, 12, -24)
+BonusCrystall  (11, 12, -24)
+//
+Mage     (0, 4, 8)    front
+Mage     (0, 8, 16)    front
+Mage     (0, 12, 24)    front
+//
+BonusBombs  (0, 4, 8)
+// Layer 3 - squad
+FalseFloor  (0, 12, -25)
+FalseFloor  (1, 12, -25)
+FalseFloor  (0, 12, -26)
+FalseFloor  (1, 12, -26)
+FalseFloor  (0, 12, -27)
+FalseFloor  (1, 12, -27)
+FalseFloor  (0, 12, -28)
+FalseFloor  (1, 12, -28)
+FalseFloor  (0, 12, -29)
+FalseFloor  (1, 12, -29)
+Custom  (-1, 12, -25)             palm01.x
+Custom  (-1, 12, -26)             palm01.x
+Custom  (-1, 12, -27)             palm01.x
+Custom  (-1, 12, -28)             palm01.x
+Custom  (-1, 12, -29)             palm01.x
+Custom  (2, 12, -25)             palm01.x
+Custom  (2, 12, -26)             palm01.x
+Custom  (2, 12, -27)             palm01.x
+Custom  (2, 12, -28)             palm01.x
+Custom  (2, 12, -29)             palm01.x
+BonusCrystall  (0, 12, -28)
+BonusCrystall  (1, 12, -28)
+BonusLife  (0, 12, -29)
+BonusLife  (1, 12, -29)
+//
+Exit (0, 0, 2)
+Custom  (-1, 0, 2)             obelisk_desert.x
+Custom  (1, 0, 2)              obelisk_desert.x
+}
+//=======================================
+LEVEL (12){
+DefaultTime (120)
+Instruction "You are almost home!."
+Instruction "Are you ready??? Go!!!"
+Hero    (0, 0, -8)    front
+// layer 1 y=0
+Floor    (-8, 0, -8) - (8,0,-8)
+Floor    (8, 0, -8) - (8,0,8)
+Floor    (8, 0, 8) - (-8,0,8)
+Floor    (-8, 0, 8) - (-8,0,-8)
+//
+BonusCrystall  (-8, 0, -8)
+BonusCrystall  (8, 0, -8)
+BonusCrystall  (8, 0, 8)
+BonusCrystall  (-8, 0, 8)
+BonusCrystall  (-8, 0, 0)
+BonusCrystall  (8, 0, 8)
+BonusCrystall  (0, 0, 8)
+BonusCrystall  (0, 0, -8)
+//
+Mummy    (-5, 0, -8) right
+Mummy    (5, 0, -8) left
+//
+ElectroShock (0, 2, -6)
+Stair    (0, 1, -7)            front
+Stair   (7,1,1)                left
+Stair   (0,1,7)                back
+Stair   (-7,1,0)               right
+// layer 2 y=2
+Floor    (-6, 2, -6) - (6,2,-6)
+Floor    (6,2,-6) - (6,2,6)
+Floor    (6, 2, 6) - (-6,2,6)
+Floor    (-6, 2, 6) - (-6,0,-6)
+//
+Stair   (0,3,-5)    front
+Stair   (5,3,1)     left
+Stair   (0,3,5)     back
+Stair   (-5,3,0)    right
+//
+Mummy    (-5, 2, -6) right
+Mummy    (5, 2, -6) left
+//
+BonusCrystall  (-2, 2, -6)
+BonusCrystall  (2, 2, -6)
+BonusLife  (1, 2, -6)
+// layer 3
+Floor    (-4, 4, -4) - (4,4,-4)
+Floor    (4,4,-4) - (4,4,4)
+Floor    (4, 4, 4) - (-4,4,4)
+Floor    (-4, 4, 4) - (-4,4,1)
+FalseFloor  (-4, 4, 0)
+Floor     (-4, 4, -1) - (-4,4,-4)
+// layer 4
+Floor    (-1, 6, -2)
+Floor    (1, 6, -2)
+Floor    (2,6,-2) - (2,6,2)
+Floor    (2, 6, 2) - (-2,6,2)
+Floor    (-2, 6, 2) - (-2,6,-2)
+//
+Stair   (0, 5, -3)    front
+Mummy   (0, 4, 4) front
+// layer 5
+FalseFloor (0,6,-2)
+FalseFloor (-1,6,-1) 
+FalseFloor (1,6,1)
+FalseFloor (-1,6,1)
+FalseFloor (1,6,1)
+FalseFloor (-1,6,0)  
+FalseFloor (1,6,0)
+FalseFloor (0,6,1)  
+FalseFloor (0,6,-1)
+FalseFloor (1,6,-1)
+//
+BonusCrystall (-1,6,0)
+BonusCrystall (1,6,0)
+//
+Exit    (0, 6, 0)
+}
+//=======================================

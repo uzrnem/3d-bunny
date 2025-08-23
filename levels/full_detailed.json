@@ -119,6 +119,46 @@
       ]
     },
     {
+      "levelNumber": 3,
+      "defaultTime": 40,
+      "instructions": [
+        "You have a way to go. Up, up, and up.",
+        "Be careful and good luck!"
+      ],
+      "elements": [
+        { "type": "hero", "position": { "x": 0, "y": -2, "z": -1 }, "facing": "front" },
+        { "type": "floor", "from": { "x": -1, "y": -2, "z": -2 }, "to": { "x": 1, "y": -2, "z": 0 } },
+        { "type": "stair", "position": { "x": 0, "y": -1, "z": 1 }, "direction": "front", "count": "4" },
+        { "type": "floor", "from": { "x": -1, "y": 6, "z": 5 }, "to": { "x": 1, "y": 6, "z": 7 } },
+        { "type": "floor", "from": { "x": 2, "y": 6, "z": 6 }, "to": { "x": 7, "y": 6, "z": 6 } },
+        { "type": "bonuscrystall", "position": { "x": 0, "y": 6, "z": 6 } },
+        { "type": "floor", "from": { "x": 8, "y": 6, "z": 5 }, "to": { "x": 10, "y": 6, "z": 7 } },
+        { "type": "bonuscrystall", "position": { "x": 9, "y": 6, "z": 6 } },
+        { "type": "lift", "from": { "x": 9, "y": 6, "z": 4 }, "to": { "x": 9, "y": 6, "z": 1 } },
+        { "type": "floor", "from": { "x": 10, "y": 6, "z": 0 }, "to": { "x": 8, "y": 6, "z": -2 } },
+        { "type": "bonuscrystall", "position": { "x": 9, "y": 6, "z": -1 } },
+        { "type": "lift", "from": { "x": 7, "y": 6, "z": -1 }, "to": { "x": 4, "y": 6, "z": -1 } },
+        { "type": "floor", "from": { "x": 3, "y": 6, "z": -2 }, "to": { "x": 1, "y": 6, "z": 0 } },
+        { "type": "bonuscrystall", "position": { "x": 2, "y": 6, "z": -1 } },
+        { "type": "lift", "from": { "x": 2, "y": 6, "z": 1 }, "to": { "x": 2, "y": 24, "z": 1 } },
+        { "type": "floor", "from": { "x": 1, "y": 24, "z": 2 }, "to": { "x": 3, "y": 24, "z": 4 } },
+        { "type": "stair", "position": { "x": 2, "y": 25, "z": 5 }, "direction": "front", "count": "2" },
+        { "type": "bonuscrystall", "position": { "x": 2, "y": 24, "z": 3 } },
+        { "type": "floor", "from": { "x": 1, "y": 28, "z": 9 }, "to": { "x": 3, "y": 28, "z": 7 } },
+        { "type": "bonuscrystall", "position": { "x": 2, "y": 28, "z": 8 } },
+        { "type": "stair", "position": { "x": 4, "y": 29, "z": 8 }, "direction": "right", "count": "2" },
+        { "type": "floor", "from": { "x": 6, "y": 32, "z": 7 }, "to": { "x": 8, "y": 32, "z": 9 } },
+        { "type": "bonuscrystall", "position": { "x": 7, "y": 32, "z": 8 } },
+        { "type": "stair", "position": { "x": 7, "y": 33, "z": 6 }, "direction": "back", "count": "2" },
+        { "type": "floor", "from": { "x": 6, "y": 36, "z": 4 }, "to": { "x": 8, "y": 36, "z": 2 } },
+        { "type": "stair", "position": { "x": 5, "y": 37, "z": 3 }, "direction": "left", "count": null },
+        { "type": "floor", "position": { "x": 4, "y": 38, "z": 3 } },
+        { "type": "stair", "position": { "x": 4, "y": 39, "z": 4 }, "direction": "front", "count": null },
+        { "type": "teleporter", "entry1": { "x": 4, "y": 40, "z": 5 }, "entry2": { "x": -3, "y": 40, "z": -2 } },
+        { "type": "goal", "position": { "x": -3, "y": 40, "z": -1 } }
+      ]
+    },
+    {
       "levelNumber": 10,
       "defaultTime": 150,
       "instructions": [

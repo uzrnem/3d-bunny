@@ -47,7 +47,7 @@
   <div id="menu"><h1>Ball Rolling Game</h1><button data-action="start">Start Game</button></div>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
 
   <script>
   (() => {
@@ -73,28 +73,9 @@
     // ------------ Levels ------------
     const levels = [
       {
-        "levelNumber": 2,
-        "defaultTime": 50,
-        "instructions": [
-          "Magic pyramid! The Crystals are flying in the air.",
-          "It must be the Wizard's work. Be careful!"
-        ],
-        "elements": [
-          { "type": "hero", "position": { "x": 0, "y": -6, "z": -15 }, "facing": "back" },
-          { "type": "floor", "from": { "x": -14, "y": -6, "z": -15 }, "to": { "x": 14, "y": -6, "z": -15 } },
-          { "type": "stair", "position": { "x": 0, "y": -5, "z": -14 }, "direction": "front", "count": "4" },
-          //{ "type": "stair", "position": { "x": 0, "y": 3, "z": -9 }, "direction": "front", "count": "4" },
-          { "type": "lift", "from": { "x": -14, "y": -6, "z": -14 }, "to": { "x": -10, "y": 2, "z": -10 } },
-          { "type": "bonuscrystall", "position": { "x": -13, "y": -4, "z": -13 } },
-          { "type": "bonuscrystall", "position": { "x": -12, "y": -2, "z": -12 } },
-          { "type": "bonuscrystall", "position": { "x": -11, "y": 0, "z": -11 } },
-          { "type": "floor", "from": { "x": -9, "y": 2, "z": -10 }, "to": { "x": 9, "y": 2, "z": -10 } },
-          { "type": "goal", "position": { "x": 0, "y": 18, "z": 0 } }
-        ]
-      },
-      {
         "elements": [
           {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
+          { "type": "custom", "position": { "x": 5, "y": 0, "z": 3 } },
           {"type":"hero","position":{"x":-1,"y":0,"z":0}},
           {"type":"floor","position":{"x":-1,"y":0,"z":15}},
           {"type":"floor","position":{"x":0,"y":0,"z":-1}},
@@ -111,7 +92,7 @@
           {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
           {"type":"bonuscrystall","position":{"x":8,"y":0,"z":9}},
           {"type":"bonuscrystall","position":{"x":8,"y":0,"z":7}},
-          { "type": "ghost", "from": { "x": 7, "y": 0, "z": 3 }, "to": { "x": 13, "y": 0, "z": 8 } },
+          { "type": "ghost", "position": { "x": 7, "y": 0, "z": 3 } },
           {"type":"falsefloor","position":{"x":1,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":0,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":-1,"y":0,"z":-3}},
@@ -119,50 +100,6 @@
           {"type":"falsefloor","position":{"x":3,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":4,"y":0,"z":-3}},
           {"type":"falsefloor","position":{"x":5,"y":0,"z":-3}},
-        ]
-      },
-      {
-        "levelNumber": 2,
-        "defaultTime": 80,
-        "instructions": [
-          "Welcome to Magic Forest!",
-          "Your first task is to collect all the ",
-          "crystals and find the exit to the next level.",
-          "Tip: To zoom-in, use key 'A', to zoom-out use key 'Z'.",
-          "Good Luck!"
-        ],
-        "elements": [
-          { "type": "hero", "position": { "x": 0, "y": 0, "z": 0 }, "facing": "back" },
-          { "type": "floor", "from": { "x": -3, "y": 0, "z": 2 }, "to": { "x": 3, "y": 0, "z": -2 } },
-          { "type": "floor", "from": { "x": 4, "y": 0, "z": 0 }, "to": { "x": 5, "y": 0, "z": 0 } },
-          { "type": "floor", "from": { "x": 6, "y": 0, "z": 1 }, "to": { "x": 10, "y": 0, "z": -1 } },
-          { "type": "floor", "from": { "x": 8, "y": 0, "z": 2 }, "to": { "x": 10, "y": 0, "z": 5 } },
-          { "type": "floor", "from": { "x": 9, "y": 0, "z": 7 }, "to": { "x": 6, "y": 0, "z": 7 } },
-          { "type": "floor", "from": { "x": 2, "y": 0, "z": 3 }, "to": { "x": 2, "y": 0, "z": 4 } },
-          { "type": "floor", "from": { "x": 1, "y": 0, "z": 5 }, "to": { "x": 5, "y": 0, "z": 7 } },
-          { "type": "floor", "from": { "x": -4, "y": 0, "z": 0 }, "to": { "x": -5, "y": 0, "z": 0 } },
-          { "type": "floor", "from": { "x": -6, "y": 0, "z": 1 }, "to": { "x": -10, "y": 0, "z": -1 } },
-          { "type": "floor", "from": { "x": -10, "y": 0, "z": -2 }, "to": { "x": -8, "y": 0, "z": -5 } },
-          { "type": "floor", "from": { "x": -7, "y": 0, "z": -4 }, "to": { "x": -2, "y": 0, "z": -4 } },
-          { "type": "floor", "position": { "x": 9, "y": 0, "z": 6 } },
-          { "type": "floor", "position": { "x": -2, "y": 0, "z": -3 } },
-          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": 1 } },
-          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": -1 } },
-          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": -1 } },
-          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": 1 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 0 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 2 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 4 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": 0 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -2 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -4 } },
-          { "type": "custom", "position": { "x": 3, "y": 0, "z": 2 }, "comment": "tree01.x" },
-          { "type": "custom", "position": { "x": 3, "y": 0, "z": -2 }, "comment": "tree02.x" },
-          { "type": "custom", "position": { "x": -3, "y": 0, "z": -2 }, "comment": "tree01.x" },
-          { "type": "custom", "position": { "x": -3, "y": 0, "z": 2 }, "comment": "tree03.x" },
-          { "type": "custom", "position": { "x": -9, "y": 0, "z": -3 }, "comment": "barrel.x" },
-          { "type": "custom", "position": { "x": 4, "y": 0, "z": 6 }, "comment": "barrel.x" },
-          { "type": "goal", "position": { "x": 2, "y": 0, "z": 6 } }
         ]
       }
     ];
@@ -174,7 +111,7 @@
 
     const loader = new THREE.CubeTextureLoader();
     const gltfLoader = new THREE.GLTFLoader();
-    
+
     function loadGLBModel(path, onLoad) {
       gltfLoader.load(path, (gltf) => {
         const model = gltf.scene;
@@ -231,6 +168,7 @@
     let teleporters = [];
     let crystals = [];
     let ghosts = [];
+    let customs = [];
     let crystalsRemaining = 0;
     let goalActive = false;
     let startTile, goalTile;
@@ -241,6 +179,30 @@
     scene.add(ball);
 
     // ------------ Moving platforms, teleporter, crystals ------------
+    class Custom {
+      constructor(pos) {
+        this.pos = new THREE.Vector3(pos.x, pos.y / DIVIDE_HEIGHT_BY, pos.z);
+
+        const geo = new THREE.BoxGeometry(1, 1, 1);
+        const texture = new THREE.TextureLoader().load("./bg/crate.gif");
+        const mat = new THREE.MeshBasicMaterial({ map: texture });
+
+        this.mesh = new THREE.Mesh(geo, mat);
+        this.mesh.position.set(this.pos.x, this.pos.y + 0.5, this.pos.z);
+        scene.add(this.mesh);
+      }
+
+      isBlocking(x, y, z) {
+        return Math.abs(x - this.pos.x) < 0.1 && Math.abs(y-this.pos.y) < 0.5 && Math.abs(z - this.pos.z) < 0.1;
+      }
+
+      dispose() {
+        scene.remove(this.mesh);
+        this.mesh.geometry.dispose();
+        this.mesh.material.dispose();
+      }
+    }
+
     class Lift {
       constructor(x1,y1,z1,x2,y2,z2) {
         this.start = new THREE.Vector3(x1,y1/DIVIDE_HEIGHT_BY,z1);
@@ -313,7 +275,7 @@
     class BonusCrystall {
       constructor(pos) {
         // place crystal just above floor (y/3 for tiles) plus some lift for visibility
-        const y = pos.y / 3 + .5;  
+        const y = pos.y / 3 + .5;
         this.pos = new THREE.Vector3(pos.x, y, pos.z);
 
         const geo = new THREE.OctahedronGeometry(0.3);
@@ -456,7 +418,7 @@
 
         // 💥 Collision with ball
         if (this.pos.distanceTo(ballPos) < 0.5) {
-          loseGame();
+          loseGame("Hit by Tornado");
         }
 
         // ❌ Fade out in last 2s
@@ -480,76 +442,80 @@
     }
 
     class Ghost {
-      constructor(pos, patrolTo) {
-        this.start = new THREE.Vector3(pos.x, pos.y/DIVIDE_HEIGHT_BY + 0.5, pos.z);
-        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/DIVIDE_HEIGHT_BY + 0.5, patrolTo.z);
-        this.pos   = this.start.clone();
+      constructor(pos) {
+        this.start = new THREE.Vector3(pos.x, pos.y / DIVIDE_HEIGHT_BY + 0.5, pos.z);
+        this.pos = this.start.clone();
 
         loadGLBModel("./glb/ghost.glb", (model) => {
           this.mesh = model;
-          this.mesh.scale.set(0.2, 0.2, 0.2);   // adjust scale
+          this.mesh.scale.set(0.2, 0.2, 0.2);
           this.mesh.position.copy(this.start);
+          this.mesh.rotation.x = -Math.PI / 2;
           scene.add(this.mesh);
         });
-        /*this.mesh = new THREE.Mesh(
-          new THREE.SphereGeometry(0.5, 16, 16),
-          new THREE.MeshBasicMaterial({ color: 0xff00ff })
-        );
-        this.mesh.position.copy(this.pos);
-        scene.add(this.mesh); */
 
-        this.forward = true;
-        this.progress = 0;
-        this.speed = LIFT_SPEED; // 👈 ghost patrol speed matches lifts
-        this.distance = this.start.distanceTo(this.end);
-        this.travelTime = Math.max(0.0001, this.distance / this.speed);
-        this.waitUntil = 0;
-
+        this.speed = LIFT_SPEED; // roam speed
+        this.target = null; // next target position
+        this.range = 2; // 4x4 grid means ±2 from start
         this.tornados = [];
         this.cooldown = 0;
       }
 
+      pickNextTarget() {
+        // Pick a random adjacent tile within 4x4 range
+        const dirs = [
+          new THREE.Vector3(1, 0, 0),
+          new THREE.Vector3(-1, 0, 0),
+          new THREE.Vector3(0, 0, 1),
+          new THREE.Vector3(0, 0, -1)
+        ];
+        const shuffled = dirs.sort(() => Math.random() - 0.5);
+        for (const d of shuffled) {
+          const next = this.pos.clone().add(d);
+          if (Math.abs(next.x - this.start.x) <= this.range &&
+              Math.abs(next.z - this.start.z) <= this.range &&
+              hasFloorBelow(next.x, next.y, next.z)) {
+            this.target = next;
+            return;
+          }
+        }
+        this.target = null;
+      }
+
       update(dt) {
-        // 🚶 Smooth patrol like lifts
-        if (Date.now() >= this.waitUntil) {
-          const delta = dt / (this.travelTime * 1000);
-          this.progress += this.forward ? delta : -delta;
-
-          if (this.progress >= 1) {
-            this.progress = 1; 
-            this.forward = false;
-            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
-          }
-          if (this.progress <= 0) {
-            this.progress = 0; 
-            this.forward = true;
-            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
-          }
+        // If no target → pick one
+        if (!this.target) {
+          this.pickNextTarget();
+          return;
         }
 
-        // 👣 Interpolated position
-        this.pos.lerpVectors(this.start, this.end, this.progress);
+        // Move towards target
+        const dir = this.target.clone().sub(this.pos).setY(0);
+        const dist = dir.length();
+        if (dist < 0.05) {
+          this.pos.copy(this.target);
+          this.pickNextTarget();
+        } else {
+          dir.normalize();
+          this.pos.addScaledVector(dir, this.speed * dt / 1000);
+        }
 
-        // 👻 Apply bobbing effect
-        const bob = 0; //Math.sin(Date.now() * 0.005) * 0.1;
-        this.mesh.position.set(this.pos.x, this.pos.y + bob, this.pos.z);
+        // Apply bobbing
+        this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
 
-        // 👻 Spin for effect
-        this.mesh.rotation.y += 0.02;
-
-        // 👻 Direct collision with ball
+        // Collision with player
         if (this.pos.distanceTo(ballPos) < 0.6) {
-          loseGame();
+          loseGame("Caught by Ghost");
         }
 
-        // 🔥 Fire tornado if close
+        // Tornado attack
         if (this.pos.distanceTo(ballPos) < 6 && Date.now() > this.cooldown) {
-          const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
-          this.tornados.push(new Tornado(this.pos, dir));
+          const dirToPlayer = ballPos.clone().sub(this.pos).setY(0).normalize();
+          this.tornados.push(new Tornado(this.pos, dirToPlayer));
           this.cooldown = Date.now() + 2000;
         }
 
-        // 🌪️ Update tornado projectiles
+        // Update tornados
         for (let i = this.tornados.length - 1; i >= 0; i--) {
           if (!this.tornados[i].update(dt)) this.tornados.splice(i, 1);
         }
@@ -564,26 +530,28 @@
     // ------------ Level loading ------------
     function loadLevel(index) {
       tiles.forEach(t => scene.remove(t));
-      lifts.forEach(l => l.dispose && l.dispose());
-      falseFloors.forEach(f => f.dispose());
-      teleporters.forEach(t => t.dispose());
-      crystals.forEach(c => c.dispose());
-      if (startTile) scene.remove(startTile);
-      if (goalTile)  scene.remove(goalTile);
       tiles = [];
+      lifts.forEach(l => l.dispose && l.dispose());
       lifts = [];
+      falseFloors.forEach(f => f.dispose());
       falseFloors = [];
+      teleporters.forEach(t => t.dispose());
       teleporters = [];
+      crystals.forEach(c => c.dispose());
       crystals = [];
       ghosts.forEach(g => g.dispose());
       ghosts = [];
+      customs.forEach(c => c.dispose());
+      customs = [];
+      if (startTile) scene.remove(startTile);
+      if (goalTile)  scene.remove(goalTile);
       crystalsRemaining = 0;
       goalActive = false;
       startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
-      if (goalLight) { 
-        scene.remove(goalLight); 
-        goalLight = null; 
+      if (goalLight) {
+        scene.remove(goalLight);
+        goalLight = null;
       }
 
       const def = levels[index].elements;
@@ -595,8 +563,6 @@
             const minY = Math.min(obj.from.y, obj.to.y);
             const minZ = Math.min(obj.from.z, obj.to.z);
             const maxZ = Math.max(obj.from.z, obj.to.z);
-
-            console.log(`Floor  minY/DIVIDE_HEIGHT_BY = ${minY/DIVIDE_HEIGHT_BY}`);
 
             for (let x = minX; x <= maxX; x++) {
               for (let z = minZ; z <= maxZ; z++) {
@@ -648,9 +614,9 @@
           for (var i = start + 1; i <= end - 1; i++) {
             //  start + (n * (end - start)) / (count - 1)
             console.log(` >  yCord: ${start + (i * (end - start)) / (steps - 1)}`);
-          } */
+          }
+          console.log(` >  obj.position.y: ${obj.position.y}, steps: ${steps}`); */
 
-          console.log(` >  obj.position.y: ${obj.position.y}, steps: ${steps}`);
 
           for (let i = 0; i < steps; i++) {
             const t = new THREE.Mesh(tileGeo, tileMat);
@@ -660,7 +626,7 @@
               obj.position.z + dir.z * i
             );
             t.position.set(pos.x, pos.y / DIVIDE_HEIGHT_BY, pos.z);
-            console.log(`Stair step at ${pos.x}, ${pos.y}, ${pos.z}`);
+            //console.log(`Stair step at ${pos.x}, ${pos.y}, ${pos.z}`);
             scene.add(t);
             tiles.push(t);
           }
@@ -668,11 +634,15 @@
           const f = new FalseFloor(obj.position);
           falseFloors.push(f);
           tiles.push(f.mesh); // still counts as a tile initially
-        } else if (obj.type === "ghost") {
-          const g = new Ghost(obj.from, obj.to);
+        } else if (obj.type === "ghost" || obj.type === "monkey" || obj.type === "mummy" || obj.type === "mage") {
+          const g = new Ghost(obj.position || obj.from);
           ghosts.push(g);
         } else {
           if (obj.position) {
+            if (obj.type === "custom") {
+              const c = new Custom(obj.position);
+              customs.push(c);
+            }
             const t = new THREE.Mesh(tileGeo, tileMat);
             t.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
             scene.add(t); tiles.push(t);
@@ -756,12 +726,12 @@
       updateHUD();
     }
 
-    function loseGame() {
+    function loseGame(reason) {
       clearInterval(timerId);
       isMoving = false;
       falling = false;
       menu.style.display = 'flex';
-      menu.innerHTML = `<h1>You Fell!</h1><button data-action="restart">Restart Level</button>`;
+      menu.innerHTML = `<h1>${reason}!</h1><button data-action="restart">Restart Level</button>`;
     }
 
     function winGame() {
@@ -795,16 +765,24 @@
       if (!btn) return;
       const action = btn.getAttribute('data-action');
       if (action === 'start') {
+        startNewGame(e);
+      } else if (action === 'restart') {
+        restartGame(e);
+      }
+    });
+
+    function startNewGame(e) {
         e.preventDefault();
         menu.style.display = 'none';
         currentLevel = 0;
         startLevel(currentLevel);
-      } else if (action === 'restart') {
+    }
+
+    function restartGame(e) {
         e.preventDefault();
         menu.style.display = 'none';
         startLevel(currentLevel);
-      }
-    });
+    }
 
     // ------------ Camera (smoothed) ------------
     let camYaw = DEFAULT_CAM.yaw;
@@ -817,6 +795,13 @@
     // ------------ Input handling ------------
     document.addEventListener("keydown", (e) => {
       switch (e.key) {
+        case "Enter":
+          startNewGame(e);
+          break;
+        case "r":
+        case "R":
+          restartLevel(e);
+          break;
         case ",": // camera rotate right
           dirIndex = (dirIndex + 1) % 4;
           updateCameraBehind();
@@ -847,6 +832,15 @@
       // 🔑 rotate relative to dirIndex (camera orientation)
       for (let i = 0; i < dirIndex; i++) {
         dir = new THREE.Vector3(-dir.z, 0, dir.x);
+      }
+
+      var targetPos = ballPos.clone().add(dir);
+      if (key === " ") targetPos.addScaledVector(dir, 2); // space = reset to start
+
+      for (const c of customs) {
+        if (c.isBlocking(targetPos.x, targetPos.y , targetPos.z)) {
+          return; // Movement blocked
+        }
       }
 
       // then continue with your existing movement checks...
@@ -894,8 +888,8 @@
 
     // ------------ Helpers ------------
 
-    function findNearestTileY(ballX, ballZ, ballY, tiles) {
-      let candidates = tiles.filter(t => t.position.x === ballX && t.position.z === ballZ && t.position.y <= ballY + 1);
+    function findNearestTileY(ballX, ballY, ballZ, tiles) {
+      let candidates = tiles.filter(t => Math.abs(t.position.x - ballX) < 0.1 && Math.abs(t.position.z - ballZ) < 0.1 && t.position.y <= ballY + 1);
       if (candidates.length === 0) return null;
 
       // Find the tile with closest y
@@ -903,8 +897,8 @@
           return Math.abs(tile.position.y - ballY) < Math.abs(nearest.position.y - ballY) ? tile : nearest;
       }, candidates[0]);
     }
-    function findNearestLiftY(ballX, ballZ, ballY, lifts) {
-      let candidates = lifts.filter(t => t.mesh.position.x === ballX && t.mesh.position.z === ballZ && t.mesh.position.y <= ballY + 1);
+    function findNearestLiftY(ballX, ballY, ballZ, lifts) {
+      let candidates = lifts.filter(t => Math.abs(t.mesh.position.x - ballX) < 0.1 && Math.abs(t.mesh.position.z - ballZ) < 0.1 && t.mesh.position.y <= ballY + 1);
       if (candidates.length === 0) return null;
 
       // Find the tile with closest y
@@ -921,7 +915,7 @@
       teleport = teleporters.find(t => t.checkIfExactlyOnEntry2(new THREE.Vector3(x, y, z)));
       if (teleport) return teleport.mesh2;
 
-      return findNearestTileY(x, z, y, tiles);
+      return findNearestTileY(x, y, z, tiles);
       /*
       var tile = tiles.find(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.y + BALL_RADIUS - y) < 0.1 && Math.abs(t.position.z - z) < 0.1);
       if (tile) return tile; // found exact match
@@ -964,7 +958,7 @@
         ballPos.lerpVectors(moveFrom, moveTo, t);
 
         // Snap to lift if we move over it
-        ridingLift = findNearestLiftY(ballPos.x, ballPos.z, ballPos.y, lifts);
+        ridingLift = findNearestLiftY(ballPos.x, ballPos.y, ballPos.z, lifts);
 
         // Ball visual rolling
         const dist = TILE_SIZE * t;
@@ -998,7 +992,7 @@
       if (falling) {
         velocityY -= 0.015;
         ballPos.y += velocityY;
-        if (ballPos.y < OK_FALL_Y) loseGame();
+        if (ballPos.y < OK_FALL_Y) loseGame("You Fell");
       } else if (!isMoving) {
         if (ridingLift) {
           if (landStartY !== null) {
@@ -1045,8 +1039,13 @@
 
     const controlDiv = document.getElementById("control");
     if (!controlDiv) return;
-  
+
     controlDiv.innerHTML = `
+      <b>Controls:</b><br>
+      ↑ ↓ ← → : Move<br>
+      &lt; / &gt; : Rotate Camera<br>
+      R : Restart<br>
+      Enter : New Game <br>
       Theme:
       <select id="themeSelect">
         <option value="">Select Theme</option>
@@ -1058,10 +1057,10 @@
       Level:
       <select id="levelSelect"></select>
     `;
-  
+
     const themeSelect = document.getElementById("themeSelect");
     const levelSelect = document.getElementById("levelSelect");
-  
+
     // Repopulate level dropdown
     function refreshLevelSelect() {
       if (!levels) return;
@@ -1074,7 +1073,7 @@
         levelSelect.appendChild(opt);
       });
     }
-  
+
     // Handle theme change
     themeSelect.addEventListener("change", async () => {
       const theme = themeSelect.value;
@@ -1090,25 +1089,21 @@
         console.error("Failed to load theme:", err);
       }
     });
-  
+
     // Handle level change
     levelSelect.addEventListener("change", () => {
       currentLevel = parseInt(levelSelect.value, 10);
       startLevel(currentLevel);
     });
-  
 
-    const select = document.getElementById('themeSelect'); 
-
+    const select = document.getElementById('themeSelect');
     // Set its value
     select.value = 'full';
-
     // Trigger the change event
     const event = new Event('change', { bubbles: true });
     select.dispatchEvent(event);
     // Initialize
     refreshLevelSelect();
-
 
   })();
   </script>
