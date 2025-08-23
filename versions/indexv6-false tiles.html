@@ -46,23 +46,19 @@
   <div id="control"></div>
   <div id="menu"><h1>Ball Rolling Game</h1><button data-action="start">Start Game</button></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>  
-
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script>
   (() => {
     const TILE_SIZE = 1;
     const TILE_HEIGHT = 0.1;
     const BALL_RADIUS = 0.4;
-    const DIVIDE_HEIGHT_BY = 3; // tiles are placed at y/3 in 3D space
 
     const MOVE_SPEED = 3; // Ball speed in tiles per second
     const CAM_SMOOTH = 0.12;
-    const LIFT_SPEED = 26.0;
-    const LIFT_PAUSE_MS = 4000;
+    const LIFT_SPEED = 2.0;
+    const LIFT_PAUSE_MS = 2000;
     const DROP_DURATION = 200;
     const LAND_DURATION = 200;
-    var OK_FALL_Y = -5; // if ball falls below this y → lose
 
     const DEFAULT_CAM = {
       yaw: Math.PI, // * 0.75, // + , // - Math.PI/4, // - Math.PI/4,
@@ -72,26 +68,6 @@
 
     // ------------ Levels ------------
     const levels = [
-      {
-        "levelNumber": 2,
-        "defaultTime": 50,
-        "instructions": [
-          "Magic pyramid! The Crystals are flying in the air.",
-          "It must be the Wizard's work. Be careful!"
-        ],
-        "elements": [
-          { "type": "hero", "position": { "x": 0, "y": -6, "z": -15 }, "facing": "back" },
-          { "type": "floor", "from": { "x": -14, "y": -6, "z": -15 }, "to": { "x": 14, "y": -6, "z": -15 } },
-          { "type": "stair", "position": { "x": 0, "y": -5, "z": -14 }, "direction": "front", "count": "4" },
-          //{ "type": "stair", "position": { "x": 0, "y": 3, "z": -9 }, "direction": "front", "count": "4" },
-          { "type": "lift", "from": { "x": -14, "y": -6, "z": -14 }, "to": { "x": -10, "y": 2, "z": -10 } },
-          { "type": "bonuscrystall", "position": { "x": -13, "y": -4, "z": -13 } },
-          { "type": "bonuscrystall", "position": { "x": -12, "y": -2, "z": -12 } },
-          { "type": "bonuscrystall", "position": { "x": -11, "y": 0, "z": -11 } },
-          { "type": "floor", "from": { "x": -9, "y": 2, "z": -10 }, "to": { "x": 9, "y": 2, "z": -10 } },
-          { "type": "goal", "position": { "x": 0, "y": 18, "z": 0 } }
-        ]
-      },
       {
         "elements": [
           {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
@@ -110,15 +86,7 @@
           {"type":"floor","position":{"x":0,"y":0,"z":-2}},
           {"type":"stair","position":{"x":1,"y":0,"z":-2},"direction":"right","count":"6"},
           {"type":"bonuscrystall","position":{"x":8,"y":0,"z":9}},
-          {"type":"bonuscrystall","position":{"x":8,"y":0,"z":7}},
-          { "type": "ghost", "from": { "x": 7, "y": 0, "z": 3 }, "to": { "x": 13, "y": 0, "z": 8 } },
-          {"type":"falsefloor","position":{"x":1,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":0,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":-1,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":2,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":3,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":4,"y":0,"z":-3}},
-          {"type":"falsefloor","position":{"x":5,"y":0,"z":-3}},
+          {"type":"bonuscrystall","position":{"x":8,"y":0,"z":7}}
         ]
       },
       {
@@ -132,37 +100,316 @@
           "Good Luck!"
         ],
         "elements": [
-          { "type": "hero", "position": { "x": 0, "y": 0, "z": 0 }, "facing": "back" },
-          { "type": "floor", "from": { "x": -3, "y": 0, "z": 2 }, "to": { "x": 3, "y": 0, "z": -2 } },
-          { "type": "floor", "from": { "x": 4, "y": 0, "z": 0 }, "to": { "x": 5, "y": 0, "z": 0 } },
-          { "type": "floor", "from": { "x": 6, "y": 0, "z": 1 }, "to": { "x": 10, "y": 0, "z": -1 } },
-          { "type": "floor", "from": { "x": 8, "y": 0, "z": 2 }, "to": { "x": 10, "y": 0, "z": 5 } },
-          { "type": "floor", "from": { "x": 9, "y": 0, "z": 7 }, "to": { "x": 6, "y": 0, "z": 7 } },
-          { "type": "floor", "from": { "x": 2, "y": 0, "z": 3 }, "to": { "x": 2, "y": 0, "z": 4 } },
-          { "type": "floor", "from": { "x": 1, "y": 0, "z": 5 }, "to": { "x": 5, "y": 0, "z": 7 } },
-          { "type": "floor", "from": { "x": -4, "y": 0, "z": 0 }, "to": { "x": -5, "y": 0, "z": 0 } },
-          { "type": "floor", "from": { "x": -6, "y": 0, "z": 1 }, "to": { "x": -10, "y": 0, "z": -1 } },
-          { "type": "floor", "from": { "x": -10, "y": 0, "z": -2 }, "to": { "x": -8, "y": 0, "z": -5 } },
-          { "type": "floor", "from": { "x": -7, "y": 0, "z": -4 }, "to": { "x": -2, "y": 0, "z": -4 } },
-          { "type": "floor", "position": { "x": 9, "y": 0, "z": 6 } },
-          { "type": "floor", "position": { "x": -2, "y": 0, "z": -3 } },
-          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": 1 } },
-          { "type": "bonuscrystall", "position": { "x": 2, "y": 0, "z": -1 } },
-          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": -1 } },
-          { "type": "bonuscrystall", "position": { "x": -2, "y": 0, "z": 1 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 0 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 2 } },
-          { "type": "bonuscrystall", "position": { "x": 9, "y": 0, "z": 4 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": 0 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -2 } },
-          { "type": "bonuscrystall", "position": { "x": -9, "y": 0, "z": -4 } },
-          { "type": "custom", "position": { "x": 3, "y": 0, "z": 2 }, "comment": "tree01.x" },
-          { "type": "custom", "position": { "x": 3, "y": 0, "z": -2 }, "comment": "tree02.x" },
-          { "type": "custom", "position": { "x": -3, "y": 0, "z": -2 }, "comment": "tree01.x" },
-          { "type": "custom", "position": { "x": -3, "y": 0, "z": 2 }, "comment": "tree03.x" },
-          { "type": "custom", "position": { "x": -9, "y": 0, "z": -3 }, "comment": "barrel.x" },
-          { "type": "custom", "position": { "x": 4, "y": 0, "z": 6 }, "comment": "barrel.x" },
-          { "type": "goal", "position": { "x": 2, "y": 0, "z": 6 } }
+          {
+            "type": "hero",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "facing": "back"
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -3,
+              "y": 0,
+              "z": 2
+            },
+            "to": {
+              "x": 3,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 4,
+              "y": 0,
+              "z": 0
+            },
+            "to": {
+              "x": 5,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 6,
+              "y": 0,
+              "z": 1
+            },
+            "to": {
+              "x": 10,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 8,
+              "y": 0,
+              "z": 2
+            },
+            "to": {
+              "x": 10,
+              "y": 0,
+              "z": 5
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 9,
+              "y": 0,
+              "z": 7
+            },
+            "to": {
+              "x": 6,
+              "y": 0,
+              "z": 7
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 2,
+              "y": 0,
+              "z": 3
+            },
+            "to": {
+              "x": 2,
+              "y": 0,
+              "z": 4
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": 1,
+              "y": 0,
+              "z": 5
+            },
+            "to": {
+              "x": 5,
+              "y": 0,
+              "z": 7
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -4,
+              "y": 0,
+              "z": 0
+            },
+            "to": {
+              "x": -5,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -6,
+              "y": 0,
+              "z": 1
+            },
+            "to": {
+              "x": -10,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -10,
+              "y": 0,
+              "z": -2
+            },
+            "to": {
+              "x": -8,
+              "y": 0,
+              "z": -5
+            }
+          },
+          {
+            "type": "floor",
+            "from": {
+              "x": -7,
+              "y": 0,
+              "z": -4
+            },
+            "to": {
+              "x": -2,
+              "y": 0,
+              "z": -4
+            }
+          },
+          {
+            "type": "floor",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 6
+            }
+          },
+          {
+            "type": "floor",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -3
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 2
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": 9,
+              "y": 0,
+              "z": 4
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "type": "bonuscrystall",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -4
+            }
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": 2
+            },
+            "comment": "tree01.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": -2
+            },
+            "comment": "tree02.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -3,
+              "y": 0,
+              "z": -2
+            },
+            "comment": "tree01.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -3,
+              "y": 0,
+              "z": 2
+            },
+            "comment": "tree03.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": -9,
+              "y": 0,
+              "z": -3
+            },
+            "comment": "barrel.x"
+          },
+          {
+            "type": "custom",
+            "position": {
+              "x": 4,
+              "y": 0,
+              "z": 6
+            },
+            "comment": "barrel.x"
+          },
+          {
+            "type": "goal",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 6
+            }
+          }
         ]
       }
     ];
@@ -173,20 +420,6 @@
     document.body.appendChild(renderer.domElement);
 
     const loader = new THREE.CubeTextureLoader();
-    const gltfLoader = new THREE.GLTFLoader();
-    
-    function loadGLBModel(path, onLoad) {
-      gltfLoader.load(path, (gltf) => {
-        const model = gltf.scene;
-        model.traverse((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-        onLoad(model);
-      });
-    }
     const skybox = loader.load([
       './bg/bg_front.bmp',
       './bg/bg_back.bmp',
@@ -218,8 +451,8 @@
 
     const tileMat  = new THREE.MeshBasicMaterial({ map: tileTexture });
     const falseMat  = new THREE.MeshBasicMaterial({ map: falseFloorTexture });
-    const goalMat  = new THREE.MeshStandardMaterial({ map: goalTexture });
-    const destinationMat  = new THREE.MeshStandardMaterial({ map: destinationTexture });
+    const goalMat  = new THREE.MeshBasicMaterial({ map: goalTexture });
+    const destinationMat  = new THREE.MeshBasicMaterial({ map: destinationTexture });
     const liftMat  = new THREE.MeshBasicMaterial({ map: liftTexture });
     const teleportMat  = new THREE.MeshBasicMaterial({ map: teleportTexture });
     const crystallMat  = new THREE.MeshBasicMaterial({ map: diamondTexture });
@@ -230,11 +463,9 @@
     let falseFloors = [];
     let teleporters = [];
     let crystals = [];
-    let ghosts = [];
     let crystalsRemaining = 0;
     let goalActive = false;
     let startTile, goalTile;
-    let goalLight = null;
     let START_POS, GOAL_POS;
 
     const ball = new THREE.Mesh(ballGeo, ballMat);
@@ -243,23 +474,16 @@
     // ------------ Moving platforms, teleporter, crystals ------------
     class Lift {
       constructor(x1,y1,z1,x2,y2,z2) {
-        this.start = new THREE.Vector3(x1,y1/DIVIDE_HEIGHT_BY,z1);
-        this.end   = new THREE.Vector3(x2,y2/DIVIDE_HEIGHT_BY,z2);
+        this.start = new THREE.Vector3(x1,y1,z1);
+        this.end   = new THREE.Vector3(x2,y2,z2);
         this.progress = 0;
         this.forward = true;
         this.waitUntil = 0;
         this.distance = this.start.distanceTo(this.end);
         this.travelTime = Math.max(0.0001, this.distance / LIFT_SPEED);
         this.mesh = new THREE.Mesh(tileGeo, liftMat);
-        loadGLBModel("./glb/lift.glb", (model) => {
-          this.mesh = model;
-          this.mesh.scale.set(0.2, 0.2, 0.2);   // adjust scale
-          this.mesh.position.copy(this.start);
-          scene.add(this.mesh);
-        });
-        //this.mesh = new THREE.Mesh(tileGeo, liftMat);
-        //scene.add(this.mesh);
-        //this.mesh.position.copy(this.start);
+        scene.add(this.mesh);
+        this.mesh.position.copy(this.start);
       }
       update(dtMs) {
         if (Date.now() < this.waitUntil) return;
@@ -275,12 +499,12 @@
 
     class Teleporter {
       constructor(e1, e2) {
-        this.entry1 = new THREE.Vector3(e1.x, e1.y/DIVIDE_HEIGHT_BY, e1.z);
-        this.entry2 = new THREE.Vector3(e2.x, e2.y/DIVIDE_HEIGHT_BY, e2.z);
+        this.entry1 = new THREE.Vector3(e1.x, e1.y/3, e1.z);
+        this.entry2 = new THREE.Vector3(e2.x, e2.y/3, e2.z);
         this.mesh1 = new THREE.Mesh(tileGeo, teleportMat);
         this.mesh2 = new THREE.Mesh(tileGeo, teleportMat);
-        this.mesh1.position.set(e1.x, e1.y/DIVIDE_HEIGHT_BY, e1.z);
-        this.mesh2.position.set(e2.x, e2.y/DIVIDE_HEIGHT_BY, e2.z);
+        this.mesh1.position.set(e1.x, e1.y/3-TILE_HEIGHT/2, e1.z);
+        this.mesh2.position.set(e2.x, e2.y/3-TILE_HEIGHT/2, e2.z);
         scene.add(this.mesh1);
         scene.add(this.mesh2);
       }
@@ -291,19 +515,6 @@
           pos.copy(this.entry1);
         }
       }
-      checkIfExactlyOnEntry1(pos) {
-        if (Math.abs(pos.x - this.entry1.x) < 0.1 && Math.abs(this.entry1.y + BALL_RADIUS - pos.y) && Math.abs(pos.z - this.entry1.z) < 0.1) {
-          return true;
-        }
-        return false
-      }
-      checkIfExactlyOnEntry2(pos) {
-        if (Math.abs(pos.x - this.entry2.x) < 0.1 && Math.abs(this.entry2.y + BALL_RADIUS - pos.y) && Math.abs(pos.z - this.entry2.z) < 0.1) {
-          return true;
-        }
-        return false
-      }
-
       dispose() {
         scene.remove(this.mesh1);
         scene.remove(this.mesh2);
@@ -327,7 +538,8 @@
         if (this.collected) return false;
 
         // Check same tile (x and z match exactly)
-        if (Math.abs(ballPos.x - this.pos.x) < 0.1 && Math.abs(ballPos.z - this.pos.z) < 0.1) {
+        if (ballPos.x === this.pos.x && ballPos.z === this.pos.z) {
+          //console.log("Ball position:", ballPos, "Crystal position:", this.pos, " y difference: ball: ", ballPos.y,  "crystal: ",this.pos.y);
           // Check vertical closeness
           if (Math.abs(ballPos.y - this.pos.y) < 2) {
             this.collected = true;
@@ -337,24 +549,6 @@
             if (crystalsRemaining <= 0) {
               goalTile.material = destinationMat;
               goalActive = true;
-
-              // 🔥 Torch-like green light
-              if (goalLight) {
-                scene.remove(goalLight);
-                goalLight = null;
-              }
-
-              goalLight = new THREE.PointLight(0x00ff00, 5, 12); // (color, intensity, distance)
-              goalLight.position.set(goalTile.position.x, goalTile.position.y + 2, goalTile.position.z);
-
-              // Optional glowing sphere to show the light source
-              const glowGeo = new THREE.SphereGeometry(0.3, 16, 16);
-              const glowMat = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.6 });
-              const glowMesh = new THREE.Mesh(glowGeo, glowMat);
-              glowMesh.name = "goalGlowMesh";
-              goalLight.add(glowMesh);
-
-              scene.add(goalLight);
             }
             return true;
           }
@@ -366,55 +560,76 @@
 
     class FalseFloor {
       constructor(pos) {
-        this.pos = new THREE.Vector3(pos.x, pos.y/DIVIDE_HEIGHT_BY, pos.z);
+        this.pos = new THREE.Vector3(pos.x, pos.y/3, pos.z);
         this.mesh = new THREE.Mesh(tileGeo, falseMat);
-        this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
+        this.mesh.position.set(this.pos.x, this.pos.y - TILE_HEIGHT/2, this.pos.z);
         scene.add(this.mesh);
-
-        this.triggered = false;   // countdown started?
-        this.fallAt = null;       // timestamp when fall starts
-        this.falling = false;     // is falling now
-        this.fallSpeed = 0;       // vertical speed
+        this.triggered = false;
+        this.removeAt = null;
       }
 
       update(ballPos) {
-        // 1) Start countdown when ball steps on tile
-        if (!this.triggered &&
-            Math.abs(ballPos.x - this.pos.x) < 0.2 &&
-            Math.abs(ballPos.z - this.pos.z) < 0.2 &&
-            Math.abs(ballPos.y - (this.pos.y + BALL_RADIUS)) < 0.4) {
+        if (this.triggered || !ballPos) return;
+        if (
+          Math.abs(ballPos.x - this.pos.x) < 0.1 &&
+          Math.abs(ballPos.z - this.pos.z) < 0.1 &&
+          Math.abs(ballPos.y - (this.pos.y + BALL_RADIUS)) < 0.2
+        ) {
           this.triggered = true;
-          this.fallAt = Date.now() + 3000; // 3s wait
+          this.removeAt = Date.now() + 3000; // 3 sec countdown
         }
+      }
 
-        // 2) Begin falling after countdown
-        if (this.triggered && !this.falling && Date.now() >= this.fallAt) {
-          this.falling = true;
-          this.fallSpeed = -LIFT_SPEED / 8; // start faster than lifts
+      animate() {
+        if (!this.triggered) return;
 
-          // Remove from safe ground list
-          const idx = tiles.indexOf(this.mesh);
-          if (idx !== -1) tiles.splice(idx, 1);
+        const timeLeft = this.removeAt - Date.now();
+        if (timeLeft <= 0) return;
 
-          // If player is on it → make player fall too
-          if (Math.abs(ballPos.x - this.pos.x) < 0.2 &&
-              Math.abs(ballPos.z - this.pos.z) < 0.2) {
-            falling = true;
-            velocityY = this.fallSpeed;
+        // Crack effect: pulse color + shake scale
+        const t = (3000 - timeLeft) / 3000; // 0 → 1 progress
+        const intensity = Math.sin(Date.now() * 0.02 * (1 + t * 5)); // faster near the end
+
+        // Flash between red & black
+        this.mesh.material.color.setRGB(0.5 + 0.5 * intensity, 0, 0);
+
+        // Tiny shake in scale
+        const scale = 1 + 0.05 * intensity;
+        this.mesh.scale.set(scale, 1, scale);
+      }
+
+      checkRemove(ballPos) {
+        if (this.triggered && Date.now() >= this.removeAt) {
+          // Start falling instead of disappearing instantly
+          if (!this.falling) {
+            this.falling = true;
+            this.fallSpeed = 0;
+
+            // Remove from tiles[] so it no longer counts as ground
+            const idx = tiles.indexOf(this.mesh);
+            if (idx !== -1) tiles.splice(idx, 1);
+
+            // If the ball is on top of this tile → make ball fall immediately
+            if (
+              Math.abs(ballPos.x - this.pos.x) < 0.1 &&
+              Math.abs(ballPos.z - this.pos.z) < 0.1
+            ) {
+              falling = true;
+              velocityY = 0; // reset ball velocity
+            }
           }
         }
 
-        // 3) Animate falling
         if (this.falling) {
-          this.fallSpeed -= 0.02;               // gravity
+          this.fallSpeed -= 0.02; // gravity
           this.mesh.position.y += this.fallSpeed;
 
-          // Remove from scene when out of view
+          // Remove after it falls below the world
           if (this.mesh.position.y < -5) {
             scene.remove(this.mesh);
             this.mesh.geometry.dispose();
             this.mesh.material.dispose();
-            return true; // signal to delete from array
+            return true;
           }
         }
         return false;
@@ -423,143 +638,7 @@
       dispose() { scene.remove(this.mesh); }
     }
 
-    class Tornado {
-      constructor(pos, dir) {
-        this.pos = pos.clone();
-        this.dir = dir.clone().normalize();
-        this.startTime = Date.now();
-        this.lifetime = 20; // seconds
 
-        this.mesh = new THREE.Mesh(
-          new THREE.ConeGeometry(0.3, 0.6, 12, 1, true),
-          new THREE.MeshBasicMaterial({ color: 0x88ccff, wireframe: true, transparent: true })
-        );
-        this.mesh.position.copy(this.pos);
-        scene.add(this.mesh);
-      }
-
-      update(dt) {
-        const elapsed = (Date.now() - this.startTime) / 1000;
-
-        // 🎯 Move forward
-        this.pos.addScaledVector(this.dir, LIFT_SPEED * dt/1000);
-
-        // 🌪️ Spin
-        this.mesh.rotation.y += 0.2;
-
-        // 🌪️ Wobble
-        const wobbleMag = 0.2;
-        const wobbleDir = new THREE.Vector3(-this.dir.z, 0, this.dir.x);
-        const wobbleOffset = wobbleDir.multiplyScalar(Math.sin(elapsed * 10) * wobbleMag);
-
-        this.mesh.position.copy(this.pos.clone().add(wobbleOffset));
-
-        // 💥 Collision with ball
-        if (this.pos.distanceTo(ballPos) < 0.5) {
-          loseGame();
-        }
-
-        // ❌ Fade out in last 2s
-        const timeLeft = this.lifetime - elapsed;
-        if (timeLeft <= 2) {
-          const fade = Math.max(0, timeLeft / 2); // 1 → 0
-          this.mesh.scale.set(fade, fade, fade);
-          this.mesh.material.opacity = fade;
-        }
-
-        // ❌ Remove after lifetime
-        if (elapsed > this.lifetime) {
-          scene.remove(this.mesh);
-          this.mesh.geometry.dispose();
-          this.mesh.material.dispose();
-          return false;
-        }
-
-        return true;
-      }
-    }
-
-    class Ghost {
-      constructor(pos, patrolTo) {
-        this.start = new THREE.Vector3(pos.x, pos.y/DIVIDE_HEIGHT_BY + 0.5, pos.z);
-        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/DIVIDE_HEIGHT_BY + 0.5, patrolTo.z);
-        this.pos   = this.start.clone();
-
-        loadGLBModel("./glb/ghost.glb", (model) => {
-          this.mesh = model;
-          this.mesh.scale.set(0.2, 0.2, 0.2);   // adjust scale
-          this.mesh.position.copy(this.start);
-          scene.add(this.mesh);
-        });
-        /*this.mesh = new THREE.Mesh(
-          new THREE.SphereGeometry(0.5, 16, 16),
-          new THREE.MeshBasicMaterial({ color: 0xff00ff })
-        );
-        this.mesh.position.copy(this.pos);
-        scene.add(this.mesh); */
-
-        this.forward = true;
-        this.progress = 0;
-        this.speed = LIFT_SPEED; // 👈 ghost patrol speed matches lifts
-        this.distance = this.start.distanceTo(this.end);
-        this.travelTime = Math.max(0.0001, this.distance / this.speed);
-        this.waitUntil = 0;
-
-        this.tornados = [];
-        this.cooldown = 0;
-      }
-
-      update(dt) {
-        // 🚶 Smooth patrol like lifts
-        if (Date.now() >= this.waitUntil) {
-          const delta = dt / (this.travelTime * 1000);
-          this.progress += this.forward ? delta : -delta;
-
-          if (this.progress >= 1) {
-            this.progress = 1; 
-            this.forward = false;
-            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
-          }
-          if (this.progress <= 0) {
-            this.progress = 0; 
-            this.forward = true;
-            this.waitUntil = Date.now() + LIFT_PAUSE_MS;
-          }
-        }
-
-        // 👣 Interpolated position
-        this.pos.lerpVectors(this.start, this.end, this.progress);
-
-        // 👻 Apply bobbing effect
-        const bob = 0; //Math.sin(Date.now() * 0.005) * 0.1;
-        this.mesh.position.set(this.pos.x, this.pos.y + bob, this.pos.z);
-
-        // 👻 Spin for effect
-        this.mesh.rotation.y += 0.02;
-
-        // 👻 Direct collision with ball
-        if (this.pos.distanceTo(ballPos) < 0.6) {
-          loseGame();
-        }
-
-        // 🔥 Fire tornado if close
-        if (this.pos.distanceTo(ballPos) < 6 && Date.now() > this.cooldown) {
-          const dir = ballPos.clone().sub(this.pos).setY(0).normalize();
-          this.tornados.push(new Tornado(this.pos, dir));
-          this.cooldown = Date.now() + 2000;
-        }
-
-        // 🌪️ Update tornado projectiles
-        for (let i = this.tornados.length - 1; i >= 0; i--) {
-          if (!this.tornados[i].update(dt)) this.tornados.splice(i, 1);
-        }
-      }
-
-      dispose() {
-        scene.remove(this.mesh);
-        this.tornados.forEach(t => scene.remove(t.mesh));
-      }
-    }
 
     // ------------ Level loading ------------
     function loadLevel(index) {
@@ -575,16 +654,10 @@
       falseFloors = [];
       teleporters = [];
       crystals = [];
-      ghosts.forEach(g => g.dispose());
-      ghosts = [];
       crystalsRemaining = 0;
       goalActive = false;
       startTile = goalTile = undefined;
       START_POS = GOAL_POS = undefined;
-      if (goalLight) { 
-        scene.remove(goalLight); 
-        goalLight = null; 
-      }
 
       const def = levels[index].elements;
       def.forEach(obj => {
@@ -596,30 +669,28 @@
             const minZ = Math.min(obj.from.z, obj.to.z);
             const maxZ = Math.max(obj.from.z, obj.to.z);
 
-            console.log(`Floor  minY/DIVIDE_HEIGHT_BY = ${minY/DIVIDE_HEIGHT_BY}`);
-
             for (let x = minX; x <= maxX; x++) {
               for (let z = minZ; z <= maxZ; z++) {
                 const t = new THREE.Mesh(tileGeo, tileMat);
-                t.position.set(x, minY/DIVIDE_HEIGHT_BY, z);
+                t.position.set(x, minY/3-TILE_HEIGHT/2, z);
                 scene.add(t); tiles.push(t);
               }
             }
           } else {
             const t = new THREE.Mesh(tileGeo, tileMat);
-            t.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
             scene.add(t); tiles.push(t);
           }
         } else if (obj.type === "hero") {
           startTile = new THREE.Mesh(tileGeo, tileMat);
-          startTile.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+          startTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(startTile); tiles.push(startTile);
-          START_POS = new THREE.Vector3(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+          START_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
         } else if (obj.type === "goal") {
           goalTile = new THREE.Mesh(tileGeo, goalMat); // dark until activated
-          goalTile.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+          goalTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
           scene.add(goalTile); tiles.push(goalTile);
-          GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+          GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
           goalActive = false;
         } else if (obj.type === "lift") {
           const l = new Lift(obj.from.x, obj.from.y, obj.from.z, obj.to.x, obj.to.y, obj.to.z);
@@ -636,31 +707,19 @@
           const dirMap = {
             "right": new THREE.Vector3(1, 0, 0),
             "left":  new THREE.Vector3(-1, 0, 0),
-            "front": new THREE.Vector3(0, 0, 1),
+            "forward": new THREE.Vector3(0, 0, 1),
             "back": new THREE.Vector3(0, 0, -1)
           };
           const dir = dirMap[obj.direction] || new THREE.Vector3(1,0,0);
           const steps = parseInt(obj.count) || 1;
-/*
-          var start = obj.position.y - 1;
-          var end = start + steps;
-          var yCords = [];
-          for (var i = start + 1; i <= end - 1; i++) {
-            //  start + (n * (end - start)) / (count - 1)
-            console.log(` >  yCord: ${start + (i * (end - start)) / (steps - 1)}`);
-          } */
-
-          console.log(` >  obj.position.y: ${obj.position.y}, steps: ${steps}`);
-
           for (let i = 0; i < steps; i++) {
             const t = new THREE.Mesh(tileGeo, tileMat);
             const pos = new THREE.Vector3(
               obj.position.x + dir.x * i,
-              obj.position.y + i*1.5,
+              (obj.position.y + i) * 1/3,
               obj.position.z + dir.z * i
             );
-            t.position.set(pos.x, pos.y / DIVIDE_HEIGHT_BY, pos.z);
-            console.log(`Stair step at ${pos.x}, ${pos.y}, ${pos.z}`);
+            t.position.set(pos.x, pos.y - TILE_HEIGHT/2, pos.z);
             scene.add(t);
             tiles.push(t);
           }
@@ -668,13 +727,10 @@
           const f = new FalseFloor(obj.position);
           falseFloors.push(f);
           tiles.push(f.mesh); // still counts as a tile initially
-        } else if (obj.type === "ghost") {
-          const g = new Ghost(obj.from, obj.to);
-          ghosts.push(g);
         } else {
           if (obj.position) {
             const t = new THREE.Mesh(tileGeo, tileMat);
-            t.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
+            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
             scene.add(t); tiles.push(t);
           }
         }
@@ -815,46 +871,44 @@
     let camDistTarget = camDist;
 
     // ------------ Input handling ------------
-    document.addEventListener("keydown", (e) => {
-      switch (e.key) {
-        case ",": // camera rotate right
-          dirIndex = (dirIndex + 1) % 4;
-          updateCameraBehind();
-          break;
-        case ".": // camera rotate left
-          dirIndex = (dirIndex + 3) % 4; // same as -1 mod 4
-          updateCameraBehind();
-          break;
-        case "ArrowLeft":
-        case "ArrowRight":
-        case "ArrowDown":
-        case "ArrowUp":
-        case " ":
-          moveHero(e.key);
-          break;
+    window.addEventListener('keydown', (e) => {
+      if (!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) return;
+      e.preventDefault();
+      if (isMoving || falling) return;
+      ridingLift = null; dropStartY = null; landStartY = null;
+
+      // Rotation-only keys change facing & camera; movement happens on ArrowUp
+      if (e.key === 'ArrowLeft') {
+        dirIndex = (dirIndex + 3) % 4;     // +90°
       }
-    });
-
-    function moveHero(key) {
-      let dir = new THREE.Vector3();
-
-      if (key === "ArrowDown")  dir.set(-1, 0, 0);
-      if (key === "ArrowUp") dir.set(1, 0, 0);
-      if (key === "ArrowRight")  dir.set(0, 0, 1);
-      if (key === "ArrowLeft")    dir.set(0, 0, -1);
-      if (key === " ") dir.set(1,0,0);
-
-      // 🔑 rotate relative to dirIndex (camera orientation)
-      for (let i = 0; i < dirIndex; i++) {
-        dir = new THREE.Vector3(-dir.z, 0, dir.x);
+      if (e.key === 'ArrowRight') {
+        dirIndex = (dirIndex + 1) % 4;     // -90°
+      }
+      if (e.key === 'ArrowDown' && !isMoving && !falling) {
+        dirIndex = (dirIndex + 2) % 4;     // 180°
       }
 
-      // then continue with your existing movement checks...
-      //ballPos.add(dir);
+      // ArrowUp moves forward in the stored direction
+      const dir = DIRS[dirIndex].clone();
       moveFrom.copy(ballPos);
       moveTo.copy(ballPos).add(dir);
-      OK_FALL_Y = moveTo.y - 5; // allow falling up to 5 units down
-      if (key === " ") moveTo.copy(ballPos).addScaledVector(dir, 2); // space = reset to start
+
+      // If target tile is higher (stairs) lift to its height
+      if (moveFrom && moveTo && !falling) {
+        for (const upperTile of tiles) {
+          if (
+            Math.abs(upperTile.position.x - ballPos.x) < 0.1 &&
+            Math.abs(upperTile.position.z - ballPos.z) < 0.1
+          ) {
+            const expectedY = upperTile.position.y + BALL_RADIUS;
+            const diff = expectedY - ballPos.y;
+            // only snap up if close enough and small step (<= 1.5 units)
+            if (diff > 0.05 && diff <= 1.5) {
+              ballPos.y = expectedY;
+            }
+          }
+        }
+      }
 
       // Teleport if target has a teleporter
       for (const tele of teleporters) tele.checkTeleport(moveTo);
@@ -867,7 +921,7 @@
 
       // Keep camera behind the new direction while moving
       updateCameraBehind();
-    };
+    });
 
     // Mouse look & wheel still allowed, but next key realigns the camera behind
     let dragging = false, lastX = 0, lastY = 0;
@@ -893,78 +947,32 @@
     });
 
     // ------------ Helpers ------------
-
-    function findNearestTileY(ballX, ballZ, ballY, tiles) {
-      let candidates = tiles.filter(t => t.position.x === ballX && t.position.z === ballZ && t.position.y <= ballY + 1);
-      if (candidates.length === 0) return null;
-
-      // Find the tile with closest y
-      return candidates.reduce((nearest, tile) => {
-          return Math.abs(tile.position.y - ballY) < Math.abs(nearest.position.y - ballY) ? tile : nearest;
-      }, candidates[0]);
-    }
-    function findNearestLiftY(ballX, ballZ, ballY, lifts) {
-      let candidates = lifts.filter(t => t.mesh.position.x === ballX && t.mesh.position.z === ballZ && t.mesh.position.y <= ballY + 1);
-      if (candidates.length === 0) return null;
-
-      // Find the tile with closest y
-      return candidates.reduce((nearest, tile) => {
-          return Math.abs(tile.mesh.position.y - ballY) < Math.abs(nearest.mesh.position.y - ballY) ? tile : nearest;
-      }, candidates[0]);
-    }
-
     function hasFloorBelow(x, y, z) {
-
-      // Return only if nearest , interm of y
-      var teleport = teleporters.find(t => t.checkIfExactlyOnEntry1(new THREE.Vector3(x, y, z)));
-      if (teleport) return teleport.mesh1;
-      teleport = teleporters.find(t => t.checkIfExactlyOnEntry2(new THREE.Vector3(x, y, z)));
-      if (teleport) return teleport.mesh2;
-
-      return findNearestTileY(x, z, y, tiles);
-      /*
-      var tile = tiles.find(t => Math.abs(t.position.x - x) < 0.1 && Math.abs(t.position.y + BALL_RADIUS - y) < 0.1 && Math.abs(t.position.z - z) < 0.1);
-      if (tile) return tile; // found exact match
-
       return tiles.find(t => Math.abs(t.position.x - x) < 0.1 && ((y+1) > t.position.y) && Math.abs(t.position.z - z) < 0.1);
-      */
     }
 
     // ------------ Main loop ------------
     let lastTime = performance.now();
     function animate() {
       requestAnimationFrame(animate);
-      // Torch flicker effect for goal light
-      if (goalLight) {
-        goalLight.intensity = 4.5 + Math.sin(Date.now() * 0.02) * 0.5 + (Math.random() - 0.5) * 0.3;
-
-        const glowMesh = goalLight.getObjectByName("goalGlowMesh");
-        if (glowMesh) {
-          glowMesh.material.opacity = 0.5 + Math.sin(Date.now() * 0.01) * 0.3;
-        }
-      }
       const now = performance.now();
       const dt = now - lastTime;
       lastTime = now;
 
-      if (gameRunning) {
-        for (const l of lifts) l.update(dt);
-        for (const g of ghosts) g.update(dt);
-
-        // Update false floors
-        for (let i = falseFloors.length - 1; i >= 0; i--) {
-          if (falseFloors[i].update(ballPos)) {
-            falseFloors.splice(i, 1);
-          }
-        }
-      }
+      if (gameRunning) { for (const l of lifts) l.update(dt); }
 
       if (isMoving && !falling) {
         const t = Math.min(1, (now - moveStartTime) / ( (0.5 / MOVE_SPEED) * 1000 ));
         ballPos.lerpVectors(moveFrom, moveTo, t);
 
         // Snap to lift if we move over it
-        ridingLift = findNearestLiftY(ballPos.x, ballPos.z, ballPos.y, lifts);
+        for (const lift of lifts) {
+          if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
+              Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
+            ballPos.set(lift.mesh.position.x, lift.mesh.position.y + BALL_RADIUS, lift.mesh.position.z);
+            ridingLift = lift;
+          }
+        }
 
         // Ball visual rolling
         const dist = TILE_SIZE * t;
@@ -975,7 +983,32 @@
         if (t >= 1) {
           isMoving = false;
           ballPos.copy(moveTo);
+          console.log(`483 Ball moved to ${ballPos.x}, ${ballPos.y}, ${ballPos.z}`);
 
+          // Update false floors
+          for (let i = falseFloors.length - 1; i >= 0; i--) {
+            falseFloors[i].update(ballPos);
+            falseFloors[i].animate(); // 🔥 cracks / shakes
+            if (falseFloors[i].checkRemove()) {
+              falseFloors.splice(i, 1); // remove from array
+            }
+          }
+
+          // collect crystals
+          for (const c of crystals) c.checkCollect(ballPos);
+
+          ridingLift = null;
+          for (const lift of lifts) {
+            if (Math.abs(lift.mesh.position.x - ballPos.x) < 0.1 &&
+                Math.abs(lift.mesh.position.z - ballPos.z) < 0.1) {
+              ridingLift = lift;
+              dropStartY = null;
+              landStartY = ballPos.y;
+              landTargetY = lift.mesh.position.y + BALL_RADIUS;
+              landStartTime = performance.now();
+              break;
+            }
+          }
           if (!ridingLift) {
             // Check if we can drop onto a floor tile, from upwards lift
             const tx = Math.round(ballPos.x), ty = Math.round(ballPos.y), tz = Math.round(ballPos.z);
@@ -998,7 +1031,7 @@
       if (falling) {
         velocityY -= 0.015;
         ballPos.y += velocityY;
-        if (ballPos.y < OK_FALL_Y) loseGame();
+        if (ballPos.y < -5) loseGame();
       } else if (!isMoving) {
         if (ridingLift) {
           if (landStartY !== null) {
@@ -1035,11 +1068,10 @@
       camera.lookAt(ballPos.x, ballPos.y, ballPos.z);
 
       ball.position.copy(ballPos);
-      // ✅ Continuous crystal check
-      for (const c of crystals) { c.checkCollect(ballPos); }
       renderer.render(scene, camera);
     }
     animate();
+
 
     // Controls
 
