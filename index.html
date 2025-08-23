@@ -58,8 +58,8 @@
 
     const MOVE_SPEED = 3; // Ball speed in tiles per second
     const CAM_SMOOTH = 0.12;
-    const LIFT_SPEED = 26.0;
-    const LIFT_PAUSE_MS = 4000;
+    const LIFT_SPEED = 2.0;
+    const LIFT_PAUSE_MS = 2000;
     const DROP_DURATION = 200;
     const LAND_DURATION = 200;
     var OK_FALL_Y = -5; // if ball falls below this y → lose
@@ -1053,6 +1053,7 @@
         <option value="desert">Desert</option>
         <option value="forest">Forest</option>
         <option value="rocks">Rocks</option>
+        <option value="full">Full</option>
       </select>
       Level:
       <select id="levelSelect"></select>
@@ -1096,8 +1097,18 @@
       startLevel(currentLevel);
     });
   
+
+    const select = document.getElementById('themeSelect'); 
+
+    // Set its value
+    select.value = 'full';
+
+    // Trigger the change event
+    const event = new Event('change', { bubbles: true });
+    select.dispatchEvent(event);
     // Initialize
     refreshLevelSelect();
+
 
   })();
   </script>
