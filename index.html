@@ -46,12 +46,15 @@
   <div id="control"></div>
   <div id="menu"><h1>Ball Rolling Game</h1><button data-action="start">Start Game</button></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>  
+
   <script>
   (() => {
     const TILE_SIZE = 1;
     const TILE_HEIGHT = 0.1;
     const BALL_RADIUS = 0.4;
+    const DIVIDE_HEIGHT_BY = 3; // tiles are placed at y/3 in 3D space
 
     const MOVE_SPEED = 3; // Ball speed in tiles per second
     const CAM_SMOOTH = 0.12;
@@ -68,6 +71,26 @@
 
     // ------------ Levels ------------
     const levels = [
+      {
+        "levelNumber": 2,
+        "defaultTime": 50,
+        "instructions": [
+          "Magic pyramid! The Crystals are flying in the air.",
+          "It must be the Wizard's work. Be careful!"
+        ],
+        "elements": [
+          { "type": "hero", "position": { "x": 0, "y": -6, "z": -15 }, "facing": "back" },
+          { "type": "floor", "from": { "x": -14, "y": -6, "z": -15 }, "to": { "x": 14, "y": -6, "z": -15 } },
+          { "type": "stair", "position": { "x": 0, "y": -5, "z": -14 }, "direction": "front", "count": "4" },
+          //{ "type": "stair", "position": { "x": 0, "y": 3, "z": -9 }, "direction": "front", "count": "4" },
+          { "type": "lift", "from": { "x": -14, "y": -6, "z": -14 }, "to": { "x": -10, "y": 2, "z": -10 } },
+          { "type": "bonuscrystall", "position": { "x": -13, "y": -4, "z": -13 } },
+          { "type": "bonuscrystall", "position": { "x": -12, "y": -2, "z": -12 } },
+          { "type": "bonuscrystall", "position": { "x": -11, "y": 0, "z": -11 } },
+          { "type": "floor", "from": { "x": -9, "y": 2, "z": -10 }, "to": { "x": 9, "y": 2, "z": -10 } },
+          { "type": "goal", "position": { "x": 0, "y": 18, "z": 0 } }
+        ]
+      },
       {
         "elements": [
           {"type":"floor","from":{"x":0,"y":0,"z":0},"to":{"x":15,"y":0,"z":15}},
@@ -149,6 +172,20 @@
     document.body.appendChild(renderer.domElement);
 
     const loader = new THREE.CubeTextureLoader();
+    const gltfLoader = new THREE.GLTFLoader();
+    
+    function loadGLBModel(path, onLoad) {
+      gltfLoader.load(path, (gltf) => {
+        const model = gltf.scene;
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+        onLoad(model);
+      });
+    }
     const skybox = loader.load([
       './bg/bg_front.bmp',
       './bg/bg_back.bmp',
@@ -205,16 +242,23 @@
     // ------------ Moving platforms, teleporter, crystals ------------
     class Lift {
       constructor(x1,y1,z1,x2,y2,z2) {
-        this.start = new THREE.Vector3(x1,y1/3,z1);
-        this.end   = new THREE.Vector3(x2,y2/3,z2);
+        this.start = new THREE.Vector3(x1,y1/DIVIDE_HEIGHT_BY,z1);
+        this.end   = new THREE.Vector3(x2,y2/DIVIDE_HEIGHT_BY,z2);
         this.progress = 0;
         this.forward = true;
         this.waitUntil = 0;
         this.distance = this.start.distanceTo(this.end);
         this.travelTime = Math.max(0.0001, this.distance / LIFT_SPEED);
         this.mesh = new THREE.Mesh(tileGeo, liftMat);
-        scene.add(this.mesh);
-        this.mesh.position.copy(this.start);
+        loadGLBModel("./glb/lift.glb", (model) => {
+          this.mesh = model;
+          this.mesh.scale.set(0.2, 0.2, 0.2);   // adjust scale
+          this.mesh.position.copy(this.start);
+          scene.add(this.mesh);
+        });
+        //this.mesh = new THREE.Mesh(tileGeo, liftMat);
+        //scene.add(this.mesh);
+        //this.mesh.position.copy(this.start);
       }
       update(dtMs) {
         if (Date.now() < this.waitUntil) return;
@@ -230,12 +274,12 @@
 
     class Teleporter {
       constructor(e1, e2) {
-        this.entry1 = new THREE.Vector3(e1.x, e1.y/3, e1.z);
-        this.entry2 = new THREE.Vector3(e2.x, e2.y/3, e2.z);
+        this.entry1 = new THREE.Vector3(e1.x, e1.y/DIVIDE_HEIGHT_BY, e1.z);
+        this.entry2 = new THREE.Vector3(e2.x, e2.y/DIVIDE_HEIGHT_BY, e2.z);
         this.mesh1 = new THREE.Mesh(tileGeo, teleportMat);
         this.mesh2 = new THREE.Mesh(tileGeo, teleportMat);
-        this.mesh1.position.set(e1.x, e1.y/3-TILE_HEIGHT/2, e1.z);
-        this.mesh2.position.set(e2.x, e2.y/3-TILE_HEIGHT/2, e2.z);
+        this.mesh1.position.set(e1.x, e1.y/DIVIDE_HEIGHT_BY, e1.z);
+        this.mesh2.position.set(e2.x, e2.y/DIVIDE_HEIGHT_BY, e2.z);
         scene.add(this.mesh1);
         scene.add(this.mesh2);
       }
@@ -319,12 +363,11 @@
       dispose() { scene.remove(this.mesh); }
     }
 
-
     class FalseFloor {
       constructor(pos) {
-        this.pos = new THREE.Vector3(pos.x, pos.y/3, pos.z);
+        this.pos = new THREE.Vector3(pos.x, pos.y/DIVIDE_HEIGHT_BY, pos.z);
         this.mesh = new THREE.Mesh(tileGeo, falseMat);
-        this.mesh.position.set(this.pos.x, this.pos.y - TILE_HEIGHT/2, this.pos.z);
+        this.mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
         scene.add(this.mesh);
 
         this.triggered = false;   // countdown started?
@@ -437,16 +480,22 @@
 
     class Ghost {
       constructor(pos, patrolTo) {
-        this.start = new THREE.Vector3(pos.x, pos.y/3 + 0.5, pos.z);
-        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/3 + 0.5, patrolTo.z);
+        this.start = new THREE.Vector3(pos.x, pos.y/DIVIDE_HEIGHT_BY + 0.5, pos.z);
+        this.end   = new THREE.Vector3(patrolTo.x, patrolTo.y/DIVIDE_HEIGHT_BY + 0.5, patrolTo.z);
         this.pos   = this.start.clone();
 
-        this.mesh = new THREE.Mesh(
+        loadGLBModel("./glb/ghost.glb", (model) => {
+          this.mesh = model;
+          this.mesh.scale.set(0.2, 0.2, 0.2);   // adjust scale
+          this.mesh.position.copy(this.start);
+          scene.add(this.mesh);
+        });
+        /*this.mesh = new THREE.Mesh(
           new THREE.SphereGeometry(0.5, 16, 16),
           new THREE.MeshBasicMaterial({ color: 0xff00ff })
         );
         this.mesh.position.copy(this.pos);
-        scene.add(this.mesh);
+        scene.add(this.mesh); */
 
         this.forward = true;
         this.progress = 0;
@@ -546,28 +595,30 @@
             const minZ = Math.min(obj.from.z, obj.to.z);
             const maxZ = Math.max(obj.from.z, obj.to.z);
 
+            console.log(`Floor  minY/DIVIDE_HEIGHT_BY = ${minY/DIVIDE_HEIGHT_BY}`);
+
             for (let x = minX; x <= maxX; x++) {
               for (let z = minZ; z <= maxZ; z++) {
                 const t = new THREE.Mesh(tileGeo, tileMat);
-                t.position.set(x, minY/3-TILE_HEIGHT/2, z);
+                t.position.set(x, minY/DIVIDE_HEIGHT_BY, z);
                 scene.add(t); tiles.push(t);
               }
             }
           } else {
             const t = new THREE.Mesh(tileGeo, tileMat);
-            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
+            t.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
             scene.add(t); tiles.push(t);
           }
         } else if (obj.type === "hero") {
           startTile = new THREE.Mesh(tileGeo, tileMat);
-          startTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
+          startTile.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
           scene.add(startTile); tiles.push(startTile);
-          START_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
+          START_POS = new THREE.Vector3(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
         } else if (obj.type === "goal") {
           goalTile = new THREE.Mesh(tileGeo, goalMat); // dark until activated
-          goalTile.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
+          goalTile.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
           scene.add(goalTile); tiles.push(goalTile);
-          GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/3, obj.position.z);
+          GOAL_POS = new THREE.Vector3(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
           goalActive = false;
         } else if (obj.type === "lift") {
           const l = new Lift(obj.from.x, obj.from.y, obj.from.z, obj.to.x, obj.to.y, obj.to.z);
@@ -584,19 +635,30 @@
           const dirMap = {
             "right": new THREE.Vector3(1, 0, 0),
             "left":  new THREE.Vector3(-1, 0, 0),
-            "forward": new THREE.Vector3(0, 0, 1),
+            "front": new THREE.Vector3(0, 0, 1),
             "back": new THREE.Vector3(0, 0, -1)
           };
           const dir = dirMap[obj.direction] || new THREE.Vector3(1,0,0);
           const steps = parseInt(obj.count) || 1;
+/*
+          var start = obj.position.y - 1;
+          var end = start + steps;
+          var yCords = [];
+          for (var i = start + 1; i <= end - 1; i++) {
+            //  start + (n * (end - start)) / (count - 1)
+            console.log(` >  yCord: ${start + (i * (end - start)) / (steps - 1)}`);
+          } */
+
+
           for (let i = 0; i < steps; i++) {
             const t = new THREE.Mesh(tileGeo, tileMat);
             const pos = new THREE.Vector3(
               obj.position.x + dir.x * i,
-              (obj.position.y + i) * 1/3,
+              (obj.position.y) + (i * steps) / (steps - 2),
               obj.position.z + dir.z * i
             );
-            t.position.set(pos.x, pos.y - TILE_HEIGHT/2, pos.z);
+            t.position.set(pos.x, pos.y / DIVIDE_HEIGHT_BY, pos.z);
+            console.log(`Stair step at ${pos.x}, ${pos.y}, ${pos.z}`);
             scene.add(t);
             tiles.push(t);
           }
@@ -610,7 +672,7 @@
         } else {
           if (obj.position) {
             const t = new THREE.Mesh(tileGeo, tileMat);
-            t.position.set(obj.position.x, obj.position.y/3-TILE_HEIGHT/2, obj.position.z);
+            t.position.set(obj.position.x, obj.position.y/DIVIDE_HEIGHT_BY, obj.position.z);
             scene.add(t); tiles.push(t);
           }
         }
