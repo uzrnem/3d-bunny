@@ -139,6 +139,23 @@
     dirLight.position.set(5, 10, 5);
     scene.add(dirLight);
 
+    // --- Sound Setup ---
+    const listener = new THREE.AudioListener();
+    camera.add(listener);
+
+    const audioLoader = new THREE.AudioLoader();
+    const sounds = {};
+
+    function loadSound(name, file, loop=false, volume=0.5) {
+      const sound = new THREE.Audio(listener);
+      audioLoader.load(`./sounds/${file}`, buffer => {
+        sound.setBuffer(buffer);
+        sound.setLoop(loop);
+        sound.setVolume(volume);
+      });
+      sounds[name] = sound;
+    }
+
     // Load Texture
     const tilesTextureLoader = new THREE.TextureLoader();
     const tileTexture = tilesTextureLoader.load("./bg/tiles.png"); // <-- replace with your file path
@@ -295,8 +312,14 @@
             this.collected = true;
             scene.remove(this.mesh);
             crystalsRemaining--;
+            if (sounds.crystall) {
+              sounds.crystall.play();
+            }
 
             if (crystalsRemaining <= 0) {
+              if (sounds.score) {
+                sounds.score.play();
+              }
               goalTile.material = destinationMat;
               goalActive = true;
 
@@ -352,6 +375,9 @@
         // 2) Begin falling after countdown
         if (this.triggered && !this.falling && Date.now() >= this.fallAt) {
           this.falling = true;
+          if (sounds.falsefloor) {
+            sounds.falsefloor.play();
+          }
           this.fallSpeed = -LIFT_SPEED / 8; // start faster than lifts
 
           // Remove from safe ground list
@@ -418,6 +444,9 @@
 
         // 💥 Collision with ball
         if (this.pos.distanceTo(ballPos) < 0.5) {
+          if (sounds.gameover) {
+            sounds.gameover.play();
+          }
           loseGame("Hit by Tornado");
         }
 
@@ -505,6 +534,9 @@
 
         // Collision with player
         if (this.pos.distanceTo(ballPos) < 0.6) {
+          if (sounds.gameover) {
+            sounds.gameover.play();
+          }
           loseGame("Caught by Ghost");
         }
 
@@ -735,6 +767,9 @@
     }
 
     function winGame() {
+      if (sounds.exit) {
+        sounds.exit.play();
+      }
       clearInterval(timerId);
       const duration = Math.floor((Date.now() - startTime) / 1000);
       if (!bestTime || duration < bestTime) bestTime = duration;
@@ -756,6 +791,29 @@
       clearInterval(timerId);
       timerId = setInterval(updateHUD, 1000);
       setTimeout(() => { gameRunning = true; }, 2000);
+      playRandomBG();
+    }
+
+    function playRandomBG() {
+      const bgTracks = ["bg_forest_1", "bg_forest_2", "bg_forest_3"];
+      const pick = bgTracks[Math.floor(Math.random() * bgTracks.length)];
+
+      // Stop any currently playing bg track
+      Object.keys(sounds).forEach(k => {
+        if (k.startsWith("bg_") && sounds[k].isPlaying) sounds[k].stop();
+      });
+
+      const sound = sounds[pick];
+      if (sound) {
+        sound.setLoop(false); // don't loop, we'll control playback
+        sound.onEnded = () => {
+          // Wait 5 seconds, then start another random track
+          setTimeout(() => {
+            playRandomBG();
+          }, 5000);
+        };
+        sound.play();
+      }
     }
 
     function restartLevel() { startLevel(currentLevel); }
@@ -841,6 +899,9 @@
         if (c.isBlocking(targetPos.x, targetPos.y , targetPos.z)) {
           return; // Movement blocked
         }
+      }
+      if (sounds.hero_step && !sounds.hero_step.isPlaying) {
+        sounds.hero_step.play();
       }
 
       // then continue with your existing movement checks...
@@ -990,9 +1051,17 @@
       }
 
       if (falling) {
+        if (sounds.drop && !sounds.drop.isPlaying) {
+          sounds.drop.play();
+        }
         velocityY -= 0.015;
         ballPos.y += velocityY;
-        if (ballPos.y < OK_FALL_Y) loseGame("You Fell");
+        if (ballPos.y < OK_FALL_Y) {
+          if (sounds.drop_break) {
+            sounds.drop_break.play();
+          }
+          loseGame("You Fell");
+        }
       } else if (!isMoving) {
         if (ridingLift) {
           if (landStartY !== null) {
@@ -1104,6 +1173,35 @@
     select.dispatchEvent(event);
     // Initialize
     refreshLevelSelect();
+
+    // Background music
+    loadSound("bg_forest_1", "bg_forest_1.wav", true, 0.4);
+    loadSound("bg_forest_2", "bg_forest_2.wav", true, 0.4);
+    loadSound("bg_forest_3", "bg_forest_3.wav", true, 0.4);
+
+    // Hero / Ball
+    loadSound("hero_step", "hero_step.wav", false, 0.6);
+    loadSound("drop", "drop.wav");
+    loadSound("drop_break", "drop_break.wav");
+
+    // Collectibles
+    loadSound("crystall", "crystall.wav");
+
+    // Hazards
+    loadSound("falsefloor", "falsefloor.wav");
+
+    // Enemies footsteps
+    loadSound("ghost_step", "ghost_step.wav");
+
+    // Game events
+    loadSound("exit", "exit.wav");
+    loadSound("gameover", "gameover.wav");
+    loadSound("gamecomplete", "gamecomplete.wav");
+    loadSound("death", "death.wav");
+
+    // UI
+    loadSound("change", "change.wav");
+    loadSound("choose", "choose.wav");
 
   })();
   </script>
