@@ -3,9 +3,12 @@
 This is a remake project inspired by *Magic World* by Funny Arts.  
 The goal is to rebuild the original missions (Desert, Forest, Rocks, etc.) using **Three.js** in modern browsers.
 
-Background Images are from Magic World, a game by Funny Arts.  
+Background Images are from Magic World, a game by Funny Arts.
+https://www.myplaycity.com/animal_retreat/
 https://www.funnyarts.com/magicworldindex.php  
 https://www.funnyarts.com/magicworld
+
+https://imagetostl.com/convert/file/x/to/glb
 
 ---
 ## ✅ Current Implementation (in `index.html`)
@@ -232,6 +235,86 @@ Each level specifies:
 | Custom (Trees, Palms, Stones, Obelisks) | Yes | Yes | Yes | Single | No |
 
 
+
+🎭 3D Models (.x files)
+Root folder:
+alligator.x, bat.x, bomb.x, bombbox.x, freeze.x, ghost.x, hero_die.x, hero_jump.x, hero_stay1.x, hero_stay2.x, life.x, mage.x, magicbox.x, monkey.x, mummy.x, scorpion.x, shield.x, time.x
+Desert folder:
+palm01.x, palm02.x, palm03.x, teleporter.x, exit.x, shock.x, floor.x, stair.x, lift.x, figure1.x, falsefloor.x, crystall.x, obelisk_desert.x
+Forest folder:
+tree01.x, tree02.x, tree03.x, barrel.x, teleporter.x, exit.x, floor.x, stair.x, lift.x, figure1.x, falsefloor.x, crystall.x, cust1.x
+Rocks folder:
+obelisk_rocks.x, stones1.x, stones2.x, stone_big.x, teleporter.x, exit.x, shock.x, floor.x, stair.x, lift.x, figure1.x, falsefloor.x, crystall.x
+🖼️ Textures (image files)
+Root:
+BATDIF1.jpg, Bk_obj01.jpg, button_selected.jpg, explosion_par.jpg, explosion_ring.jpg, explosion.jpg, flame.jpg, flash.jpg, ghostdif1.png, HERO01.jpg, magic.jpg, ORANGDIF4.jpg, particle.jpg, REPTDIF4.jpg, scorpion.jpg, slim.jpg, … (+ UI PNGs like btn_common.png, stats.png)
+Desert:
+bg_top.jpg, bg_left.jpg, bg_back.jpg, bg_right.jpg, bg_front.jpg, bg_bottom.jpg, Bk_obj01.jpg, bk_scn02.jpg, Bk_scn22.png
+Forest:
+bg_top.jpg, bg_left.jpg, bg_back.jpg, bg_right.jpg, bg_front.jpg, bg_bottom.jpg, Bk_obj01.jpg, Bk_scn01.jpg, Bk_scn12.png, green1.jpg
+Rocks:
+bg_top.jpg, bg_left.jpg, bg_back.jpg, bg_right.jpg, bg_front.jpg, bg_bottom.jpg, Bk_obj01.jpg, bk_scn03.jpg, Bk_scn32.jpg, Bk_scn32.png
+
+# .X Models and Textures Mapping
+
+## Step to add JPG texture in Blender
+1. Select your 3D model (imported `.x` file).
+2. Switch to **Shading tab** (Shader Editor).
+3. Ensure your object has a material. If not, click **New**.
+4. In the Shader Editor, add a **Image Texture node** (`Shift + A → Texture → Image Texture`).
+5. Open your `.jpg/.png/.tga/.bmp` file inside this node.
+6. Connect the **Color output** of the Image Texture node to the **Base Color input** of the Principled BSDF shader.
+
+That’s how you give color to your `.x` model using `.jpg` texture in Blender.
+
+---
+
+## Texture-to-Model Mapping from Graphics.zip
+
+### 🐊 Characters & Creatures
+- **alligator.x** → `REPTDIF4.jpg`
+- **bat.x** → `BATDIF1.jpg`
+- **ghost.x** → `ghostdif1.png`
+- **hero_die.x / hero_jump.x / hero_stay1.x / hero_stay2.x** → `HERO01.jpg`
+- **mage.x** → `ORANGDIF4.jpg`
+- **monkey.x** → `ORANGDIF4.jpg`
+- **mummy.x** → `Bk_obj01.jpg`
+- **scorpion.x** → `scorpion.jpg`
+
+### 🧰 Items & Effects
+- **bomb.x** → *(no explicit texture, maybe just geometry or particle applied in-game)*
+- **bombbox.x** → *(no texture found)*
+- **freeze.x** → *(no texture found)*
+- **life.x** → *(no texture found)*
+- **magicbox.x** → `magic.jpg`
+- **shield.x** → `Bk_obj01.jpg`
+- **time.x** → *(no texture found)*
+
+### 🌴 Desert Assets
+- **palm01.x / palm02.x / palm03.x** → `Bk_obj01.jpg`
+- **teleporter.x** → `Bk_obj01.jpg`
+- **exit.x** → `Bk_obj01.jpg`
+- **shock.x** → `Bk_obj01.jpg`
+- **floor.x** → `Bk_obj01.jpg`
+- **stair.x** → `Bk_obj01.jpg`
+- **lift.x** → `Bk_obj01.jpg`
+- **figure1.x** → `Bk_obj01.jpg`
+- **falsefloor.x** → `Bk_obj01.jpg`
+- **crystall.x** → `Bk_obj01.jpg`
+- **obelisk_desert.x** → `Bk_obj01.jpg`
+
+### 🌲 Forest Assets
+- **tree01.x / tree02.x / tree03.x** → `green1.jpg`
+- **barrel.x** → `Bk_obj01.jpg`
+- **teleporter.x / exit.x / floor.x / stair.x / lift.x / figure1.x / falsefloor.x / crystall.x / cust1.x** → `Bk_obj01.jpg`
+
+### 🪨 Rock Assets
+- **obelisk_rocks.x / stones1.x / stones2.x / stone_big.x** → `Bk_obj01.jpg`
+- **teleporter.x / exit.x / shock.x / floor.x / stair.x / lift.x / figure1.x / falsefloor.x / crystall.x** → `Bk_obj01.jpg`
+
+---
+
+✅ Now you have a clear mapping of which `.jpg/.png` belongs to each `.x` model.
 
 
 
