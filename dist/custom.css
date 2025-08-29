@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+body {
+  margin: 0;
+  display: flex;
+  font-family: "Press Start 2P", cursive;
+  background-color: aqua;
+}
+/* Menu Overlay */
+.dialog-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 100;
+  visibility: hidden;
+}
+
+.dialog {
+  background: white;
+  padding: 30px;
+  text-align: center;
+  border: 4px solid black;
+  box-shadow: 5px 5px 0px #000;
+}
+
+.dialog h1 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.theme-btn {
+  width: 100%;
+  height: 40px;
+  font-family: inherit;
+  padding: 10px 20px;
+  background: white;
+  border: 2px solid black;
+  box-shadow: 3px 3px 0px black;
+  cursor: pointer;
+  outline: none;
+  font-size: 16px;
+}
+
+/* Hover effect: lift button */
+.theme-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px black;
+}
+
+/* Click effect: press down */
+.theme-btn.active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px black;
+  background: black;
+  color: white;
+  transform: scale(1.05); /* slightly bigger */
+  box-shadow: 4px 4px 0px #444;
+}
+
+/* Click effect: press down */
+.theme-btn:active {
+  background: black;
+  color: white;
+  transform: scale(1.05); /* slightly bigger */
+  box-shadow: 4px 4px 0px #444;
+}
+
+#level-select {
+  font-family: inherit;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid black;
+}
+
+/* Existing Game UI */
+#controls {
+  position: absolute;
+  bottom: 20px;
+  min-width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+#controls div {
+  display: grid;
+  grid-template-columns: 50px 50px 50px;
+  gap: 10px;
+}
+
+#controls button:first-of-type {
+  grid-column: 1/-1;
+}
+
+.details {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 2em;
+  color: white;
+}
+#loading { 
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  color: white; font-size: 20px; display: none; text-align: center;
+}
+#progressbar {
+  width: 300px; height: 20px; background: #444;
+  margin-top: 10px; border-radius: 10px; overflow: hidden;
+}
+#progress {
+  height: 100%; width: 0%; background: limegreen; transition: width 0.2s;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ball Rolling Game</title>
+  <style>
+
+  </style>
+  <link rel="stylesheet" href="/custom.css" />
+  <script type="module" crossorigin src="/assets/index-BDW-B_AP.js"></script>
+</head>
+<body>
+  <!-- ✅ New Menu -->
+  <div id="menu-container" class="dialog-overlay">
+    <div id="menuNew" class="dialog">
+      <h1>Select Theme</h1>
+      <div class="button-group">
+        <button class="theme-btn active" style="background-color: #1b4d2a" data-theme="forest">Forest</button>
+        <button class="theme-btn" style="background-color: #7a7a7a" data-theme="rocks">Rock</button>
+        <button class="theme-btn" style="background-color: #edc9af;" data-theme="desert">Desert</button>
+      </div>
+
+      <h1>Select Level</h1>
+      <select id="level-select">
+        <option value="1">Level 1</option>
+        <option value="2">Level 2</option>
+        <option value="3">Level 3</option>
+        <option value="4">Level 4</option>
+        <option value="5">Level 5</option>
+        <option value="6">Level 6</option>
+        <option value="7">Level 7</option>
+        <option value="8">Level 8</option>
+        <option value="9">Level 9</option>
+        <option value="10">Level 10</option>
+        <option value="11">Level 11</option>
+        <option value="12">Level 12</option>
+      </select>
+
+      <br />
+      <button id="start-game" class="theme-btn">Play</button>
+    </div>
+  </div>
+
+  <!-- Existing UI -->
+  <div id="controls">
+    <table>
+      <tr>
+        <td>
+          <button class="theme-btn" id="cameraleft" style="font-size: 50px; font-weight: bold;position: relative;">
+            <span style="position: absolute;top: -14px;left: 6px;transform: scaleX(-1);">&#x293B;</span>
+          </button>
+        </td>
+        <td>
+        </td>
+        <td>
+          <button class="theme-btn" id="front">▲</button>
+        </td>
+        <td></td>
+        <td rowspan="2">
+          <button class="theme-btn" style="height: 84px;" id="jump">
+            <span style="writing-mode: vertical-rl; text-orientation: upright;">Jump</span>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="theme-btn" id="cameraright" style="font-size: 50px; font-weight: bold;position: relative;">
+            <span style="position: absolute;top: -14px;left: 6px;">&#x293B;</span>
+          </button>
+        </td>
+        <td>
+          <button class="theme-btn" id="left">◀</button>
+        </td>
+        <td>
+          <button class="theme-btn" id="back">▼</button>
+        </td>
+        <td>
+          <button class="theme-btn" id="right">▶</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="loading">
+    <div>Loading assets... <span id="percent">0%</span></div>
+    <div id="progressbar"><div id="progress"></div></div>
+  </div>
+
+  <div class="details">
+    <div id="score">0</div>
+    <div style="font-size: .7em;">Level:&thinsp;<span id="level"></span></div>
+  </div>
+
+  <div id="result-container" class="dialog-overlay">
+    <div id="result" class="dialog">
+      <h1>Game Over</h1>
+      <p><span id="final-score"></span></p>
+      <div class="button-group">
+        <button class="theme-btn" id="retry" style="background-color: green">Retry</button>
+        <button class="theme-btn" id="restart" style="background-color: red">Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="nextlevel-container" class="dialog-overlay">
+    <div id="nextleveldialong" class="dialog">
+      <h1>You WON..!</h1>
+      <p><span id="final-score2"></span></p>
+      <div class="button-group">
+        <button class="theme-btn" id="retry" style="background-color: red">Retry</button>
+        <button class="theme-btn" id="nextlevel" style="background-color: green">Next Level</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
